@@ -5,7 +5,7 @@ var config = require('../../config/database');
 module.exports = {
     SignUp: (req, res)=>{
         if (!req.body.username || !req.body.password) {
-            res.json({success: false, msg: 'Please pass username and password.'});
+            res.status(401).json({success: false, msg: 'Please pass username and password.'});
         } else {
             var newUser = new User({
                 username: req.body.username,
@@ -14,9 +14,9 @@ module.exports = {
             // save the user
             newUser.save(function(err) {
                 if (err) {
-                return res.json({success: false, msg: 'Username already exists.'});
+                return res.status(400).json({success: false, msg: 'Username already exists.'});
                 }
-                res.json({success: true, msg: 'Successful created new user.'});
+                res.status(201).json({success: true, msg: 'Successful created new user.'});
             });
         }
     },

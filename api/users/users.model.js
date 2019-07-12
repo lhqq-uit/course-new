@@ -11,6 +11,12 @@ var UserSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    email:String,
+    fullname:String,
+    role:{
+        type:String,
+        enum: ['Admin','Student','Teacher']
     }
 });
 
