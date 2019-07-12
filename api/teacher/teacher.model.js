@@ -5,17 +5,11 @@ var TeacherSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
    },
-   name: String,
-   email: String,
    salary: {
       type: Number,
       default: 0,
    },
    iq: Number,
-   avatar: String,   //one image
-   images: [
-      type
-   ],
    courses:[{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Course'

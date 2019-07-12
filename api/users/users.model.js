@@ -16,7 +16,8 @@ var UserSchema = new Schema({
     fullname:String,
     role:{
         type:String,
-        enum: ['Admin','Student','Teacher']
+        enum: ['Admin','Student','Teacher'],
+        default: 'Admin' // để  admin cho test api, thực tế sẽ là student
     }
 });
 

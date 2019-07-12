@@ -9,12 +9,14 @@ module.exports = {
         } else {
             var newUser = new User({
                 username: req.body.username,
-                password: req.body.password
+                password: req.body.password,
+                fullname: req.body.fullname,
+                email: req.body.email
             });
             // save the user
             newUser.save(function(err) {
                 if (err) {
-                return res.status(400).json({success: false, msg: 'Username already exists.'});
+                    return res.status(400).json({success: false, msg: 'Username already exists.'});
                 }
                 res.status(201).json({success: true, msg: 'Successful created new user.'});
             });
