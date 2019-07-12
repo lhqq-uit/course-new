@@ -1,6 +1,6 @@
 var mongoose=require("mongoose")
 
-var Quiz=new mongoose.Schema({
+var QuizSchema = new mongoose.Schema({
    question:String,
    list_answer:[{
       type:String
@@ -8,4 +8,4 @@ var Quiz=new mongoose.Schema({
    result:String
 })
 
-module.exports = mongoose.model('Quiz', Quiz);
+module.exports = mongoose.model('Quiz', QuizSchema);

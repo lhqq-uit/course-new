@@ -1,6 +1,6 @@
 var mongoose=require('mongoose')
 
-var Lesson=new mongoose.Schema(
+var LessonSchema = new mongoose.Schema(
    {
       course: {
          type: mongoose.Schema.Types.ObjectId,
@@ -20,4 +20,4 @@ var Lesson=new mongoose.Schema(
       }]
    }
 )
-module.exports = mongoose.model('Lesson', Lesson);
+module.exports = mongoose.model('Lesson', LessonSchema);

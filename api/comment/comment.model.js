@@ -1,6 +1,6 @@
 var mongoose=require("mongoose")
 
-var Comment=mongoose.Schema({
+var CommentSchema = mongoose.Schema({
    user:{
       type:mongoose.Schema.Types.ObjectId,
       ref:'User'
@@ -13,4 +13,4 @@ var Comment=mongoose.Schema({
    }
 })
 
-module.exports = mongoose.model('Comment', Comment);
+module.exports = mongoose.model('Comment', CommentSchema);

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var Teacher = new mongoose.Schema({
+var TeacherSchema = new mongoose.Schema({
    user:{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
@@ -30,4 +30,4 @@ var Teacher = new mongoose.Schema({
    }]
 });
 
-module.exports = mongoose.model('Teacher', Teacher);
+module.exports = mongoose.model('Teacher', TeacherSchema);

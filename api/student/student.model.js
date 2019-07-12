@@ -1,6 +1,6 @@
 var mongoose=require("mongoose");
 
-var Student=mongoose.Schema({
+var StudentSchema = mongoose.Schema({
    user:{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
@@ -20,4 +20,4 @@ var Student=mongoose.Schema({
    }]
 })
 
-module.exports = mongoose.model('Student', Student);
+module.exports = mongoose.model('Student', StudentSchema);
