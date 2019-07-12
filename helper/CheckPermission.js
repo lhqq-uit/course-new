@@ -27,18 +27,17 @@ module.exports = {
                         msg : err.message
                     };
                     res.status(301).json(result);
-                } else{
-                    if(decode.data.role == "Admin"){
-                        req.user = {
-                            success : true,
-                            msg : "login success",
-                            data : decode.data,
-                        }
-                        next();
+                }
+                if(decode.role == "Admin"){
+                    req.user = {
+                        success : true,
+                        msg : "login success",
+                        data : decode,
                     }
-                    else{
-                        return res.status(403).send({success: false, msg: 'Unauthorized.'});
-                    }
+                    next();
+                }
+                else{
+                    return res.status(403).send({success: false, msg: 'Unauthorized.'});
                 }
             });
         } else {
@@ -56,9 +55,9 @@ module.exports = {
                     };
                     res.status(301).json(result);
                 } else{
-                    if(decode.data.role == "Teacher"){
+                    if(decode.role == "Teacher"){
 
-                        Teacher.findOne({user: decode.data._id}, (err, data)=>{
+                        Teacher.findOne({user: decode._id}, (err, data)=>{
                             if(err){
                                 let result = {
                                     success: false,
@@ -94,9 +93,9 @@ module.exports = {
                     };
                     res.status(301).json(result);
                 } else{
-                    if(decode.data.role == "Student"){
+                    if(decode.role == "Student"){
                         
-                        Student.findOne({user: decode.data._id}, (err, data)=>{
+                        Student.findOne({user: decode._id}, (err, data)=>{
                             if(err){
                                 let result = {
                                     success: false,
