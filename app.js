@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var cors = require('cors');
 var config = require('./config/database');
+var index = require('./routes/index')
 
 mongoose.Promise = global.Promise;
 
@@ -36,13 +37,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
 app.use(passport.initialize());
 
+//static file
+//app.use("/", express.static(path.join(__dirname, "views")));
+
 var api = require('./api');
 app.use('/api', api);
 
-app.get('/', function(req, res) {
-  res.render('index',{title: 'Express'});
-});
-
+app.get('/', index);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
