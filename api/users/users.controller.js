@@ -1,25 +1,36 @@
 var User = require('./users.model');
+let Teacher = require('../teacher/teacher.model');
+let Student = require('../student/student.model');
 var jwt = require('jsonwebtoken');
 var config = require('../../config/database');
 
 module.exports = {
-    SignUp: (req, res)=>{
+    SignUp: async (req, res)=>{
         if (!req.body.username || !req.body.password) {
             res.status(401).json({success: false, msg: 'Please pass username and password.'});
-        } else {
-            var newUser = new User({
-                username: req.body.username,
-                password: req.body.password,
-                fullname: req.body.fullname,
-                email: req.body.email
-            });
-            // save the user
-            newUser.save(function(err) {
-                if (err) {
-                    return res.status(400).json({success: false, msg: 'Username already exists.'});
+        } else {            
+            try {
+                var newUser = new User({
+                    username: req.body.username,
+                    password: req.body.password,
+                    fullname: req.body.fullname,
+                    email: req.body.email, 
+                    role: req.body.role
+                });
+                let user = await User.create(newUser);
+                if(req.body.role == "Student"){
+                    Student.create({user: user._id}, (err, data)=>{
+                        res.status(201).json({success: true, msg: 'Successful created new student.'});
+                    })
                 }
-                res.status(201).json({success: true, msg: 'Successful created new user.'});
-            });
+                if(req.body.role == "Teacher"){
+                    Teacher.create({user: user._id}, (err, data)=>{
+                        res.status(201).json({success: true, msg: 'Successful created new teacher.'});
+                    })
+                }
+            } catch (error) {
+                return res.status(400).json({success: false, msg: 'Username already exists.'});
+            }
         }
     },
     SignIn: (req, res) => {
