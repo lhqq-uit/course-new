@@ -1,8 +1,8 @@
-let router = require('express').Router();
+const router = require('express').Router();
 
-let usersRouter = require('./users/users.routes')
-let teacherRouter = require('./teacher/teacher.routes')
-let courseRouter = require('./course/course.routes')
+const usersRouter = require('./users/users.routes')
+const teacherRouter = require('./teacher/teacher.routes')
+const courseRouter = require('./course/course.routes')
 
 router.use('/', usersRouter);
 router.use('/teacher', teacherRouter);
