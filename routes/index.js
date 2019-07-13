@@ -1,10 +1,24 @@
-var express = require('express');
-var router = express.Router();
+//TODO: show home page
+exports.home = (req, res, next) => {
+    res.render("index-2");
+};
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  
-  res.render('index');
-});
+//TODO: change password, Account Management
+exports.Change_Password_Management = (req, res) => {
+    res.render("change-password");
+};
 
-module.exports = router;
+//TODO: login
+exports.Login = (res, req) => {
+    res.render("login");
+};
+
+//TODO: Reset Password
+exports.Reset_Password = (res, req) => {
+    res.render("reset-password");
+};
+
+//TODO: Sign Up
+exports.Sign_Up = (res, req) => {
+    res.render("signup");
+};

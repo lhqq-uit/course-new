@@ -10,7 +10,7 @@ var LessonSchema = new mongoose.Schema(
       desciption:String,
       video:String,
       document:String,
-      quiz:[{
+      quizzes:[{
          type: mongoose.Schema.Types.ObjectId,
          ref: 'Quiz'
       }],
