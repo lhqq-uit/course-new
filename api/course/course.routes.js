@@ -19,5 +19,5 @@ var storage = multer.diskStorage({
 //laays danh sach tat ca khoa hoc
 // router.get("/", passport.authenticate('jwt', { session: false}),CourseController.getAllCourse);
 //upload.single('image'), passport.authenticate('jwt', { session: false}), checkPermission.isAdmin,
-router.post('/',  checkPermission.isTeacher, CourseController.create);
+router.post('/',  passport.authenticate('jwt', { session: false}), checkPermission.isTeacher, CourseController.create);
 module.exports = router;

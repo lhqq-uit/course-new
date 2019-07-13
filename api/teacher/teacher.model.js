@@ -9,7 +9,10 @@ var TeacherSchema = new mongoose.Schema({
       type: Number,
       default: 0,
    },
-   iq: Number,
+   iq: {
+      type: Number,
+      default: 0,
+   },
    courses:[{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Course'

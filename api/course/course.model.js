@@ -22,7 +22,11 @@ var CourseSchema = new mongoose.Schema({
       type: Number,
       default: 0
    },
-   number_lession: Number,
+
+   // number_lession:{ 
+   //    type: Number,
+   //    default: 0
+   // },
    avatar: String,
    sale: {
       type: Boolean,   //one image

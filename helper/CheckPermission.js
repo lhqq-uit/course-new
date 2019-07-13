@@ -20,7 +20,7 @@ module.exports = {
     isAdmin: (req, res, next)=>{
         let token = getToken(req.headers);
         if (token) {
-            jwt.verify(token, config.secret, async (err, decode)=>{
+            jwt.verify(token, config.secret, (err, decode)=>{
                 if(err){
                     let result = {
                         success: false,

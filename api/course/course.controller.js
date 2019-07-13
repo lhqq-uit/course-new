@@ -11,7 +11,6 @@ module.exports = {
             price: req.body.price,
             total_time: req.body.total_time,
             level: req.body.level,
-            number_lession: req.body.number_lession,
             teacher: req.user.data._id
          }
          let course = await Course.create(newCourse)
