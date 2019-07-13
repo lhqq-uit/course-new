@@ -36,8 +36,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
 app.use(passport.initialize());
 
+
 var api = require('./api');
 app.use('/api', api);
+
 
 app.get('/', function(req, res) {
   res.render('index',{title: 'Express'});
