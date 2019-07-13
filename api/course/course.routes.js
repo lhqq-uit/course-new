@@ -17,7 +17,7 @@ var storage = multer.diskStorage({
  
  var upload = multer({ storage: storage });
 //laays danh sach tat ca khoa hoc
-router.get("/", passport.authenticate('jwt', { session: false}),CourseController.getAllCourse);
-
-router.post('/', upload.single('image'), checkPermission.isTeacher, CourseController.Create);
+// router.get("/", passport.authenticate('jwt', { session: false}),CourseController.getAllCourse);
+//upload.single('image'), passport.authenticate('jwt', { session: false}), checkPermission.isAdmin,
+router.post('/',  checkPermission.isTeacher, CourseController.create);
 module.exports = router;
