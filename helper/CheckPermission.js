@@ -56,7 +56,6 @@ module.exports = {
                     res.status(301).json(result);
                 } else{
                     if(decode.role == "Teacher"){
-
                         Teacher.findOne({user: decode._id}, (err, data)=>{
                             if(err){
                                 let result = {
@@ -68,7 +67,7 @@ module.exports = {
                             req.user = {
                                 success : true,
                                 msg : "login success",
-                                data : data,
+                                data : decode,
                             }
                             next();
                         })
@@ -106,7 +105,7 @@ module.exports = {
                             req.user = {
                                 success : true,
                                 msg : "login success",
-                                data : data,
+                                data : decode,
                             }
                             next();
                         })
