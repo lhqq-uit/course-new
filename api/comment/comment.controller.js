@@ -3,14 +3,14 @@ const Comment = require('./comment.model')
 
 module.exports = {
     create: async (req, res) => {
-        // ! Validate request
+        //TODO: Validate request
         if (!req.body.content) {
             return res.status(400).send({
                 message: "Comment can not be empty"
             });
         }
 
-        // ! Create a Comment
+        //TODO: Create a Comment
         try {
             let newComment = {
                 time: Date.now(),
@@ -27,7 +27,7 @@ module.exports = {
                 msg: "Success create a Comment",
                 data: comment
             })
-        } catch (error) { // ? show error
+        } catch (error) { //TODO: Show error
             res.status(500).send({
                 message: error.message || "Some error occurred while creating the Comment."
             });
