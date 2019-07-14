@@ -5,6 +5,6 @@ const router = express.Router();
 let CommentController = require('./comment.controller');
 //const checkPermission = require('../../helper/CheckPermission');
 
-router.post('/:idComment',  passport.authenticate('jwt', { session: false}), CommentController.create);
+router.post('/comment',  passport.authenticate('jwt', { session: false}), CommentController.create);
 
 module.exports = router;
