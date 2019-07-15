@@ -88,13 +88,13 @@ module.exports = {
                     message: "Comment can not be empty"
                 })
             }
-            let check = await Comment.findOneAndUpdate({
+            let result = await Comment.findOneAndUpdate({
                 _id: req.params.idComment,
                 user: req.user.data._id
             }, {
                 content: req.body.content
             });
-            if (!check) {
+            if (!result) {
                 return res.status(404).json({
                     message: "You not a author or Comment not find"
                 })
