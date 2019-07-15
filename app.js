@@ -43,7 +43,7 @@ app.use(passport.initialize());
 var api = require('./api');
 app.use('/api', api);
 
-app.get('/', index.home);
+app.get('/', index.home); //TODO: test EJS home
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
