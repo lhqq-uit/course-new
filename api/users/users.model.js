@@ -18,6 +18,9 @@ var UserSchema = new Schema({
         type:String,
         enum: ['Admin','Student','Teacher'],
         // default: 'Admin' // để  admin cho test api, thực tế sẽ là student
+    }, 
+    currentToken: {
+        type: String
     }
 });
 
