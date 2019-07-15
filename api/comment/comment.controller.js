@@ -41,7 +41,7 @@ module.exports = {
             })
         }
     },
-    delete: async (res, req) => {
+    delete: async (req, res) => {
         try {
             await Lesson.update({
                 _id: req.params.idLesson
@@ -77,7 +77,7 @@ module.exports = {
             })
         }
     },
-    update: async (res, req) => {
+    update: async (req, res) => {
         //TODO: Validate request
         if (!req.body.content) {
             return res.status(400).send({
@@ -108,7 +108,7 @@ module.exports = {
             })
         }
     },
-    createChild: async (res, req) => {
+    createChild: async (req, res) => {
         //TODO: Validate request
         if (!req.body.content) {
             return res.status(400).send({
@@ -143,7 +143,7 @@ module.exports = {
             })
         }
     },
-    deleteChild: async (res, req) => {
+    deleteChild: async (req, res) => {
         try {
             await Comment.update({
                 _id: req.params.idCommentParent
@@ -167,7 +167,7 @@ module.exports = {
             })
         }
     },
-    getOneComment: async (res, req) => {
+    getOneComment: async (req, res) => {
         try {
             let oneComment = await Comment.findById(req.params.idComment);
             res.status(201).json({
@@ -181,7 +181,7 @@ module.exports = {
             })
         }
     },
-    getOneComment: async (res, req) => {
+    getAllComment: async (_req, res) => {
         try {
             let allComment = await Comment.find();
             res.status(201).json({
