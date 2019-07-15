@@ -9,7 +9,9 @@ var LessonSchema = new mongoose.Schema(
       title:String,
       desciption:String,
       video:String,
-      document:String,
+      document:[{
+         type: String
+      }],
       quizzes:[{
          type: mongoose.Schema.Types.ObjectId,
          ref: 'Quiz'
