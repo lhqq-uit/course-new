@@ -1,5 +1,6 @@
 const User = require('./../users/users.model')
 const Comment = require('./comment.model')
+const Lesson = require('./../users/lesson.model')
 
 module.exports = {
     create: async (req, res) => {
@@ -21,6 +22,15 @@ module.exports = {
             await User.findOneAndUpdate({
                 user: req.user.data._id
             })
+
+            await Lesson.findOneAndUpdate(
+                {
+                    _id: req.params.idLesson
+                },
+                {
+                    $push: {comment: comment._id}
+                }
+            )
 
             res.status(201).json({
                 success: true,
