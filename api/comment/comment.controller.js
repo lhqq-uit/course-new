@@ -1,13 +1,46 @@
-const Course = require('./../course/course.model')
 const User = require('./../users/users.model')
-const Lesson = require('./lesson.model')
+const Comment = require('./comment.model')
+const Lesson = require('./../users/lesson.model')
 
-module.exports ={
-    create: async (req,res)=> {
+module.exports = {
+    create: async (req, res) => {
+        //TODO: Validate request
+        if (!req.body.content) {
+            return res.status(400).send({
+                message: "Comment can not be empty"
+            });
+        }
+
+        //TODO: Create a Comment
         try {
+            let newComment = {
+                time: Date.now(),
+                content: req.body.content
+            }
+            let comment = await Comment.create(newComment);
 
-        } catch (error) {
-            res.status(500).send('There was a problem adding the information to the database.')
+            await User.findOneAndUpdate({
+                user: req.user.data._id
+            })
+
+            await Lesson.findOneAndUpdate(
+                {
+                    _id: req.params.idLesson
+                },
+                {
+                    $push: {comment: comment._id}
+                }
+            )
+
+            res.status(201).json({
+                success: true,
+                msg: "Success create a Comment",
+                data: comment
+            })
+        } catch (error) { //TODO: Show error
+            res.status(500).send({
+                message: error.message || "Some error occurred while creating the Comment."
+            });
         }
     }
 }
