@@ -45,32 +45,39 @@ module.exports = {
     },
     delete: async (req, res) => {
         try {
-            await Lesson.update({
-                _id: req.params.idLesson
-            }, {
-                $pull: {
-                    comment: req.params.idComment
-                }
-            }, {
-                multi: true
-            });
+            // await Lesson.update({
+            //     _id: req.params.idLesson
+            // }, {
+            //     $pull: {
+            //         comment: req.params.idComment
+            //     }
+            // }, {
+            //     multi: true
+            // });
             let getData = await Comment.findById(
                 req.params.idComment
             ).select("reply");
+            
 
-            await Comment.remove({
-                '_id': {
-                    '$in': getData
-                }
-            }, (err, result) => {
-                if (err) {
-                    err.message || "Some thing err"
-                }
-                res.status(201).json({
-                    success: true,
-                    msg: "Success delete a Comment",
-                    data: result
-                })
+            // await Comment.remove({
+            //     '_id': {
+            //         '$in': getData
+            //     }
+            // }, (err, result) => {
+            //     if (err) {
+            //         err.message || "Some thing err"
+            //     }
+            //     res.status(201).json({
+            //         success: true,
+            //         msg: "Success delete a Comment",
+            //         data: result
+            //     })
+            // })
+
+            res.status(201).json({
+                success: true,
+                msg: "Success delete a Comment",
+                data: getData
             })
 
         } catch (error) {
