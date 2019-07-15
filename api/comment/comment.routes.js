@@ -5,6 +5,14 @@ const router = express.Router();
 let CommentController = require('./comment.controller');
 //const checkPermission = require('../../helper/CheckPermission');
 
-router.post('/:idLesson',  passport.authenticate('jwt', { session: false}), CommentController.create);
+//TODO: create cmt
+router.post('/:idLesson', passport.authenticate('jwt', {
+    session: false
+}), CommentController.create);
+
+//TODO: update cmt
+router.put("/:idComment", passport.authenticate('jwt', {
+    session: false
+}), CommentController.update)
 
 module.exports = router;
