@@ -8,15 +8,22 @@ var StudentSchema = mongoose.Schema({
    courses:[{
       type: mongoose.Schema.Types.ObjectId,
       ref:'Course',
-      lesson_number:Number
+      lesson_number: {
+         type: Number,
+         default: 0           //mặc định chưa học bài nào
+      }
    }],
+   iq: {
+      type: Number,
+      default: 0
+   },
    quiz:[{
       id:{
          type:mongoose.Schema.Types.ObjectId,
          ref:'Quiz',
       },
       answer:String,
-      result:String
+      key:String
    }]
 })
 
