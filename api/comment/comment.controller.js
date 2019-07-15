@@ -94,7 +94,11 @@ module.exports = {
             }, {
                 content: req.body.content
             });
-
+            if (!result) {
+                return res.status(404).json({
+                    message: "You not a author or Comment not find"
+                })
+            }
             res.status(201).json({
                 success: true,
                 msg: "Success update a Comment",
