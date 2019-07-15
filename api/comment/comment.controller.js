@@ -1,26 +1,25 @@
-//const User = require('./../users/users.model')
+const User = require('./../users/users.model')
 const Comment = require('./comment.model')
 const Lesson = require('./../lesson/lesson.model')
 
 module.exports = {
     // ? Parent 
     create: async (req, res) => {
-        //TODO: Validate request
-        if (!req.body.content) {
-            return res.status(400).send({
-                message: "Comment can not be empty"
-            })
-        }
-
         //TODO: Create a Comment
         try {
+            //TODO: Validate request
+            if (!req.body.content) {
+                return res.status(400).send({
+                    message: "Comment can not be empty"
+                })
+            }
+
             let newComment = {
+                user: req.user.data._id,
                 time: Date.now(),
                 content: req.body.content,
-                user: req.user.data._id
             }
             let comment = await Comment.create(newComment)
-
 
             await Lesson.findOneAndUpdate({
                 _id: req.params.idLesson
@@ -37,7 +36,10 @@ module.exports = {
             })
         } catch (error) { //TODO: Show error
             res.status(500).send({
-                message: error.message || "Some error occurred while creating the Comment."
+                message: error.message || "Some error occurred while creating the Comment.",
+                // //iduser: req.user.data._id,
+                // idLesson1: req.params.idLesson,
+                // content1: req.body.content,
             })
         }
     },
@@ -78,14 +80,14 @@ module.exports = {
         }
     },
     update: async (req, res) => {
-        //TODO: Validate request
-        if (!req.body.content) {
-            return res.status(400).send({
-                message: "Comment can not be empty"
-            })
-        }
-        //TODO: Create a Comment
+        //TODO: Update a Comment
         try {
+            //TODO: Validate request
+            if (!req.body.content) {
+                return res.status(400).send({
+                    message: "Comment can not be empty"
+                })
+            }
             let check = await Comment.findOneAndUpdate({
                 _id: req.params.idComment,
                 user: req.user.data._id
@@ -109,18 +111,18 @@ module.exports = {
         }
     },
     createChild: async (req, res) => {
-        //TODO: Validate request
-        if (!req.body.content) {
-            return res.status(400).send({
-                message: "Comment can not be empty"
-            })
-        }
         //TODO: Create a Comment
         try {
+            //TODO: Validate request
+            if (!req.body.content) {
+                return res.status(400).send({
+                    message: "Comment can not be empty"
+                })
+            }
             let newComment = {
+                user: req.user.data._id,
                 time: Date.now(),
                 content: req.body.content,
-                user: req.user.data._id
             }
             let comment = await Comment.create(newComment);
 
@@ -128,7 +130,7 @@ module.exports = {
                 _id: req.params.idCommentParent
             }, {
                 $push: {
-                    comment: comment._id
+                    reply: comment._id
                 }
             })
 

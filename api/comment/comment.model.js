@@ -7,10 +7,10 @@ var CommentSchema = mongoose.Schema({
    },
    time: Date,
    content: String,
-   reply: {
+   reply: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Comment'
-   }
+   }]
 })
 
 module.exports = mongoose.model('Comment', CommentSchema);
