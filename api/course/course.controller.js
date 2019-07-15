@@ -42,8 +42,8 @@ module.exports = {
             price: req.body.price,
             total_time: req.body.total_time,
             level: req.body.level,
-            last_update: Date.now()
-            // avatar: req.file.filename,
+            last_update: Date.now(),
+            avatar: req.file.filename,
          }
          let course = await Course.findOneAndUpdate(
             {_id: req.params.id,

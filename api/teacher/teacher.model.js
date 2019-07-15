@@ -17,13 +17,13 @@ var TeacherSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Course'
    }],
-   transaction: [{   //total salary per day
+   transaction: [{  
       course:{
          type:mongoose.Schema.Types.ObjectId,
          ref:'Course'
       },
-      time: Date,       
-      total_value: Number
+      date_trading: String,       //using $group to calculate sum value in one date
+      value: Number
    }]
 });
 
