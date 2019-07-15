@@ -22,14 +22,13 @@ var CourseSchema = new mongoose.Schema({
       type: Number,
       default: 0
    },
-
    // number_lession:{ 
    //    type: Number,
    //    default: 0
    // },
-   avatar: String,
+   avatar: String,   //one image
    sale: {
-      type: Boolean,   //one image
+      type: Boolean,   
       default: false
    },
    last_update:{
