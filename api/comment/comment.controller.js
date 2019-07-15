@@ -1,6 +1,6 @@
-const User = require('./../users/users.model')
+//const User = require('./../users/users.model')
 const Comment = require('./comment.model')
-const Lesson = require('./../users/lesson.model')
+const Lesson = require('./../lesson/lesson.model')
 
 module.exports = {
     // ? Parent 
@@ -9,7 +9,7 @@ module.exports = {
         if (!req.body.content) {
             return res.status(400).send({
                 message: "Comment can not be empty"
-            });
+            })
         }
 
         //TODO: Create a Comment
@@ -19,7 +19,7 @@ module.exports = {
                 content: req.body.content,
                 user: req.user.data._id
             }
-            let comment = await Comment.create(newComment);
+            let comment = await Comment.create(newComment)
 
 
             await Lesson.findOneAndUpdate({
@@ -38,7 +38,7 @@ module.exports = {
         } catch (error) { //TODO: Show error
             res.status(500).send({
                 message: error.message || "Some error occurred while creating the Comment."
-            });
+            })
         }
     },
     delete: async (res, req) => {
@@ -68,13 +68,13 @@ module.exports = {
                     success: true,
                     msg: "Success delete a Comment",
                     data: result
-                });
-            });
+                })
+            })
 
         } catch (error) {
             res.status(500).send({
                 message: error.message || "Some error occurred while deleting the Comment."
-            });
+            })
         }
     },
     update: async (res, req) => {
@@ -82,7 +82,7 @@ module.exports = {
         if (!req.body.content) {
             return res.status(400).send({
                 message: "Comment can not be empty"
-            });
+            })
         }
         //TODO: Create a Comment
         try {
@@ -105,7 +105,7 @@ module.exports = {
         } catch (error) { //TODO: Show error
             res.status(500).send({
                 message: error.message || "Some error occurred while updating the Comment."
-            });
+            })
         }
     },
     createChild: async (res, req) => {
@@ -113,7 +113,7 @@ module.exports = {
         if (!req.body.content) {
             return res.status(400).send({
                 message: "Comment can not be empty"
-            });
+            })
         }
         //TODO: Create a Comment
         try {
@@ -140,7 +140,7 @@ module.exports = {
         } catch (error) { //TODO: Show error
             res.status(500).send({
                 message: error.message || "Some error occurred while creating the Comment Child."
-            });
+            })
         }
     },
     deleteChild: async (res, req) => {
@@ -164,7 +164,7 @@ module.exports = {
         } catch (error) {
             res.status(500).send({
                 message: error.message || "Some error occurred while Deleting the Comment Child."
-            });
+            })
         }
     },
     getOneComment: async (res, req) => {
@@ -177,7 +177,7 @@ module.exports = {
         } catch (error) {
             res.status(500).send({
                 message: error.message || "Some error occurred while get the comment."
-            });
+            })
         }
     },
     getOneComment: async (res, req) => {
@@ -190,7 +190,7 @@ module.exports = {
         } catch (error) {
             res.status(500).send({
                 message: error.message || "Some error occurred while get all the comment."
-            });
+            })
         }
     }
 }

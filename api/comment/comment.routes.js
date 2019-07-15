@@ -2,19 +2,15 @@ const passport = require('passport');
 require('../../config/passport')(passport);
 const express = require('express');
 const router = express.Router();
-let CommentController = require('./comment.controller');
+const CommentController = require('./comment.controller');
 //const checkPermission = require('../../helper/CheckPermission');
 
 //TODO: get cmt
 //TODO: get all
-router.get("/", passport.authenticate('jwt', {
-    session: false
-}), CommentController.getAllComment)
+router.get("/", CommentController.getAllComment);
 
 //TODO: get one
-router.get("/:idComment", passport.authenticate('jwt', {
-    session: false
-}), CommentController.getOneComment)
+router.get("/:idComment", CommentController.getOneComment);
 
 //TODO: thêm, xóa, cập nhập, cmt chính
 //TODO: create cmt
@@ -25,12 +21,12 @@ router.post('/:idLesson', passport.authenticate('jwt', {
 //TODO: delete cmt, khi xóa cmt chính, xóa cả cmt con,
 router.delete("/:idLesson/:idComment", passport.authenticate('jwt', {
     session: false
-}), CommentController.delete)
+}), CommentController.delete);
 
 //TODO: update cmt, for both parent and child
 router.put("/:idComment", passport.authenticate('jwt', {
     session: false
-}), CommentController.update)
+}), CommentController.update);
 
 
 //TODO: thêm,xóa, comment child (reply)
@@ -43,4 +39,6 @@ router.post("/:idCommentParent", passport.authenticate('jwt', {
 router.post("/:idCommentParent/:idCommentChild", passport.authenticate('jwt', {
     session: false
 }), CommentController.deleteChild);
+
+
 module.exports = router;
