@@ -4,19 +4,11 @@ const Teacher = require('./../teacher/teacher.model')
 module.exports = {
    create: async (req, res) =>{
       try{
-<<<<<<< HEAD
          if (!req.file) {
             return res.send({
               message: 'No image received'
             });
          }
-=======
-         // if (!req.file) {
-         //    return res.send({
-         //      message: 'No image received'
-         //    });
-         // }
->>>>>>> 2f5649b7c8f922230aedbf19e1bafe3ce3812f0f
          let newCourse = {
             name: req.body.name,
             topic: req.body.topic,
