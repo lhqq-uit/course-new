@@ -17,7 +17,7 @@ module.exports = {
             total_time: req.body.total_time,
             level: req.body.level,
             teacher: req.user.data._id,
-            // avatar: req.file.filename,
+            avatar: req.file.filename,
          }
          let course = await Course.create(newCourse)
          await Teacher.findOneAndUpdate(
