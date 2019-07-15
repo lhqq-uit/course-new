@@ -172,7 +172,8 @@ module.exports = {
             let oneComment = await Comment.findById(req.params.idComment);
             res.status(201).json({
                 success: true,
-                msg: oneComment,
+                msg: "Get one comment success",
+                data: oneComment,
             })
         } catch (error) {
             res.status(500).send({
@@ -185,7 +186,8 @@ module.exports = {
             let allComment = await Comment.find();
             res.status(201).json({
                 success: true,
-                msg: allComment,
+                msg: "Get all comment success",
+                data: allComment,
             })
         } catch (error) {
             res.status(500).send({
