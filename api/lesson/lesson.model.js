@@ -6,12 +6,18 @@ var LessonSchema = new mongoose.Schema(
          type: mongoose.Schema.Types.ObjectId,
          ref: 'Course'
       },
-      title:String,
-      desciption:String,
+      title: {
+         type: String,
+         required: 'Title is required!'
+      },
+      desciption:{
+         type: String,
+         required: 'Description is required!',
+      },
       video:String,
-      document:[{
-         type: String
-      }],
+      document:{
+         type: [String]
+      },
       quizzes:[{
          type: mongoose.Schema.Types.ObjectId,
          ref: 'Quiz'

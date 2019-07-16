@@ -28,6 +28,13 @@ module.exports={
                 data: quiz
             })
         } catch (error) {
+            if (error && error.name === 'ValidationError') {
+                let err_msg = error.message.toString().replace('Quiz validation failed: ', '').split(', ')
+                return res.status(400).json({
+                    success: false, 
+                    err_msg: err_msg
+                });
+            }
             res.status(500).send('There was a problem adding the information to the database.')
         }
     },
