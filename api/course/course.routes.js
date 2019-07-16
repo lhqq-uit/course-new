@@ -9,10 +9,10 @@ const checkPermission = require('./../../helper/CheckPermission');
 var storage =   multer.diskStorage({
   // file upload destination
   destination: function (req, file, callback) {
-    callback(null, './public/upload/');
+    callback(null, './public/upload/images');
   },
   filename: function (req, file, callback) {
-    callback(null, file.originalname + '-' + Date.now());
+    callback(null, Date.now() + '-' + file.originalname);
   }
 });
 var upload = multer({ storage : storage});

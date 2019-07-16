@@ -1,5 +1,6 @@
 const Course = require('./course.model')
 const Teacher = require('./../teacher/teacher.model')
+const fs = require('fs');
 
 module.exports = {
    create: async (req, res) =>{
@@ -51,6 +52,7 @@ module.exports = {
             newCourse
          );
          if(!course) return res.status(404).send('No course found or you are not author of course');
+         fs.unlinkSync(`./public/upload/images/${course.avatar}`);
          res.status(200).json({message: 'Update successfully!'});
       }
       catch{
@@ -85,6 +87,7 @@ module.exports = {
                $inc: {iq: -100}           //delete course -100 IQ
             }
          );
+         fs.unlinkSync(`./public/upload/images/${course.avatar}`);
          res.status(200).json('Delete successfully!')
       } catch (error) {
          res.status(500).json('There was a problem adding the information to the database.')
