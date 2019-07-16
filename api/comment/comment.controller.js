@@ -15,7 +15,7 @@ module.exports = {
             }
 
             let newComment = {
-                user: req.user.data._id,
+                user: req.user._id,
                 time: Date.now(),
                 content: req.body.content,
             }
@@ -37,7 +37,7 @@ module.exports = {
         } catch (error) { //TODO: Show error
             res.status(500).send({
                 message: error.message || "Some error occurred while creating the Comment.",
-                // //iduser: req.user.data._id,
+                // //iduser: req.user._id,
                 // idLesson1: req.params.idLesson,
                 // content1: req.body.content,
             })
@@ -56,21 +56,31 @@ module.exports = {
             });
             let getData = await Comment.findById(
                 req.params.idComment
-            ).select("reply");
+            ).select("reply -_id");
+
 
             await Comment.remove({
                 '_id': {
-                    '$in': getData
+                    '$in': getData.reply
                 }
-            }, (err, result) => {
+            }, (err) => {
                 if (err) {
                     err.message || "Some thing err"
                 }
-                res.status(201).json({
-                    success: true,
-                    msg: "Success delete a Comment",
-                    data: result
-                })
+            })
+
+            await Comment.findByIdAndDelete({
+                _id: req.params.idComment
+            }, (err) => {
+                if (err) {
+                    err.message || "Some thing err"
+                }
+            });
+
+            res.status(201).json({
+                success: true,
+                msg: "Success delete a Comment",
+                // data: result
             })
 
         } catch (error) {
@@ -90,7 +100,7 @@ module.exports = {
             }
             let result = await Comment.findOneAndUpdate({
                 _id: req.params.idComment,
-                user: req.user.data._id
+                user: req.user._id
             }, {
                 content: req.body.content
             });
@@ -120,7 +130,7 @@ module.exports = {
                 })
             }
             let newComment = {
-                user: req.user.data._id,
+                user: req.user._id,
                 time: Date.now(),
                 content: req.body.content,
             }
@@ -190,6 +200,28 @@ module.exports = {
                 success: true,
                 msg: "Get all comment success",
                 data: allComment,
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: error.message || "Some error occurred while get all the comment."
+            })
+        }
+    },
+    getAllCommentOfLesson: async (req, res) => {
+        try {
+            let getData = await Lesson.findById(
+                req.params.idLesson
+            ).select("comment -_id");
+            //res.json(getData);
+            let getAllCommentOfLesson = await Comment.find({
+                '_id': {
+                    '$in': getData.comment
+                }
+            }).populate('user','username role')
+            res.status(201).json({
+                success: true,
+                msg: "Get all comment success",
+                data: getAllCommentOfLesson,
             })
         } catch (error) {
             res.status(500).send({
