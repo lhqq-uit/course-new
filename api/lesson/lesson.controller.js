@@ -1,19 +1,26 @@
 const Course = require('./../course/course.model')
 const Teacher = require('./../teacher/teacher.model')
 const Lesson = require('./lesson.model')
+const fs = require('fs')
 
 module.exports ={
     create: async (req,res)=> {
         try {
+
+            let list_document=[];
+            for(i=0;i<req.files.document.length;i++){
+                list_document.push(req.files.document[i].filename);
+            }
             let newLesson ={
                 title: req.body.title,
                 desciption: req.body.description,
-                //document: req.file.filename,
+                video: req.files.video[0].filename,
+                document: list_document,
                 course: req.params.idCourse
             }
-
+            // res.send(newLesson)
             let lesson= await Lesson.create(newLesson)
-
+            //console.log(lesson)
             await Course.findOneAndUpdate(
                 {
                     _id: req.params.idCourse
@@ -43,11 +50,27 @@ module.exports ={
     },
     update: async (req,res) => {
         try {
+            // if(!req.file){
+            //     return res.send({
+            //         message: 'No document received'
+            //       });
+            // }
+            // let lessonOld = await Lesson.findById(req.params.idLesson);
+            // console.log(lessonOld)
+            // fs.unlinkSync(`http://localhost:3000/upload/video/1563208898066-index-2.html`);
+            // res.send("hello")
+            // let list_document=[];
+            // for(i=0;i<req.files.document.length;i++){
+                
+            //     list_document.push(req.files.document[i].filename);
+            // }
+            // console.log(list_document)
             let newLesson = {
                 title: req.body.title,
                 desciption: req.body.description,
-                //document: req.file.filename,
-            }
+                // video: req.files.video[0].filename,
+                // document: list_document
+            };
 
             let lesson = await Lesson.findByIdAndUpdate(req.params.idLesson,newLesson);
             // let lesson = await Lesson.findOneAndUpdate({_id: req.params.idLesson}, newLesson);
