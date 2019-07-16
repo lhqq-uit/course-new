@@ -1,24 +1,17 @@
-//TODO: show home page
-exports.home = (req, res, next) => {
-    res.render("index-2");
-};
+const router = require("express").Router();
 
-//TODO: change password, Account Management
-exports.Change_Password_Management = (req, res) => {
-    res.render("change-password");
-};
+const courseRouter = require("./course")
+const rootRouter = require("./root")
+const studentRouter = require("./student")
+const teacherRouter = require("./teacher")
+const userRouter = require("./users")
 
-//TODO: login
-exports.Login = (res, req) => {
-    res.render("login");
-};
 
-//TODO: Reset Password
-exports.Reset_Password = (res, req) => {
-    res.render("reset-password");
-};
+router.use("/", rootRouter)
+// router.use("/course", courseRouter)
+// router.use("/student", studentRouter)
+// router.use("/teacher", teacherRouter)
+//router.use("/user", userRouter)
 
-//TODO: Sign Up
-exports.Sign_Up = (res, req) => {
-    res.render("signup");
-};
+
+module.exports = router;

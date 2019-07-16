@@ -24,9 +24,9 @@ exports.Teacher_Dashboard_Add_Quiz_For_Course = (res, req) => {
 };
 
 //TODO: Manage Quizzes, Dashboard teacher
-exports.Teacher_Dashboard_Manage_Quizzes = (res, req) => {
-    res.render("instructor-quizzes");
-};
+// exports.Teacher_Dashboard_Manage_Quizzes = (res, req) => {
+//     res.render("instructor-quizzes");
+// };
 
 //TODO: Dashboard>Reports>Statement, instructor-statement
 exports.Teacher_Dashboard_Statement = (res, req) => {
