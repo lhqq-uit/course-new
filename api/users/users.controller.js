@@ -30,6 +30,7 @@ module.exports = {
                         res.status(201).json({success: true, msg: 'Successful created new teacher.'});
                     })
                 }
+                // res.status(201).json({success: true, msg: 'Successful created new admin.'});
             } catch (error) {
                 return res.status(400).json({success: false, msg: 'Username already exists.'});
             }

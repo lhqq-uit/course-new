@@ -5,6 +5,6 @@ var router = express.Router();
 let TeacherController = require('./teacher.controller');
 let checkPermission = require("../../helper/CheckPermission");
 
-router.get('/', checkPermission.isTeacher, TeacherController.getTransactionOneDay);
+router.get('/:timedate', checkPermission.isTeacher, TeacherController.getTransactionOneDay);
 
 module.exports = router;

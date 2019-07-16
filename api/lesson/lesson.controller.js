@@ -6,15 +6,21 @@ const fs = require('fs')
 module.exports ={
     create: async (req,res)=> {
         try {
+
+            let list_document=[];
+            for(i=0;i<req.files.document.length;i++){
+                list_document.push(req.files.document[i].filename);
+            }
             let newLesson ={
                 title: req.body.title,
                 desciption: req.body.description,
-                //document: req.file.filename,
+                video: req.files.video[0].filename,
+                document: list_document,
                 course: req.params.idCourse
             }
-
+            // res.send(newLesson)
             let lesson= await Lesson.create(newLesson)
-
+            //console.log(lesson)
             await Course.findOneAndUpdate(
                 {
                     _id: req.params.idCourse
@@ -44,11 +50,28 @@ module.exports ={
     },
     update: async (req,res) => {
         try {
+            // if(!req.file){
+            //     return res.send({
+            //         message: 'No document received'
+            //       });
+            // }
+            
+
+            let lessonOld = await Lesson.findById(req.params.idLesson);
+            for(let i=0;i<lessonOld.document.length;i++){
+                let document=lessonOld.document[i]
+                fs.unlinkSync(`./public/upload/document/${document}`);
+            }
+            let video=lessonOld.video;
+            fs.unlinkSync(`./public/upload/video/${video}`);
+
+
             let newLesson = {
                 title: req.body.title,
                 desciption: req.body.description,
-                //document: req.file.filename,
-            }
+                video: req.files.video[0].filename,
+                document: list_document
+            };
 
             let lesson = await Lesson.findByIdAndUpdate(req.params.idLesson,newLesson);
             // let lesson = await Lesson.findOneAndUpdate({_id: req.params.idLesson}, newLesson);
@@ -87,12 +110,23 @@ module.exports ={
     },
     delete : async (req, res) => {
         try {
+
+            let lessonOld = await Lesson.findById(req.params.idLesson);
+            for(let i=0;i<lessonOld.document.length;i++){
+                let document=lessonOld.document[i]
+                fs.unlinkSync(`./public/upload/document/${document}`);
+            }
+            let video=lessonOld.video;
+            fs.unlinkSync(`./public/upload/video/${video}`);
+
+
             let lesson = await Lesson.findByIdAndDelete(
                 {
                     _id: req.params.idLesson
                 }
             );
             //if(!lesson) return res.status(404).json('No course found or you are not author of lesson');
+    
             await Course.findOneAndUpdate(
                 {
                     lesson: req.params.idLesson
@@ -111,6 +145,7 @@ module.exports ={
                 }
             );
     
+
             
             res.status(201).json({
                 success: true,

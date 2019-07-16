@@ -51,6 +51,7 @@ module.exports = {
              teacher: req.user.data._id},
             newCourse
          );
+         console.log(course)
          if(!course) return res.status(404).send('No course found or you are not author of course');
          fs.unlinkSync(`./public/upload/images/${course.avatar}`);
          res.status(200).json({message: 'Update successfully!'});
