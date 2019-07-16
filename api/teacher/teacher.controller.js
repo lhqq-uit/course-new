@@ -20,9 +20,20 @@ module.exports = {
    },
    getTeacher: async (req, res) => {
       try {
-         let teacher = await Teacher.findById(req.params.idTeacher)
+         let teacher = await Teacher.findOne({user: req.params.idTeacher})
                                     .populate('user')
                                     .select('-_id')
+         if(!teacher) return  res.status(404).json({err_msg: 'Teacher not found'})
+         res.status(200).json(teacher)
+      } catch (error) {
+         res.status(500).json({err_msg: error.message})
+      }
+   },
+   getAllCoureseOfTeacher: async (req, res) => {
+      try {
+         let teacher = await Teacher.findOne({user:req.params.idTeacher})
+                                    .populate('courses')
+                                    .select('courses')
          if(!teacher) return  res.status(404).json({err_msg: 'Teacher not found'})
          res.status(200).json(teacher)
       } catch (error) {

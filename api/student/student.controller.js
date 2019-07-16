@@ -13,7 +13,7 @@ module.exports = {
          }
          await Student.findOneAndUpdate(
             {user: req.user.data._id},
-            {$push: {courses: course_purchased}} //$addToSet
+            {$push: {courses: course_purchased}}                 //$addToSet
          );
          if(!course) return res.status(404).json({message: 'Course not found'})
          let transaction = {
@@ -62,20 +62,50 @@ module.exports = {
    setLessonStudied: async (req, res) => {
       try {
          let course = await Student.findOneAndUpdate(
-            { user: req.user.data._id, "courses.id_course": req.params.idCourse},
-            { $inc: {"courses.$.lesson_number": 1}}
+            { user: req.user.data._id, 
+              "courses.id_course": req.params.idCourse},
+            { $inc: {"courses.$.lesson_number": +1}}
          );
          if(!course) return res.status(404).json('You have not purchased the course')
+         res.status(200).json({message: 'set next lesson successfully'})
       } catch (error) {
          res.status(500).json({err_msg: error.message})
       }
    },
    getStudent: async (req, res) =>{
       try {
-         let info = await Student.findById(req.params.idStudent)
+         let info = await Student.findOne({user: req.params.idStudent})
                               .populate('user').select('-_id');
          if(!info) return res.status(404).json('Student not found')
          res.status(200).json(info);
+      } catch (error) {
+         res.status(500).json({err_msg: error.message})
+      }
+   },
+   getAllCoursePurchased: async (req, res) => {
+      try {
+         let course = await Student.findOne({user: req.user.data._id})
+                              .populate('courses.id_course')
+                              .select('courses -_id');
+         if(!course) return res.status(404).json('Student not found')
+         res.status(200).json(course);
+      } catch (error) {
+         res.status(500).json({err_msg: error.message})
+      }
+   },
+   getAllCourseNotPurchased: async (req, res) => {
+      try {
+         let coursePurchased = await Student.findOne({user: req.params.idStudent})
+                              .select('courses.id_course -_id');
+         if(!coursePurchased) return res.status(404).json('Student not found')
+         let listIdCoursePurchased = []
+         for(let i = 0; i < coursePurchased.courses.length ; i++){
+            listIdCoursePurchased.push(coursePurchased.courses[i].id_course)
+         }
+         let courseNotPurchased = await Course.find({
+             _id: { $nin: listIdCoursePurchased}
+         })
+         res.status(200).json(courseNotPurchased);
       } catch (error) {
          res.status(500).json({err_msg: error.message})
       }
