@@ -5,14 +5,16 @@ var StudentSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
    },
-   courses:[{
-      type: mongoose.Schema.Types.ObjectId,
-      ref:'Course',
-      lesson_number: {
-         type: Number,
-         default: 0           //mặc định chưa học bài nào
-      }
-   }],
+   courses:[],
+   // [{
+   //    type: mongoose.Schema.Types.ObjectId,
+   //    ref:'Course',
+   //    id_course: String,
+   //    lesson_number: {
+   //       type: Number,
+   //       default: 0           //mặc định chưa học bài nào
+   //    }
+   // }],
    iq: {
       type: Number,
       default: 0

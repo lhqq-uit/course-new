@@ -5,8 +5,14 @@ var CommentSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
    },
-   time: Date,
-   content: String,
+   time: {
+      type: Date,
+      default: Date.now()
+   },
+   content: {
+      type: String,
+      required: 'Content is required!',
+   },
    reply: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Comment'

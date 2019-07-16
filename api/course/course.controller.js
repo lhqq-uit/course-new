@@ -7,7 +7,7 @@ module.exports = {
       try{
          if (!req.file) {
             return res.send({
-              message: 'No image received'
+               err_msg: 'No image received'
             });
          }
          let newCourse = {
@@ -30,7 +30,14 @@ module.exports = {
          );
          res.status(201).json(course);
       }
-      catch{
+      catch(error){
+         if (error && error.name === 'ValidationError') {
+            let err_msg = error.message.toString().replace('Course validation failed: ', '').split(', ')
+            return res.status(400).json({
+                success: false, 
+                err_msg: err_msg
+            });
+        }
          res.status(500).send('There was a problem adding the information to the database.');
       }
    },
@@ -51,7 +58,6 @@ module.exports = {
              teacher: req.user.data._id},
             newCourse
          );
-         console.log(course)
          if(!course) return res.status(404).send('No course found or you are not author of course');
          fs.unlinkSync(`./public/upload/images/${course.avatar}`);
          res.status(200).json({message: 'Update successfully!'});

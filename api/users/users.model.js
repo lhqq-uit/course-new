@@ -2,18 +2,30 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 
+const validateEmail = email => {
+    const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return re.test(email);
+};
+
 var UserSchema = new Schema({
     username: {
         type: String,
         unique: true,
         required: true
     },
-    password: {
+    email: {
+        type: String,
+        trim: true,
+        required: 'Email address is required',
+        validate: [validateEmail, 'Please provide a valid email address'],
+    },
+    password: { 
+        type: String, 
+        minlength: [8, 'The password should be at least 8 characters long'] },
+    fullname:{
         type: String,
         required: true
     },
-    email:String,
-    fullname:String,
     role:{
         type:String,
         enum: ['Admin','Student','Teacher'],

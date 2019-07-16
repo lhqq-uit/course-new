@@ -5,12 +5,12 @@ const router = express.Router();
 const StudentController = require('./student.controller');
 const checkPermission = require('./../../helper/CheckPermission');
 
-//buy Course
-// router.get('/buy-course/:id', checkPermission.student, StudentController.buyCourse);
 
-router.put('/buy-course/:id', checkPermission.isStudent, StudentController.buyCourse);
+router.put('/buy-course/:idCourse', checkPermission.isStudent, StudentController.buyCourse);
 
-router.put('/quiz/:id', checkPermission.isStudent, StudentController.answerQuestion);
+router.put('/quiz/:idQuiz', checkPermission.isStudent, StudentController.answerQuestion);
 
+router.put('/:idCourse/next-lesson', checkPermission.isStudent, StudentController.setLessonStudied);
 
+router.get('/:idStudent', StudentController.getStudent);
 module.exports = router;

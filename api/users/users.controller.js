@@ -20,6 +20,7 @@ module.exports = {
                     role: req.body.role
                 });
                 let user = await User.create(newUser);
+                
                 if(req.body.role == "Student"){
                     Student.create({user: user._id}, (err, data)=>{
                         res.status(201).json({success: true, msg: 'Successful created new student.'});
@@ -30,10 +31,16 @@ module.exports = {
                         res.status(201).json({success: true, msg: 'Successful created new teacher.'});
                     })
                 }
-                // res.status(201).json({success: true, msg: 'Successful created new admin.'});
-            } catch (error) {
-                return res.status(400).json({success: false, msg: 'Username already exists.'});
-            }
+            } catch (err) {
+                let err_msg = 'Username already exists.'
+                if (err && err.name === 'ValidationError') {
+                    err_msg = err.message.toString().replace('User validation failed: ', '').split(',')
+                }
+                return res.status(400).json({
+                    success: false, 
+                    err_msg: err_msg
+                });
+            } 
         }
     },
     SignIn: (req, res) => {
@@ -41,7 +48,7 @@ module.exports = {
           username: req.body.username
         }, function(err, user) {
             if (err) throw err;
-        
+            
             if (!user) {
                 res.status(401).send({success: false, msg: 'Authentication failed. User not found.'});
             } else {

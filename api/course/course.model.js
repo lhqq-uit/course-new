@@ -3,16 +3,28 @@ var mongoose = require('mongoose');
 var CourseSchema = new mongoose.Schema({
    name: {
       type: String, 
-      required: true
+      required: 'Name is required!'
    },
-   topic: String,
-   description: String,
-   price: Number,
-   total_time: String,
+   topic: {
+      type: String,
+      required: 'Topic is required!'
+   },
+   description: {
+      type: String,
+      required: 'Description is required!'
+   },
+   price: {
+      type: Number,
+      required: 'Price is required!',
+   },
+   total_time: {
+      type: String,
+      required: 'Total time is required!'
+   },
    level: {
       type: String,
       enum: ['Beginner', 'Medium', 'Hard', 'Advanced'],
-      default: 'Beginner'
+      default: 'Beginner',
    },
    ratings: {
       type: Number,
@@ -22,10 +34,6 @@ var CourseSchema = new mongoose.Schema({
       type: Number,
       default: 0
    },
-   // number_lession:{ 
-   //    type: Number,
-   //    default: 0
-   // },
    avatar: String,   //one image
    sale: {
       type: Boolean,   
