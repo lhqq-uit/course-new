@@ -10,4 +10,8 @@ router.post('/signin', UserController.SignIn);
 
 router.get('/logout', passport.authenticate('jwt', { session: false}), UserController.LogOut);
 
+router.post('/forgot-password/', UserController.forgotPassword);
+
+router.post('/reset-password/:token', UserController.resetPassword);
+
 module.exports = router;

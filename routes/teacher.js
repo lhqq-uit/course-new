@@ -1,12 +1,19 @@
+const express = require('express');
+const router = express.Router();
+const domain = require('./../config/domain')
+
+const axios = require('axios')
+
+
 //TODO: instructor-courses, this's Manage Courses teacher
 exports.Teacher_Manage_Courses = (req, res) => {
     res.render("instructor-courses");
 };
 
 //TODO: dashboard teacher
-exports.Teacher_Dashboard = (req, res) => {
-    res.render("instructor-dashboard");
-};
+router.get("/dashboard", (req, res) => {
+    res.render("teacher/instructor-dashboard");
+});
 
 //TODO: instructor-earnings, teacher dashboard reports
 exports.Teacher_Dashboard_Report = (req, res) => {
@@ -32,3 +39,5 @@ exports.Teacher_Dashboard_Add_Quiz_For_Course = (res, req) => {
 exports.Teacher_Dashboard_Statement = (res, req) => {
     res.render("instructor-statement");
 };
+
+module.exports = router;

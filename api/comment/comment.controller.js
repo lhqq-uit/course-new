@@ -35,6 +35,13 @@ module.exports = {
                 data: comment
             })
         } catch (error) { //TODO: Show error
+            if (error && error.name === 'ValidationError') {
+                let err_msg = error.message.toString().replace('Lesson validation failed: ', '').split(', ')
+                return res.status(400).json({
+                    success: false, 
+                    err_msg: err_msg
+                });
+            }
             res.status(500).send({
                 message: error.message || "Some error occurred while creating the Comment.",
                 // //iduser: req.user._id,

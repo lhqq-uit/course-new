@@ -1,12 +1,13 @@
 const Course = require('./course.model')
 const Teacher = require('./../teacher/teacher.model')
+const fs = require('fs');
 
 module.exports = {
    create: async (req, res) =>{
       try{
          if (!req.file) {
             return res.send({
-              message: 'No image received'
+               err_msg: 'No image received'
             });
          }
          let newCourse = {
@@ -17,7 +18,7 @@ module.exports = {
             total_time: req.body.total_time,
             level: req.body.level,
             teacher: req.user.data._id,
-            // avatar: req.file.filename,
+            avatar: req.file.filename,
          }
          let course = await Course.create(newCourse)
          await Teacher.findOneAndUpdate(
@@ -29,7 +30,14 @@ module.exports = {
          );
          res.status(201).json(course);
       }
-      catch{
+      catch(error){
+         if (error && error.name === 'ValidationError') {
+            let err_msg = error.message.toString().replace('Course validation failed: ', '').split(', ')
+            return res.status(400).json({
+                success: false, 
+                err_msg: err_msg
+            });
+        }
          res.status(500).send('There was a problem adding the information to the database.');
       }
    },
@@ -42,8 +50,8 @@ module.exports = {
             price: req.body.price,
             total_time: req.body.total_time,
             level: req.body.level,
-            last_update: Date.now()
-            // avatar: req.file.filename,
+            last_update: Date.now(),
+            avatar: req.file.filename,
          }
          let course = await Course.findOneAndUpdate(
             {_id: req.params.id,
@@ -51,6 +59,7 @@ module.exports = {
             newCourse
          );
          if(!course) return res.status(404).send('No course found or you are not author of course');
+         fs.unlinkSync(`./public/upload/images/${course.avatar}`);
          res.status(200).json({message: 'Update successfully!'});
       }
       catch{
@@ -85,6 +94,7 @@ module.exports = {
                $inc: {iq: -100}           //delete course -100 IQ
             }
          );
+         fs.unlinkSync(`./public/upload/images/${course.avatar}`);
          res.status(200).json('Delete successfully!')
       } catch (error) {
          res.status(500).json('There was a problem adding the information to the database.')

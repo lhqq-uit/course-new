@@ -9,19 +9,19 @@ const checkPermission = require('./../../helper/CheckPermission');
 var storage =   multer.diskStorage({
   // file upload destination
   destination: function (req, file, callback) {
-    callback(null, './../public/upload');
+    callback(null, './public/upload/images');
   },
   filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
+    callback(null, Date.now() + '-' + file.originalname);
   }
 });
 var upload = multer({ storage : storage});
 //laays danh sach tat ca khoa hoc
 // router.get("/", passport.authenticate('jwt', { session: false}),CourseController.getAllCourse);
 //upload.single('image'), passport.authenticate('jwt', { session: false}), checkPermission.isAdmin,
-router.post('/', upload.single('image'), checkPermission.isTeacher, CourseController.create);
+router.post('/', checkPermission.isTeacher, upload.single('image'), CourseController.create);
 
-router.put('/:id', upload.single('image'), checkPermission.isTeacher, CourseController.update);
+router.put('/:id', checkPermission.isTeacher, upload.single('image'), CourseController.update);
 
 router.get('/:id', CourseController.getOneCourse);
 

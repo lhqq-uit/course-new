@@ -1,4 +1,5 @@
 var express = require('express');
+var session = require('express-session')
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -23,6 +24,17 @@ mongoose.connect(config.database, {
     );;
 
 var app = express();
+// ! Session
+app.use(
+    session({
+        secret: config.secret,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            maxAge: 18000000,
+        }, // ! auto delete after 5 hour
+    })
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
