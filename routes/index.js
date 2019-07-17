@@ -10,7 +10,7 @@ const userRouter = require("./users")
 router.use("/", rootRouter)
 // router.use("/course", courseRouter)
 // router.use("/student", studentRouter)
-// router.use("/teacher", teacherRouter)
+router.use("/teacher", teacherRouter)
 //router.use("/user", userRouter)
 
 
