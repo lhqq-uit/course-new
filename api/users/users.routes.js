@@ -4,11 +4,11 @@ var express = require('express');
 var router = express.Router();
 let UserController = require('./users.controller');
 
+router.get('/logout', passport.authenticate('jwt', { session: false}), UserController.LogOut);
+
 router.post('/signup', UserController.SignUp );
 
 router.post('/signin', UserController.SignIn);
-
-router.get('/logout', passport.authenticate('jwt', { session: false}), UserController.LogOut);
 
 router.post('/forgot-password/', UserController.forgotPassword);
 

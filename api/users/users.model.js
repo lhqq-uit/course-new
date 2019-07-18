@@ -10,6 +10,7 @@ const validateEmail = email => {
 var UserSchema = new Schema({
     username: {
         type: String,
+        trim: true,
         unique: true,
         required: true
     },
