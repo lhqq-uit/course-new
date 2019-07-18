@@ -1,21 +1,24 @@
+const fs = require('fs')
 const Student = require('./student.model')
 const Course = require('./../course/course.model')
 const Teacher = require('./../teacher/teacher.model')
 const Quiz = require('./../quiz/quiz.model')
 
 module.exports = {
-   buyCourse: async (req, res) => {
+   buyCourse: async (req, res) => { //còn trường hợp khóa học mua rồi thì không mua nữa
       try{
-         let course = await Course.findById(req.params.idCourse).select('teacher price _id');
+         let course = await Course.findByIdAndUpdate(req.params.idCourse,
+                                 {$inc: {students_enrolled: +1}})
+                                  .select('teacher price _id');
          let course_purchased = {
             id_course: req.params.idCourse,
             lesson_number: 0
          }
+         if(!course) return res.status(404).json({message: 'Course not found'})
          await Student.findOneAndUpdate(
             {user: req.user.data._id},
             {$push: {courses: course_purchased}}                 //$addToSet
          );
-         if(!course) return res.status(404).json({message: 'Course not found'})
          let transaction = {
             course: course._id,
             date_trading: new Date().toLocaleDateString(),
@@ -64,7 +67,7 @@ module.exports = {
          let course = await Student.findOneAndUpdate(
             { user: req.user.data._id, 
               "courses.id_course": req.params.idCourse},
-            { $inc: {"courses.$.lesson_number": +1}}
+            { $push: {"courses.$.lesson_number": req.params.idLesson}}
          );
          if(!course) return res.status(404).json('You have not purchased the course')
          res.status(200).json({message: 'set next lesson successfully'})
@@ -95,7 +98,7 @@ module.exports = {
    },
    getAllCourseNotPurchased: async (req, res) => {
       try {
-         let coursePurchased = await Student.findOne({user: req.params.idStudent})
+         let coursePurchased = await Student.findOne({user: req.user.data._id})
                               .select('courses.id_course -_id');
          if(!coursePurchased) return res.status(404).json('Student not found')
          let listIdCoursePurchased = []

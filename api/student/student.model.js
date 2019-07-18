@@ -10,7 +10,7 @@ var StudentSchema = mongoose.Schema({
          type: mongoose.Schema.Types.ObjectId,
          ref:'Course'
       },
-      lesson_number: Number
+      lesson_number: []
    }],
    iq: {
       type: Number,

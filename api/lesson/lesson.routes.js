@@ -24,30 +24,11 @@ var storage =   multer.diskStorage({
     { name: 'document', maxCount: 10 }
   ])
 
-//   var uploadFnct = function(dest){
-//     var storage = multer.diskStorage({ //multers disk storage settings
-//         destination: function (req, file, cb) {
-//             // cb(null, './public/upload/'+dest+'/');
-//             if(req.files.fields == "video"){
-//                 cb(null, './public/upload/'+dest+'/');
-//             }
-//         },
-//         filename: function (req, file, callback) {
-//             callback(null, Date.now() + '-' + file.originalname);
-//         }
-//     });
- 
+//get a lesson
+router.get('/:idLesson', lessonController.getOneLesson);
 
-//     var upload = multer({ //multer settings
-//                     storage: storage
-//                 }).fields([
-//                     { name: 'video', maxCount: 1 },
-//                     { name: 'document', maxCount: 10 }
-//                   ])
-
-//     return upload;
-// };
-//   var upload = multer({ storage : storage});
+//get all lesson
+router.get('/',lessonController.getAllLesson);
 
 //create lesson
 router.post('/:idCourse/',  passport.authenticate('jwt', { session: false}), checkPermission.isTeacher, upload, lessonController.create);
@@ -55,12 +36,7 @@ router.post('/:idCourse/',  passport.authenticate('jwt', { session: false}), che
 //update lesson
 router.put('/:idLesson', passport.authenticate('jwt', { session: false}), checkPermission.isTeacher, upload, lessonController.update);
 
-//get a lesson
-router.get('/:idLesson', lessonController.getOneLesson);
-
-//get all lesson
-router.get('/',lessonController.getAllLesson);
-
 //delete lesson
 router.delete('/:idLesson', passport.authenticate('jwt', { session: false}), checkPermission.isTeacher, lessonController.delete);
+
 module.exports = router;

@@ -22,7 +22,7 @@ mongoose.connect(config.database, {
         () => console.log('ket noi thanh cong'),
         err => console.log('ket noi that bai')
     );;
-
+//app.use("/api/resetPassword", express.static(path.join(__dirname, "public")));
 var app = express();
 // ! Session
 app.use(

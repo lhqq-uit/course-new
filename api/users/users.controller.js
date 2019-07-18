@@ -92,7 +92,7 @@ module.exports = {
             to: req.body.email,
             subject: `Reset password for user ${req.body.email}`,
             text: 'Reset password for you ',
-            html: `<a hrel="http://localhost:3000/api/resetPassword/${token}"> Tại đây! </a>`
+            html: `http://localhost:3000/change-password/${token}`
         }
         transporter.sendMail(mainOptions, function(err, info){
             if (err) {
