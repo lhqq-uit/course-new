@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from tutorio-bootstrap.frontendmatter.com/signup.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:32 GMT -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -86,7 +87,8 @@
 
         <!-- Header -->
 
-        <div id="header" class="mdk-header bg-dark js-mdk-header mb-0" data-effects="waterfall blend-background" data-fixed data-condenses>
+        <div id="header" class="mdk-header bg-dark js-mdk-header mb-0" data-effects="waterfall blend-background"
+            data-fixed data-condenses>
             <div class="mdk-header__content">
 
                 <div data-primary class="navbar navbar-expand-sm navbar-dark bg-dark p-0" id="default-navbar">
@@ -94,7 +96,8 @@
 
                         <!-- Navbar Brand -->
                         <a href="index-2.html" class="navbar-brand">
-                            <img class="navbar-brand-icon" src="assets/images/logo/white-100%402x.png" width="30" alt="Tutorio">
+                            <img class="navbar-brand-icon" src="assets/images/logo/white-100%402x.png" width="30"
+                                alt="Tutorio">
                             <span class="d-none d-md-block">Tutorio</span>
                         </a>
 
@@ -113,7 +116,8 @@
                         <!-- // END Main Navigation -->
 
                         <!-- Navbar toggler -->
-                        <button class="navbar-toggler navbar-toggler-right d-block d-md-none" type="button" data-toggle="sidebar">
+                        <button class="navbar-toggler navbar-toggler-right d-block d-md-none" type="button"
+                            data-toggle="sidebar">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
@@ -146,10 +150,12 @@
 
             <div class="py-64pt bg-gradient-primary">
                 <div class="container d-flex flex-column flex-md-row align-items-center text-center text-md-left">
-                    <img src="assets/images/illustration/student/128/white.svg" class="mr-md-32pt mb-32pt mb-md-0" alt="student">
+                    <img src="assets/images/illustration/student/128/white.svg" class="mr-md-32pt mb-32pt mb-md-0"
+                        alt="student">
                     <div class="flex mb-32pt mb-md-0">
                         <h1 class="text-white mb-8pt">Sign Up</h1>
-                        <p class="lead measure-lead text-white-50">Change your future today with over 1.000 professional courses from the top industry leading teachers and professionals.</p>
+                        <p class="lead measure-lead text-white-50">Change your future today with over 1.000 professional
+                            courses from the top industry leading teachers and professionals.</p>
                     </div>
                     <a href="#" class="btn btn-outline-white flex-column">
                         Questions?
@@ -157,30 +163,47 @@
                     </a>
                 </div>
             </div>
-           
+
 
             <div class="bg-white py-32pt py-lg-64pt">
                 <div class="container page__container">
                     <div class="col-lg-10 p-0 mx-auto">
                         <div class="row">
-                            <div class="col-md-6 mb-24pt mb-md-0">
-                                <form action="http://tutorio-bootstrap.frontendmatter.com/signup-payment.html">
+                            <div class="col-md-12 mb-24pt mb-md-0">
+                                <form action="/signup" method="POST">
                                     <div class="form-group">
-                                        <label for="name">Your first and last name:</label>
-                                        <input id="name" type="text" class="form-control" placeholder="Your first and last name ...">
+                                        <label for="name">Full name:</label>
+                                        <input name="fullname" id="fullname" type="text" class="form-control"
+                                            placeholder="Full name ..." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Your username:</label>
+                                        <input name="username" id="username" type="text" class="form-control"
+                                            placeholder="Your username ..." required>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Your email:</label>
-                                        <input id="email" type="email" class="form-control" placeholder="Your email address ...">
+                                        <input name="email" id="email" type="email" class="form-control"
+                                            placeholder="Your email address ..." required>
                                     </div>
                                     <div class="form-group mb-24pt">
                                         <label for="password">Password:</label>
-                                        <input id="password" type="password" class="form-control" placeholder="Your password ...">
+                                        <input name="password" id="password" type="password" class="form-control"
+                                            placeholder="Your password ..." required>
                                     </div>
-                                    <button class="btn btn-lg btn-accent">Create account</button>
+                                    <div class="form-group">
+                                        <label class="form-label" for="custom-select">Choose</label>
+                                        <select id="custom-select" class="form-control custom-select" name="role">
+                                            <option value="Student" selected>Student</option>
+                                            <option value="Teacher">Teacher</option>
+                                        </select>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-lg btn-accent">Create account</button>
+                                    </div>
                                 </form>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="card mb-0">
                                     <div class="card-body">
                                         <h5>Purchase summary</h5>
@@ -203,7 +226,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -223,14 +246,14 @@
 
 
 
-            <% include footer %>
+            <% include ../layout/footer %>
         </div>
         <!-- // END Header Layout Content -->
 
     </div>
     <!-- // END Header Layout -->
 
- 
+
 
     <!-- jQuery -->
     <script src="assets/vendor/jquery.min.js"></script>
@@ -270,4 +293,5 @@
 
 
 <!-- Mirrored from tutorio-bootstrap.frontendmatter.com/signup.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:32 GMT -->
+
 </html>

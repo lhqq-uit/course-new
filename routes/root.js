@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const domain =require('./../config/domain')
+const domain = require('./../config/domain')
 
 const axios = require('axios')
 
@@ -35,7 +35,7 @@ router.post("/login", (req, res) => {
     }).catch(err => {
         console.log(err)
     })
-    
+
 });
 
 
@@ -45,8 +45,33 @@ exports.Reset_Password = (res, req) => {
 };
 
 //TODO: Sign Up
+
+router.get("/signup", (req, res) => {
+    res.render("root/signup");
+});
+
+router.post("/signup", (req, res) => {
+    axios({
+        method: 'post',
+        url: `${domain}/api/signup`,
+        data: {
+            fullname: req.body.fullname,
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password,
+            role: req.body.role
+        }
+    }).then(Response => {
+        console.log(Response.data)
+        res.redirect('/login');
+    }).catch(err => {
+        console.log(err)
+        res.redirect("/signup")
+    })
+});
+
 exports.Sign_Up = (res, req) => {
-    res.render("signup");
+    res.render("");
 };
 
 
