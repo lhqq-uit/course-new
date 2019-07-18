@@ -12,7 +12,14 @@ exports.Teacher_Manage_Courses = (req, res) => {
 
 //TODO: dashboard teacher
 router.get("/dashboard", (req, res) => {
-    res.render("teacher/instructor-dashboard");
+
+    var notificationLogin = false;
+    if(req.session.token){//TODO: check login session
+        notificationLogin = true;// ! if true => push notification -> you are login
+    }
+    res.render("teacher/instructor-dashboard", {
+        notificationLogin: notificationLogin
+    });
 });
 
 //TODO: instructor-earnings, teacher dashboard reports

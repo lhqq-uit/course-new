@@ -252,8 +252,17 @@
 
     </div>
     <!-- // END Header Layout -->
-
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script>
+        let notificationSignUpError = <%= notificationSignUpError %> ;
+        if (notificationSignUpError == true) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong! Please try again'
+            })
+        }
+    </script>
 
     <!-- jQuery -->
     <script src="assets/vendor/jquery.min.js"></script>
