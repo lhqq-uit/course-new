@@ -70,9 +70,4 @@ router.post("/signup", (req, res) => {
     })
 });
 
-exports.Sign_Up = (res, req) => {
-    res.render("");
-};
-
-
 module.exports = router;
