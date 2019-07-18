@@ -16,17 +16,17 @@ var storage =   multer.diskStorage({
   }
 });
 var upload = multer({ storage : storage});
-//laays danh sach tat ca khoa hoc
-// router.get("/", passport.authenticate('jwt', { session: false}),CourseController.getAllCourse);
-//upload.single('image'), passport.authenticate('jwt', { session: false}), checkPermission.isAdmin,
-router.post('/', checkPermission.isTeacher, upload.single('image'), CourseController.create);
 
-router.put('/:id', checkPermission.isTeacher, upload.single('image'), CourseController.update);
+router.get('/populate', CourseController.getCoursePopulate);
 
-router.get('/:id', CourseController.getOneCourse);
+router.get('/:idCourse', CourseController.getOneCourse);
 
 router.get('/', CourseController.getAllCourse);
 
-router.delete('/:id', checkPermission.isTeacher, CourseController.delete);
+router.post('/', checkPermission.isTeacher, upload.single('image'), CourseController.create);
+
+router.put('/:idCourse', checkPermission.isTeacher, upload.single('image'), CourseController.update);
+
+router.delete('/:idCourse', checkPermission.isTeacher, CourseController.delete);
 
 module.exports = router;

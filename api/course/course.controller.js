@@ -54,21 +54,23 @@ module.exports = {
             avatar: req.file.filename,
          }
          let course = await Course.findOneAndUpdate(
-            {_id: req.params.id,
+            {_id: req.params.idCourse,
              teacher: req.user.data._id},
             newCourse
          );
-         if(!course) return res.status(404).send('No course found or you are not author of course');
+         if(!course) return res.status(404).send({
+            err_message: 'No course found or you are not author of course'
+         });
          fs.unlinkSync(`./public/upload/images/${course.avatar}`);
          res.status(200).json({message: 'Update successfully!'});
       }
       catch{
-         res.status(500).send('There was a problem adding the information to the database.');
+         res.status(500).send({err_msg: error.message});
       }
    },
    getOneCourse: async (req, res) => {
       try {
-         let course = await Course.findById(req.params.id);
+         let course = await Course.findById(req.params.idCourse);
          res.status(200).json(course);
       } catch (error) {
          res.status(404).json({message: 'No course found'})
@@ -76,28 +78,41 @@ module.exports = {
    },
    getAllCourse: (req, res) => {
       Course.find({},(err, data)=>{
-         if(err) return res.status(500).send('There was a problem adding the information to the database.');
+         if(err) return res.status(500).send({err_msg: error.message});
          res.status(200).json(data);
       });
    },
    delete: async (req, res) => {
       try {
          let course = await Course.findOneAndDelete({
-            _id: req.params.id, 
+            _id: req.params.idCourse, 
             teacher: req.user.data._id
          });
-         if(!course) return res.status(404).json('No course found or you are not author of course')
+         if(!course) return res.status(404).json({
+            err_message: 'No course found or you are not author of course'
+         })
          await Teacher.findOneAndUpdate(
             {user: req.user.data._id},
             {
-               $pull: {courses: req.params.id},
+               $pull: {courses: req.params.idCourse},
                $inc: {iq: -100}           //delete course -100 IQ
             }
          );
          fs.unlinkSync(`./public/upload/images/${course.avatar}`);
          res.status(200).json('Delete successfully!')
       } catch (error) {
-         res.status(500).json('There was a problem adding the information to the database.')
+         res.status(500).json({err_msg: error.message})
+      }
+   },
+   getCoursePopulate: async (req, res) => {
+      try {
+         let courses = await Course.find({})
+                                   .sort({"students_enrolled": -1})
+                                   .limit(8)
+         if(!courses) return res.status(400).json({err_message: 'Course not found!'})
+         res.status(200).json(courses)
+      } catch (error) {
+         res.status(500).json({err_msg: error.message})
       }
    }
 }
