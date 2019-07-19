@@ -18,8 +18,9 @@ var CourseSchema = new mongoose.Schema({
       required: 'Price is required!',
    },
    total_time: {
-      type: String,
-      required: 'Total time is required!'
+      type: Number,
+      // required: 'Total time is required!'
+      default: 0
    },
    level: {
       type: String,

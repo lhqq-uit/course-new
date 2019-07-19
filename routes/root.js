@@ -55,7 +55,6 @@ router.post("/login", (req, res) => {
             res.redirect("/login");
         }
     })
-
 });
 
 //TODO: Reset password

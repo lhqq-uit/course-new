@@ -15,8 +15,8 @@ module.exports = {
             topic: req.body.topic,
             description: req.body.description,
             price: req.body.price,
-            total_time: req.body.total_time,
-            level: req.body.level,
+            // total_time: req.body.total_time,
+            // level: req.body.level,
             teacher: req.user.data._id,
             avatar: req.file.filename,
          }
