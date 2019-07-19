@@ -33,9 +33,8 @@ router.post("/login", (req, res) => {
         req.session.token = Response.data.token;
         res.redirect('/teacher/dashboard');
     }).catch(err => {
-        console.log(err)
+        res.send(err.message)
     })
-
 });
 
 
