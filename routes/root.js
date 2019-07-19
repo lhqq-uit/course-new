@@ -10,10 +10,6 @@ router.get("/", (req, res) => {
     res.render("index-2");
 })
 
-//TODO: change password, Account Management
-router.get("/Change-Password-Management", (req, res) => {
-    res.render("root/change-password");
-});
 
 
 //TODO: login

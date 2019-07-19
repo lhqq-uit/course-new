@@ -20,20 +20,25 @@ var UserSchema = new Schema({
         required: 'Email address is required',
         validate: [validateEmail, 'Please provide a valid email address'],
     },
-    password: { 
-        type: String, 
-        minlength: [8, 'The password should be at least 8 characters long'] },
-    fullname:{
+    password: {
+        type: String,
+        minlength: [8, 'The password should be at least 8 characters long']
+    },
+    fullname: {
         type: String,
         required: true
     },
-    role:{
-        type:String,
-        enum: ['Admin','Student','Teacher'],
+    role: {
+        type: String,
+        enum: ['Admin', 'Student', 'Teacher'],
         // default: 'Admin' // để  admin cho test api, thực tế sẽ là student
-    }, 
+    },
     currentToken: {
         type: String
+    },
+    avatar: {
+        type: String,
+        default: "https://i.imgur.com/zALNWt9.png"
     }
 });
 

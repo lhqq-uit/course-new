@@ -8,6 +8,7 @@ let checkPermission = require("../../helper/CheckPermission");
 router.get('/transaction/:timedate', checkPermission.isTeacher, TeacherController.getTransactionOneDay);
 
 //get info of teacher
+//TODO: get teacher information via id user
 router.get('/info/:idTeacher', TeacherController.getTeacher)
 
 //get all courses of teacher
