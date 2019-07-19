@@ -13,27 +13,27 @@
     <!-- Prevent the demo from appearing in search engines -->
     <meta name="robots" content="noindex">
 
-    <!-- Perfect Scrollbar -->
-    <link type="text/css" href="assets/vendor/perfect-scrollbar.css" rel="stylesheet">
+    Perfect Scrollbar
+    <link type="text/css" href="../../assets/vendor/perfect-scrollbar.css" rel="stylesheet">
 
     <!-- Fix Footer CSS -->
-    <link type="text/css" href="assets/vendor/fix-footer.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/vendor/fix-footer.css" rel="stylesheet">
 
     <!-- Material Design Icons -->
-    <link type="text/css" href="assets/css/material-icons.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/material-icons.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/material-icons.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/material-icons.rtl.css" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
-    <link type="text/css" href="assets/css/fontawesome.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/fontawesome.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/fontawesome.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/fontawesome.rtl.css" rel="stylesheet">
 
     <!-- Preloader -->
-    <link type="text/css" href="assets/css/preloader.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/preloader.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/preloader.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/preloader.rtl.css" rel="stylesheet">
 
     <!-- App CSS -->
-    <link type="text/css" href="assets/css/app.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/app.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/app.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/app.rtl.css" rel="stylesheet">
 
 
 
@@ -55,7 +55,7 @@
 
         <!-- Header -->
 
-        <% include header-dashboard %>
+        <% include ../layout/header-quiz %>
 
         <!-- // END Header -->
 
@@ -64,7 +64,7 @@
 
             <div class="bg-gradient-primary border-bottom-white py-32pt">
                 <div class="container d-flex flex-column flex-md-row align-items-center text-center text-md-left">
-                    <img src="assets/images/illustration/teacher/128/white.svg" width="104"
+                    <img src="../../assets/images/illustration/teacher/128/white.svg" width="104"
                         class="mr-md-32pt mb-32pt mb-md-0" alt="instructor">
                     <div class="flex mb-32pt mb-md-0">
                         <h2 class="text-white mb-0">Elijah Murray</h2>
@@ -126,15 +126,15 @@
                     <div class="row align-items-center">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label>Type</label>
+                                <label>Course</label>
                                 <select name="category" class="form-control custom-select">
-                                    <option value="vuejs">Multi Question</option>
-                                    <option value="vuejs">Single Question</option>
-                                    <option value="vuejs">Rating</option>
+                                    <option value="vuejs"><%- course %></option>
+                                    <!-- <option value="vuejs">Single Question</option>
+                                    <option value="vuejs">Rating</option> -->
                                 </select>
                             </div>
-                            <label>Completion Points</label>
-                            <input type="text" class="form-control" value="1000">
+                            <label>Lesson</label>
+                            <input type="text" class="form-control" value="<%= lesson %>">
                         </div>
                         <div class="col-md-4">
                             <div class="card m-0">
@@ -158,59 +158,98 @@
             </div>
 
             <div class="container page__container page-section">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="mb-heading d-flex align-items-center">
-                            <h4 class="flex m-0">Questions</h4>
-                            <a href="#" class="text-underline">Change order</a>
-                        </div>
-                        <ul class="list-group stack">
-                            <li class="list-group-item">Basic Structure</li>
-                            <li class="list-group-item">Props</li>
-                            <li class="list-group-item">Components</li>
-                        </ul>
-                        <div class="show-more"></div>
-                        <button onclick="appendText();" class="btn btn-outline-secondary mb-24pt mb-sm-0">Add
-                            Question</button>
-                        <script>
-                            function appendText() {
-                                let show = '<div class="mb-heading d-flex align-items-center"><h4 class="flex m-0">Questions</h4><a href="#" class="text-underline">Change order</a></div><ul class="list-group stack"><li class="list-group-item">Basic Structure</li><li class="list-group-item">Props</li><li class="list-group-item">Components</li></ul>';
-                                $(".show-more").append(show);   // Append new elements
-                            }
-                        </script>
-                    </div>
-                    <div class="col-md-4">
-
-                        <h4>Courses</h4>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label>Add to course</label>
-                                    <select name="course" id="course" class="custom-select form-control">
-                                        <option value="" selected>-- Select course --</option>
-                                        <option value="">JavaScript Basics</option>
-                                        <option value="">Learn AngularJS</option>
-                                    </select>
+                <form action="" method='POST'>
+                    <div class="row">
+                        
+                            <div class="col-md-8">
+                                <div class="mb-heading d-flex align-items-center">
+                                    <h4 class="flex m-0">Questions</h4>
+                                    <a href="#" class="text-underline">Change order</a>
                                 </div>
+                                <ul class="list-group stack">
+                                    <li class="list-group-item"><input name="question" id="question" type="text" class="form-control" placeholder="Question"></li>
+                                    <li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 1"></li>
+                                    <li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 2"></li>
+                                    <li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 3"></li>
+                                    <li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 4"></li>
+                                    <li class="list-group-item"><input onclick="checkSame();"  name="result" id="result" type="text" class="form-control" placeholder="result correct"></li></li>
+                                </ul>
+                                <script>
+                                    let count=0;
+                                    function checkSame(){
+                                        if(document.getElementsByName("result")[0].value=="" && (document.getElementsByName("list_answer")[0].value!="" || document.getElementsByName("list_answer")[1].value!="" || document.getElementsByName("list_answer")[2].value!="" || document.getElementsByName("list_answer")[3].value!="")){
+                                            let show= '<button onclick="checkSame()" id="submit" class="btn btn-outline-secondary mb-24pt mb-sm-0">next</button>';
+                                            $(".show-more").append(show);
+                                        }else{
+                                            if(document.getElementsByName("result")[0].value != document.getElementsByName("list_answer")[0].value && document.getElementsByName("result")[0].value != document.getElementsByName("list_answer")[1].value && document.getElementsByName("result")[0].value != document.getElementsByName("list_answer")[2].value && document.getElementsByName("result")[0].value != document.getElementsByName("list_answer")[3].value){
+                                            // alert("result is not same answer")
+                                            swal("result is not same answer")
+                                        }else if(document.getElementsByName("result")[0].value=="" || document.getElementsByName("list_answer")[0].value=="" || document.getElementsByName("list_answer")[1].value=="" || document.getElementsByName("list_answer")[2].value=="" || document.getElementsByName("list_answer")[3].value==""){
+                                            swal("Missing information")
+                                        }
+                                        // else{
+                                        //     let show= '<button onclick="checkSame()" id="submit" class="btn btn-outline-secondary mb-24pt mb-sm-0">next</button>';
+                                        //     $(".show-more").append(show);
+                                        // }
+                                        }
+                                        
 
-                                <small class="text-muted">Course assignments:</small>
-                                <a href="#" class="float-right"><small>Clear all</small></a>
-                                <div class="clearfix"></div>
-                                <span class="badge badge-primary badge-filter">
-                                    <a href="#"><i class="material-icons">close</i></a> Learn AngularJS
-                                </span>
-                                <span class="badge badge-primary badge-filter">
-                                    <a href="#"><i class="material-icons">close</i></a> JavaScript Basics
-                                </span>
+                                    }
+                                    
+                
+                                </script>
+                                <div class="show-more"></div>
+                                <!-- <button onclick="appendText();" class="btn btn-outline-secondary mb-24pt mb-sm-0">Add
+                                    Question</button> -->
+                                <!-- <button id="submit" class="btn btn-outline-secondary mb-24pt mb-sm-0">next</button> -->
+                                <!-- <script>
+                                    // function appendText() {
+                                    //     let show = '<div class="mb-heading d-flex align-items-center"><h4 class="flex m-0">Question</h4><a href="#" class="text-underline">Change order</a></div><ul class="list-group stack"><li class="list-group-item"><input name="question" id="question" type="text" class="form-control" placeholder="Question"></li><li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="list answer"></li><li class="list-group-item"><input name="result" id="result" type="text" class="form-control" placeholder="result"></li></ul>';
+                                    //     $(".show-more").append(show);   // Append new elements
+                                    // }
+                                    function appendText(){
+                                    $('.show-more').blur(function() {
+                                        if ($('#list_answer').attr('value') == $('#result').attr('value')) {
+                                        alert('Same Value'); return false;
+                                        } else { return true; }
+                                    });
+                                }
+                                </script> -->
+                            </div>
+                        
+                        <div class="col-md-4">
+
+                            <h4>Courses</h4>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Add to course</label>
+                                        <select name="course" id="course" class="custom-select form-control">
+                                            <option value="" selected>-- Select course --</option>
+                                            <option value="">JavaScript Basics</option>
+                                            <option value="">Learn AngularJS</option>
+                                        </select>
+                                    </div>
+
+                                    <small class="text-muted">Course assignments:</small>
+                                    <a href="#" class="float-right"><small>Clear all</small></a>
+                                    <div class="clearfix"></div>
+                                    <span class="badge badge-primary badge-filter">
+                                        <a href="#"><i class="material-icons">close</i></a> Learn AngularJS
+                                    </span>
+                                    <span class="badge badge-primary badge-filter">
+                                        <a href="#"><i class="material-icons">close</i></a> JavaScript Basics
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
 
 
 
-            <% include footer %>
+            <% include ../layout/footer-quiz %>
 
         </div>
         <!-- // END Header Layout Content -->
@@ -221,37 +260,49 @@
  
 
     <!-- jQuery -->
-    <script src="assets/vendor/jquery.min.js"></script>
+    <script src="../../assets/vendor/jquery.min.js"></script>
 
     <!-- Bootstrap -->
-    <script src="assets/vendor/popper.min.js"></script>
-    <script src="assets/vendor/bootstrap.min.js"></script>
+    <script src="../../assets/vendor/popper.min.js"></script>
+    <script src="../../assets/vendor/bootstrap.min.js"></script>
 
     <!-- Perfect Scrollbar -->
-    <script src="assets/vendor/perfect-scrollbar.min.js"></script>
+    <script src="../../assets/vendor/perfect-scrollbar.min.js"></script>
 
     <!-- DOM Factory -->
-    <script src="assets/vendor/dom-factory.js"></script>
+    <script src="../../assets/vendor/dom-factory.js"></script>
 
     <!-- MDK -->
-    <script src="assets/vendor/material-design-kit.js"></script>
+    <script src="../../assets/vendor/material-design-kit.js"></script>
 
     <!-- Fix Footer -->
-    <script src="assets/vendor/fix-footer.js"></script>
+    <script src="../../assets/vendor/fix-footer.js"></script>
 
     <!-- Chart.js -->
-    <script src="assets/vendor/Chart.min.js"></script>
+    <script src="../../assets/vendor/Chart.min.js"></script>
 
     <!-- App JS -->
-    <script src="assets/js/app.js"></script>
+    <script src="../../assets/js/app.js"></script>
 
     <!-- Highlight.js -->
-    <script src="assets/js/hljs.js"></script>
+    <script src="../../assets/js/hljs.js"></script>
 
     <!-- App Settings (safe to remove) -->
-    <script src="assets/js/app-settings.js"></script>
+    <script src="../../assets/js/app-settings.js"></script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+    <!-- <script>
+        document.getElementById("submit").addEventListener('click', function(){
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", `http://localhost:3000/shop/${tensp}/${image}/${price}`, true);
+            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+							
+            xhr.send();
+            alert("Buy"+tensp+"/n"+image+"/n"+price);
+
+        })
+    </script> -->
 
 
 </body>

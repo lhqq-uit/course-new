@@ -18,7 +18,18 @@ router.get("/Change-Password-Management", (req, res) => {
 
 //TODO: login
 router.get("/login", (req, res) => {
-    res.render("root/login");
+    let notificationError = false;
+    var notificationSignUpTrue = false;
+    if (req.session.SignUpTrue == true) {//TODO: signup true -> login -> push notification
+        notificationSignUpTrue = true;
+    }
+    if (req.session.catchLogin == false) {//TODO: login false -> push err
+        notificationError = true;
+    }
+    res.render("root/login", {
+        notificationError: notificationError,
+        notificationSignUpTrue: notificationSignUpTrue
+    });
 });
 
 router.post("/login", (req, res) => {
@@ -31,22 +42,76 @@ router.post("/login", (req, res) => {
         }
     }).then(Response => {
         req.session.token = Response.data.token;
-        res.redirect('/teacher/dashboard');
+        console.log(req.session.token)
+        // console.log()
+        if (req.session.token) {
+            res.redirect('/teacher/dashboard')
+        }
+
     }).catch(err => {
-        res.send(err.message)
+        //console.log(err)
+        if (err.response.data.success == false) {
+            req.session.catchLogin = false;
+            res.redirect("/login");
+        }
     })
 });
 
+//TODO: Reset password
+router.get("/reset-password", (req, res) => {
+    res.render("root/reset-password");
+});
 
-//TODO: Reset Password
-exports.Reset_Password = (res, req) => {
-    res.render("reset-password");
-};
+//TODO: Reset password
+router.post("/reset-password", (req, res) => {
+    axios({
+            method: 'post',
+            url: `${domain}/api/forgot-password`,
+            data: {
+                email: req.body.email
+            }
+        })
+        .then(Response => {
+            res.redirect('#')
+        })
+})
+
+//TODO: change password
+router.get("/change-password/:token", (req, res) => {
+    req.session.token = req.params.authorization
+    res.render("root/change-password");
+});
+
+//TODO: change-password to change-password.ejs
+router.post("/change-password/:token", (req, res) => {
+    if (req.body.password != req.body.password2) {
+        res.redirect("#")
+    } else {
+        axios({
+                method: 'post',
+                url: `${domain}/api/reset-password/${req.params.token}`,
+                data: {
+                    password: req.body.password
+                }
+            })
+            .then(Response => {
+                res.redirect('/login')
+            })
+    }
+
+});
+
 
 //TODO: Sign Up
 
-router.get("/signup", (req, res) => {
-    res.render("root/signup");
+router.get("/signup", async (req, res) => {
+    var notificationSignUpError = false;
+    if (req.session.SignUpTrue == false) {//TODO: signin not true -> push err
+        notificationSignUpError = true;
+    }
+    res.render("root/signup", {
+        notificationSignUpError: notificationSignUpError
+    });
 });
 
 router.post("/signup", (req, res) => {
@@ -62,11 +127,15 @@ router.post("/signup", (req, res) => {
         }
     }).then(Response => {
         console.log(Response.data)
+        req.session.SignUpTrue = true;
         res.redirect('/login');
     }).catch(err => {
         console.log(err)
+        req.session.SignUpTrue = false;
+        //console.log(req.session.SignUpTrue);
         res.redirect("/signup")
     })
 });
+
 
 module.exports = router;

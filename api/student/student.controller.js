@@ -1,23 +1,36 @@
-const fs = require('fs')
+const mongoose = require('mongoose')
 const Student = require('./student.model')
 const Course = require('./../course/course.model')
 const Teacher = require('./../teacher/teacher.model')
 const Quiz = require('./../quiz/quiz.model')
+const Lesson = require('./../lesson/lesson.model')
 
 module.exports = {
-   buyCourse: async (req, res) => { //còn trường hợp khóa học mua rồi thì không mua nữa
+   buyCourse: async (req, res) => {
       try{
-         let course = await Course.findByIdAndUpdate(req.params.idCourse,
-                                 {$inc: {students_enrolled: +1}})
-                                  .select('teacher price _id');
+         let student = await Student.findOne({user: req.user.data._id})
+                                    .select('balance courses.id_course')
+         let listIdCoursePurchased = []
+         for(let i = 0; i < student.courses.length ; i++){
+            listIdCoursePurchased.push(student.courses[i].id_course.toString())
+         }
+         if(listIdCoursePurchased.includes(req.params.idCourse))
+            throw new Error('You bought the course')
+         let course = await Course.findById(req.params.idCourse)
+         if(student.balance < course.price){
+            throw new Error('Your balance is not enough!')
+         }
+         await Course.findByIdAndUpdate(req.params.idCourse,
+                     { $inc: {students_enrolled: +1,
+                              balance: -course.price}}
+         );
          let course_purchased = {
             id_course: req.params.idCourse,
             lesson_number: 0
          }
-         if(!course) return res.status(404).json({message: 'Course not found'})
          await Student.findOneAndUpdate(
             {user: req.user.data._id},
-            {$push: {courses: course_purchased}}                 //$addToSet
+            {$push: {courses: course_purchased}}
          );
          let transaction = {
             course: course._id,
@@ -32,6 +45,8 @@ module.exports = {
          res.status(200).json({message: 'buy course successfully!'});
       }
       catch(error){
+         if (error.name == 'CastError')
+            res.status(404).json({error_msg: "Course was not found"});
          res.status(500).json({error_msg: error.message})
       }
    },      
@@ -112,5 +127,5 @@ module.exports = {
       } catch (error) {
          res.status(500).json({err_msg: error.message})
       }
-   }
+   },
 }

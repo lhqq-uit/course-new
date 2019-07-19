@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from tutorio-bootstrap.frontendmatter.com/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:02 GMT -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -111,12 +112,13 @@
 
             <div class="bg-gradient-primary py-32pt">
                 <div class="container d-flex flex-column flex-md-row align-items-center text-center text-md-left">
-                    <img src="assets/images/illustration/student/128/white.svg" class="mr-md-32pt mb-32pt mb-md-0" alt="student">
+                    <img src="assets/images/illustration/student/128/white.svg" class="mr-md-32pt mb-32pt mb-md-0"
+                        alt="student">
                     <div class="flex mb-32pt mb-md-0">
                         <h1 class="text-white mb-0">Sign In</h1>
                         <p class="lead measure-lead text-white-50">Account Management</p>
                     </div>
-                    <a href="signup.html" class="btn btn-outline-white flex-column">
+                    <a href="/signup" class="btn btn-outline-white flex-column">
                         Don't have an account?
                         <span class="btn__secondary-text">Sign up Today!</span>
                     </a>
@@ -127,12 +129,14 @@
                     <form action="/login" class="col-md-5 p-0 mx-auto" method="POST">
                         <div class="form-group">
                             <label for="email">Email:</label>
-                            <input name="username" id="email" type="text" class="form-control" placeholder="Your email address ...">
+                            <input name="username" id="email" type="text" class="form-control"
+                                placeholder="Your email address ...">
                         </div>
                         <div class="form-group">
                             <label for="password">Password:</label>
-                            <input name="password" id="password" type="password" class="form-control" placeholder="Your first and last name ...">
-                            <p class="text-right"><a href="reset-password.html" class="small">Forgot your password?</a></p>
+                            <input name="password" id="password" type="password" class="form-control"
+                                placeholder="Your first and last name ...">
+                            <p class="text-right"><a href="/reset-password" class="small">Forgot your password?</a></p>
                         </div>
                         <div class="text-center">
                             <button class="btn btn-lg btn-accent">Login</button>
@@ -161,8 +165,35 @@
 
     </div>
     <!-- // END Header Layout -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script>
+        let notificationError = <%= notificationError %> ;
+        if (notificationError == true) {
+            Swal.fire({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Email or passwword not true!',
+                footer: '<a href="/reset-password">Forgot password?</a>'
+            })
+        }
+    </script>
+    <script>
+        let notificationSignUpTrue = <%= notificationSignUpTrue %> ;
+        if (notificationSignUpTrue == true) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 5000
+            });
 
-   
+            Toast.fire({
+                type: 'success',
+                title: 'Signed up successfully. Login now!'
+            })
+        }
+    </script>
+
 
     <!-- jQuery -->
     <script src="assets/vendor/jquery.min.js"></script>
@@ -202,4 +233,5 @@
 
 
 <!-- Mirrored from tutorio-bootstrap.frontendmatter.com/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:04 GMT -->
+
 </html>

@@ -5,6 +5,10 @@ var StudentSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
    },
+   balance: {
+      type: Number,
+      default: 0
+   },
    courses:[{
       id_course:{
          type: mongoose.Schema.Types.ObjectId,
@@ -24,6 +28,13 @@ var StudentSchema = mongoose.Schema({
       answer:String,
       key:String
    }]
+   // lessons: [{
+   //    id_lesson:{
+   //       type: mongoose.Schema.Types.ObjectId,
+   //       ref:'Lesson'
+   //    },
+   //    quiz_true: []
+
 })
 
 module.exports = mongoose.model('Student', StudentSchema);

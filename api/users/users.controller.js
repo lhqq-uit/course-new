@@ -20,7 +20,9 @@ module.exports = {
                     role: req.body.role
                 });
                 let user = await User.create(newUser);
-                
+                if(req.body.role == "Admin"){
+                    res.status(201).json({success: true, msg: 'Successful created new admin.'});
+                }
                 if(req.body.role == "Student"){
                     Student.create({user: user._id}, (err, data)=>{
                         res.status(201).json({success: true, msg: 'Successful created new student.'});
@@ -92,7 +94,7 @@ module.exports = {
             to: req.body.email,
             subject: `Reset password for user ${req.body.email}`,
             text: 'Reset password for you ',
-            html: `<a hrel="http://localhost:3000/api/resetPassword/${token}"> Tại đây! </a>`
+            html: `http://localhost:3000/change-password/${token}`
         }
         transporter.sendMail(mainOptions, function(err, info){
             if (err) {
@@ -150,6 +152,36 @@ module.exports = {
                 });
             }
         })
-        
+    },
+
+    recharge: async (req, res) => { //for student //role: only admin
+        try {
+            let student = await Student.findOneAndUpdate(
+                {user: req.params.idStudent},
+                {$inc: { balance: +req.body.value}}
+            );
+            if(!student) return res.status(404).json({err_msg: 'Student not found!'})
+        } catch (error) {
+            res.status(500).json({err_msg: error.message})
+        }
+    },
+
+    withdrawal: async (req, res) => { //for teacher // role: only admin
+        try {
+            let value = req.body.value || 0
+            await Teacher.findOne({ user: req.params.idTeacher});
+            let update = await Teacher.update(
+                { salary: { $gte : value} },
+                { $inc: {salary: -value} }
+            );
+            if(update.n === 0)
+                return res.status(400)
+                            .json({err_msg: 'Withdrawal value is greater than the balance'})
+            res.status(200).json({message: 'Withdrawal successfully!'})
+        } catch (error) {
+            if (error.name == 'CastError')
+                res.status(404).json({error_msg: "Teacher was not found"});
+            res.status(500).json({err_msg: error})
+        }
     }
 }

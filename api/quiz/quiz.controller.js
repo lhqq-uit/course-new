@@ -9,7 +9,8 @@ module.exports={
             let newQuiz={
                 question: req.body.question,
                 list_answer: req.body.list_answer,
-                result: req.body.result
+                result: req.body.result,
+                id_lesson: req.params.idLesson
             }
             
             let quiz= await Quiz.create(newQuiz)
