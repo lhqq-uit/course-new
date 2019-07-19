@@ -105,7 +105,6 @@ router.post("/change-password/:token", (req, res) => {
 
 //TODO: Sign Up
 
-<<<<<<< HEAD
 router.get("/signup", async (req, res) => {
     var notificationSignUpError = false;
     if (req.session.SignUpTrue == false) {//TODO: signin not true -> push err
@@ -114,10 +113,6 @@ router.get("/signup", async (req, res) => {
     res.render("root/signup", {
         notificationSignUpError: notificationSignUpError
     });
-=======
-router.get("/signup", (req, res) => {
-    res.render("teacher/instructor-edit-quiz");
->>>>>>> EJS_Edit-quiz(teacher)
 });
 
 router.post("/signup", (req, res) => {
