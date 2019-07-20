@@ -13,26 +13,26 @@
     <meta name="robots" content="noindex">
 
     <!-- Perfect Scrollbar -->
-    <link type="text/css" href="assets/vendor/perfect-scrollbar.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/vendor/perfect-scrollbar.css" rel="stylesheet">
 
     <!-- Fix Footer CSS -->
-    <link type="text/css" href="assets/vendor/fix-footer.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/vendor/fix-footer.css" rel="stylesheet">
 
     <!-- Material Design Icons -->
-    <link type="text/css" href="assets/css/material-icons.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/material-icons.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/css/material-icons.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/css/material-icons.rtl.css" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
-    <link type="text/css" href="assets/css/fontawesome.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/fontawesome.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/css/fontawesome.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/css/fontawesome.rtl.css" rel="stylesheet">
 
     <!-- Preloader -->
-    <link type="text/css" href="assets/css/preloader.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/preloader.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/css/preloader.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/css/preloader.rtl.css" rel="stylesheet">
 
     <!-- App CSS -->
-    <link type="text/css" href="assets/css/app.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/app.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/css/app.css" rel="stylesheet">
+    <link type="text/css" href="../../../assets/css/app.rtl.css" rel="stylesheet">
 
 
 
@@ -88,7 +88,7 @@
 
         <!-- Header -->
 
-        <% include header-dashboard %>
+        <% include ../layout/header-dashboard-quiz %>
 
         <!-- // END Header -->
 
@@ -114,7 +114,7 @@
                         <div class="nav-item navbar-list__item">
                             <div class="d-flex align-items-center flex-nowrap">
                                 <div class="mr-16pt">
-                                    <a href="student-take-course.html"><img src="assets/images/paths/angular_64x64.png" width="40" alt="Angular" class="rounded"></a>
+                                    <a href="student-take-course.html"><img src="../../../assets/images/paths/angular_64x64.png" width="40" alt="Angular" class="rounded"></a>
                                 </div>
                                 <div class="flex">
                                     <a href="student-take-course.html" class="card-title text-body mb-0">Angular Fundamentals</a>
@@ -131,19 +131,21 @@
 
             <div class="bg-gradient-primary pb-lg-64pt py-32pt">
                 <div class="container page__container">
-                    <nav class="course-nav">
+                    <!-- <nav class="course-nav">
                         <a href="student-take-lesson.html" data-toggle="tooltip" data-placement="bottom" data-title="Getting Started with Angular: Introduction"><span class="material-icons text-primary">check_circle</span></a>
                         <a data-toggle="tooltip" data-placement="bottom" data-title="Getting Started with Angular: Introduction to TypeScript" href="student-take-lesson.html"><span class="material-icons text-primary">check_circle</span></a>
                         <a data-toggle="tooltip" data-placement="bottom" data-title="Getting Started with Angular: Comparing Angular to AngularJS" href="student-take-lesson.html"><span class="material-icons text-primary">check_circle</span></a>
                         <a class="active" href="student-take-quiz.html" data-toggle="tooltip" data-placement="bottom" data-title="Quiz: Getting Started with Angular"><span class="material-icons">account_circle</span></a>
-                    </nav>
+                    </nav> -->
 
                     <div class="d-flex flex-wrap align-items-end justify-content-end mb-16pt">
-                        <h1 class="text-white flex m-0">Question 1 of 5</h1>
-                        <p class="h1 text-white-50 font-weight-light m-0">00:14</p>
+                        <h1 class="text-white flex m-0"><center>Question <%= numerical %></center></h1>
+                        <!-- <p class="h1 text-white-50 font-weight-light m-0">00:14</p> -->
                     </div>
-
-                    <p class="hero__lead measure-hero-lead text-white-50">An angular 2 project written in typescript is* transpiled to javascript duri*ng the build process. Which of the following additional features are provided to the developer while programming on typescript over javascript?</p>
+                    <tbody>
+                        <p class="hero__lead measure-hero-lead text-white-50"><%= data.question %></p>
+                    </tbody>
+                    
                 </div>
             </div>
 
@@ -159,41 +161,50 @@
                         <div class="nav-item d-flex flex-column flex-sm-row ml-sm-16pt">
                             <!-- <a href="student-quiz-result-details.html" class="btn justify-content-center btn-outline-secondary w-100 w-sm-auto mb-16pt mb-sm-0">Skip Quiz</a> -->
                             <a href="student-take-lesson.html" class="btn justify-content-center btn-outline-secondary w-100 w-sm-auto mb-16pt mb-sm-0 ml-sm-16pt">Review Video</a>
-                            <a href="student-quiz-result-details.html" class="btn justify-content-center btn-accent w-100 w-sm-auto mb-16pt mb-sm-0 ml-sm-16pt">Next Question <i class="material-icons icon--right">keyboard_arrow_right</i></a>
+                            <a href="<%= link_next %>" class="btn justify-content-center btn-accent w-100 w-sm-auto mb-16pt mb-sm-0 ml-sm-16pt">Next Question <i class="material-icons icon--right">keyboard_arrow_right</i></a>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="container page__container">
+               <form>
                 <div class="page-section">
                     <h4>Your Answer:</h4>
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input id="customCheck01" type="checkbox" class="custom-control-input">
-                            <label for="customCheck01" class="custom-control-label">Ability to use newer syntax and offers reliability</label>
+                            <input name="answer" id="customCheck01" type="radio" class="custom-control-input">
+                            <label for="customCheck01" class="custom-control-label"></label><%= data.list_answer[0] %></label>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="custom-control custom-checkbox">
-                            <input id="customCheck02" type="checkbox" class="custom-control-input" checked="">
-                            <label for="customCheck02" class="custom-control-label">Compatibility</label>
+                            <input name="answer" id="customCheck02" type="radio" class="custom-control-input" checked="">
+                            <label for="customCheck02" class="custom-control-label"><%= data.list_answer[1] %></label>
                         </div>
                     </div>
+                    <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input name="answer" id="customCheck03" type="radio" class="custom-control-input" checked="">
+                                <label for="customCheck03" class="custom-control-label"><%= data.list_answer[2] %></label>
+                            </div>
+                        </div>
                     <div class="form-group mb-32pt mb-lg-48pt">
                         <div class="custom-control custom-checkbox">
-                            <input id="customCheck03" type="checkbox" class="custom-control-input">
-                            <label for="customCheck03" class="custom-control-label">Usage of missing features</label>
+                            <input name="answer" id="customCheck04" type="radio" class="custom-control-input">
+                            <label for="customCheck04" class="custom-control-label"><%= data.list_answer[3] %></label>
                         </div>
                     </div>
+                    
 
                     <p class="text-50 mb-0">Note: There can be multiple correct answers to this question.</p>
                 </div>
+            </form>
             </div>
 
 
 
-            <% include footer %>
+            <% include ../layout/footer-quiz %>
 
         </div>
         <!-- // END Header Layout Content -->
@@ -204,35 +215,35 @@
  
 
     <!-- jQuery -->
-    <script src="assets/vendor/jquery.min.js"></script>
+    <script src="../../../assets/vendor/jquery.min.js"></script>
 
     <!-- Bootstrap -->
-    <script src="assets/vendor/popper.min.js"></script>
-    <script src="assets/vendor/bootstrap.min.js"></script>
+    <script src="../../../assets/vendor/popper.min.js"></script>
+    <script src="../../../assets/vendor/bootstrap.min.js"></script>
 
     <!-- Perfect Scrollbar -->
-    <script src="assets/vendor/perfect-scrollbar.min.js"></script>
+    <script src="../../../assets/vendor/perfect-scrollbar.min.js"></script>
 
     <!-- DOM Factory -->
-    <script src="assets/vendor/dom-factory.js"></script>
+    <script src="../../../assets/vendor/dom-factory.js"></script>
 
     <!-- MDK -->
-    <script src="assets/vendor/material-design-kit.js"></script>
+    <script src="../../../assets/vendor/material-design-kit.js"></script>
 
     <!-- Fix Footer -->
-    <script src="assets/vendor/fix-footer.js"></script>
+    <script src="../../../assets/vendor/fix-footer.js"></script>
 
     <!-- Chart.js -->
-    <script src="assets/vendor/Chart.min.js"></script>
+    <script src="../../../assets/vendor/Chart.min.js"></script>
 
     <!-- App JS -->
-    <script src="assets/js/app.js"></script>
+    <script src="../../../assets/js/app.js"></script>
 
     <!-- Highlight.js -->
-    <script src="assets/js/hljs.js"></script>
+    <script src="../../../assets/js/hljs.js"></script>
 
     <!-- App Settings (safe to remove) -->
-    <script src="assets/js/app-settings.js"></script>
+    <script src="../../../assets/js/app-settings.js"></script>
 
 
 
