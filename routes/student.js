@@ -1,3 +1,9 @@
+const express = require('express');
+const router = express.Router();
+const domain = require('./../config/domain')
+
+const axios = require('axios')
+
 //TODO: student-dashboard
 exports.Student_Dashboard = (res, req) => {
     res.render("student-dashboard");
@@ -34,11 +40,40 @@ exports.Student_Take_Course = (res, req) => {
 };
 
 //TODO: Student > student-take-lesson
-exports.Student_Take_Lesson = (res, req) => {
-    res.render("student-take-lesson");
-};
+router.get('/take-quiz/:idLesson/:numerical', (req, res) =>{
+    console.log(`${domain}/api/lesson/${req.params.idLesson}`)
+    axios({
+        method: 'get',
+        url: `${domain}/api/lesson/${req.params.idLesson}`,
+    })
+    .then( Response =>{
+        countQuiz=Response.data.data.quizzes
+        // for(i=0;i<countQuiz.length;i++){
+        //     axios({})
+        // }
+        axios({
+            method: 'get',
+            url: `${domain}/api/quiz/${countQuiz[req.params.numerical]}`,
+        })
+        .then(Response2 =>{
+            console.log(Response2.data.data)
+            let data=Response2.data.data
+            numerical=parseInt(req.params.numerical)+1;
+            link_next=`/student/take-quiz/${req.params.idLesson}/${numerical}`;
+            res.render('student/student-take-quiz',{countQuiz, data, link_next, numerical});
+        })
+        // console.log(countQuiz[0])
+
+        // res.json(Response.data.data)
+       
+    })
+    // res.render('student/student-take-quiz');
+});
+    
 
 //TODO: Student > student-take-quiz
 exports.Student_Take_Quiz = (res, req) => {
     res.render("student-take-quiz");
 };
+
+module.exports = router;
