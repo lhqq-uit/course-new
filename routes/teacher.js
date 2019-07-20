@@ -108,10 +108,14 @@ router.get("/dashboard", async (req, res) => {
 
 //TODO: add course
 router.get("/add-course", (req, res) => {
+    
     if (!req.session.token) {
         res.redirect('/login')
     } else {
-        res.render("teacher/instructor-add-course");
+        let getInfoTeacher = jwtDecode(req.session.token)
+        res.render("teacher/instructor-add-course", {
+            avatarTeacher: getInfoTeacher.avatar,
+        });
     }
 });
 
