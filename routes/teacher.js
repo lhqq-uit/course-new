@@ -75,40 +75,43 @@ router.post("/edit-quiz/:idLesson", (req, res) => {
 
 //TODO: dashboard teacher
 router.get("/dashboard", async (req, res) => {
-    var iqTeacher = 1000;
+    var iqTeacher = 0;
     var notificationLogin = false;
     if (req.session.token) { //TODO: check login session
         notificationLogin = true; // ! if true => push notification -> you are login
+
+        let getInfoTeacher = jwtDecode(req.session.token)
+        await axios({
+                method: 'get',
+                url: `${domain}/api/teacher/info/${getInfoTeacher._id}`,
+                //responseType: 'stream'
+            })
+            .then(response => {
+                // handle success
+                console.log(response.data);
+
+                iqTeacher = response.data.iq;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+
+        //console.log(iqTeacher) 
+        res.render("teacher/instructor-dashboard", {
+            iqTeacher: iqTeacher,
+            avatarTeacher: getInfoTeacher.avatar,
+            nameTeacher: getInfoTeacher.fullname,
+            notificationLogin: notificationLogin, // ! login true push notification
+        });
+    } else {
+        res.redirect("../login")
     }
-    let getInfoTeacher = jwtDecode(req.session.token)
-    await axios({
-            method: 'get',
-            url: `${domain}/api/teacher/info/${getInfoTeacher._id}`,
-            //responseType: 'stream'
-        })
-        .then(response => {
-            // handle success
-            console.log(response.data);
-
-            iqTeacher = response.data.iq;
-        })
-        .catch(error => {
-            // handle error
-            console.log(error);
-        })
-
-    //console.log(iqTeacher) 
-    res.render("teacher/instructor-dashboard", {
-        iqTeacher: iqTeacher,
-        avatarTeacher: getInfoTeacher.avatar,
-        nameTeacher: getInfoTeacher.fullname,
-        notificationLogin: notificationLogin, // ! login true push notification
-    });
 });
 
 //TODO: add course
 router.get("/add-course", (req, res) => {
-    
+
     if (!req.session.token) {
         res.redirect('/login')
     } else {

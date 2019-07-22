@@ -130,7 +130,9 @@
                         <div class="form-group">
                             <label for="email">Email:</label>
                             <input name="username" id="email" type="text" class="form-control"
-                                placeholder="Your email address ...">
+                                placeholder="Your email address ..." required
+                                oninvalid="this.setCustomValidity('Enter User Name Here')"
+                                oninput="this.setCustomValidity('')">
                         </div>
                         <div class="form-group">
                             <label for="password">Password:</label>
