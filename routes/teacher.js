@@ -75,7 +75,7 @@ router.post("/edit-quiz/:idLesson", (req, res) => {
 
 //TODO: dashboard teacher
 router.get("/dashboard", async (req, res) => {
-    var iqTeacher = 0;
+    var infoTeacher='';
     var notificationLogin = false;
     if (req.session.token) { //TODO: check login session
         notificationLogin = true; // ! if true => push notification -> you are login
@@ -88,9 +88,9 @@ router.get("/dashboard", async (req, res) => {
             })
             .then(response => {
                 // handle success
-                console.log(response.data);
+                //console.log(response.data);
 
-                iqTeacher = response.data.iq;
+                infoTeacher = response.data;
             })
             .catch(error => {
                 // handle error
@@ -99,9 +99,7 @@ router.get("/dashboard", async (req, res) => {
 
         //console.log(iqTeacher) 
         res.render("teacher/instructor-dashboard", {
-            iqTeacher: iqTeacher,
-            avatarTeacher: getInfoTeacher.avatar,
-            nameTeacher: getInfoTeacher.fullname,
+            infoTeacher: infoTeacher,
             notificationLogin: notificationLogin, // ! login true push notification
         });
     } else {

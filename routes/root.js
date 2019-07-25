@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const domain = require('./../config/domain')
-
+const jwtDecode = require('jwt-decode');
 const axios = require('axios')
 
 
@@ -10,16 +10,27 @@ router.get("/", (req, res) => {
     res.render("index-2");
 })
 
-
+//TODO: show dashboard
+router.get("/dashboard", (req, res) => {
+    let getInfoTeacher = jwtDecode(req.session.token)
+    //console.log(getInfoTeacher)
+    if (getInfoTeacher.role == "Teacher") {
+        res.redirect("/teacher/dashboard")
+    } else if (getInfoTeacher.role == "Student") {
+        res.redirect("/student/dashboard")
+    } else {
+        res.redirect("/login")
+    }
+})
 
 //TODO: login
 router.get("/login", (req, res) => {
     let notificationError = false;
     var notificationSignUpTrue = false;
-    if (req.session.SignUpTrue == true) {//TODO: signup true -> login -> push notification
+    if (req.session.SignUpTrue == true) { //TODO: signup true -> login -> push notification
         notificationSignUpTrue = true;
     }
-    if (req.session.catchLogin == false) {//TODO: login false -> push err
+    if (req.session.catchLogin == false) { //TODO: login false -> push err
         notificationError = true;
     }
     res.render("root/login", {
@@ -39,9 +50,9 @@ router.post("/login", (req, res) => {
     }).then(Response => {
         req.session.token = Response.data.token;
         console.log(req.session.token)
-        // console.log()
+        console.log()
         if (req.session.token) {
-            res.redirect('/teacher/dashboard')
+            res.redirect('/dashboard')
         }
 
     }).catch(err => {
@@ -102,7 +113,7 @@ router.post("/change-password/:token", (req, res) => {
 
 router.get("/signup", async (req, res) => {
     var notificationSignUpError = false;
-    if (req.session.SignUpTrue == false) {//TODO: signin not true -> push err
+    if (req.session.SignUpTrue == false) { //TODO: signin not true -> push err
         notificationSignUpError = true;
     }
     res.render("root/signup", {
