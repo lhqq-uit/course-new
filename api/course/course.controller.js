@@ -107,8 +107,9 @@ module.exports = {
    getCoursePopulate: async (req, res) => {
       try {
          let courses = await Course.find({})
+                                    .populate("teacher")
                                    .sort({"students_enrolled": -1})
-                                   .limit(8)
+                                   .limit(8)  
          if(!courses) return res.status(400).json({err_message: 'Course not found!'})
          res.status(200).json(courses)
       } catch (error) {

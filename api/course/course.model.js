@@ -46,7 +46,7 @@ var CourseSchema = new mongoose.Schema({
    },
    teacher:{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Teacher'
+      ref: 'User'
    },
    lessons: [{
       type: mongoose.Schema.Types.ObjectId,

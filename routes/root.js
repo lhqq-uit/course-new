@@ -6,8 +6,20 @@ const axios = require('axios')
 
 
 //TODO: show home page
-router.get("/", (req, res) => {
-    res.render("index-2");
+router.get("/", async (req, res) => {
+    var data = '';
+    await axios({
+        method: "get",
+        url: `${domain}/api/course/populate/`
+    }).then(req => {
+        data = req.data;
+        console.log(data)
+    }).catch(error => {
+        console.log(error);
+    })
+    res.render("index-2", {
+        data: data
+    });
 })
 
 //TODO: show dashboard
