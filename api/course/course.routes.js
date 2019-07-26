@@ -21,11 +21,15 @@ router.get('/populate', CourseController.getCoursePopulate);
 
 router.get('/:idCourse', CourseController.getOneCourse);
 
+router.get('/rating/:idCourse', CourseController.getRatingCourse);
+
 router.get('/', CourseController.getAllCourse);
 
 router.post('/', checkPermission.isTeacher, upload.single('image'), CourseController.create);
 
 router.put('/:idCourse', checkPermission.isTeacher, upload.single('image'), CourseController.update);
+
+router.put('/rating/:idCourse', checkPermission.isStudent, CourseController.ratingCourse);
 
 router.delete('/:idCourse', checkPermission.isTeacher, CourseController.delete);
 

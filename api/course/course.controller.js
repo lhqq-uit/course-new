@@ -107,12 +107,39 @@ module.exports = {
    getCoursePopulate: async (req, res) => {
       try {
          let courses = await Course.find({})
+                                    .populate("teacher")
                                    .sort({"students_enrolled": -1})
-                                   .limit(8)
+                                   .limit(8)  
          if(!courses) return res.status(400).json({err_message: 'Course not found!'})
          res.status(200).json(courses)
       } catch (error) {
          res.status(500).json({err_msg: error.message})
+      }
+   },
+   ratingCourse: async (req, res) => {
+      try {
+         await Course.findByIdAndUpdate(
+            req.params.idCourse,
+            {$push: {ratings: req.body.rate}}
+         )
+         res.status(200).json({message: 'Rating for course successfully'})
+      } catch (error) {
+         res.status(500).json(error)
+      }
+   },
+   getRatingCourse: async (req, res) => {
+      try {
+         let course = await Course.findById(req.params.idCourse).select('ratings')
+         let course_rating= course.ratings;
+         let sum, avg = 0;
+         if (course_rating.length)
+         {
+            sum = course_rating.reduce(function(a, b) { return a + b; });
+            avg = sum / course_rating.length;
+         }
+         res.json({'ratings': avg})
+      } catch (error) {
+         res.status(500).json(error)
       }
    }
 }

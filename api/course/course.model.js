@@ -27,10 +27,11 @@ var CourseSchema = new mongoose.Schema({
       enum: ['Beginner', 'Medium', 'Hard', 'Advanced'],
       default: 'Beginner',
    },
-   ratings: {
+   ratings: [{
       type: Number,
-      default: 0
-   },
+      min: 1,
+      max: 5
+   }],
    students_enrolled: {
       type: Number,
       default: 0
@@ -46,7 +47,7 @@ var CourseSchema = new mongoose.Schema({
    },
    teacher:{
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Teacher'
+      ref: 'User'
    },
    lessons: [{
       type: mongoose.Schema.Types.ObjectId,
