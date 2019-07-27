@@ -22,23 +22,18 @@ module.exports = {
          if (student.balance < course.price) {
             throw new Error('Your balance is not enough!')
          }
-         await Course.findByIdAndUpdate(req.params.idCourse, {
-            $inc: {
-               students_enrolled: +1,
-               balance: -course.price
-            }
-         });
+         await Course.findByIdAndUpdate(req.params.idCourse,
+                     { $inc: {students_enrolled: +1}}
+         );
          let course_purchased = {
             id_course: req.params.idCourse,
             lesson_number: 0
          }
-         await Student.findOneAndUpdate({
-            user: req.user.data._id
-         }, {
-            $push: {
-               courses: course_purchased
-            }
-         });
+         await Student.findOneAndUpdate(
+            {user: req.user.data._id},
+            {$push: {courses: course_purchased},
+             $inc: {balance: -course.price}}
+         );
          let transaction = {
             course: course._id,
             date_trading: new Date().toLocaleDateString(),
