@@ -129,26 +129,84 @@
                         <div class="col-md-8">
                             <h4>Course title</h4>
                             <div class="form-group">
-                                <input type="text" name="name" class="form-control form-control-lg" placeholder="Course title"
-                                    value="">
+                                <input type="text" name="name" class="form-control form-control-lg" 
+                                    placeholder="Course title" value="" 
+                                    required oninvalid="this.setCustomValidity('Enter course title Here')"
+                                    oninput="this.setCustomValidity('')">
                             </div>
 
                             <h4>Description</h4>
                             <textarea class="form-control" name="description" rows="3"
-                                placeholder="Course description goes here.."></textarea>
+                                placeholder="Course description goes here.." required
+                                oninvalid="this.setCustomValidity('Enter Description Here')"
+                                oninput="this.setCustomValidity('')"></textarea>
                             <br>
 
                             <h4>Image</h4>
-                            <div class="custom-file">
-                                <input type="file" name="image" id="file" class="custom-file-input">
-                                <label for="file" class="custom-file-label image-course">Choose file image</label>
-                            </div>
-                            <br>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="custom-file">
+                                        <input type="file" name="image" id="file" class="custom-file-input" onchange="readURL(this);" required
+                                        oninvalid="this.setCustomValidity('Enter File Image Here')"
+                                        oninput="this.setCustomValidity('')">
+                                        <label for="file" class="custom-file-label image-course">Choose file image</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div style="text-align: center;">
+                                        <img id="output-img" src="http://placehold.it/180" width="250" height="auto" alt="your image" />
+                                    </div>
+                                </div>
+                            </div>`
+                        </div>
+                        <div class="col-md-4">
+                                <h4>Category</h4>
+                                <div class="form-group">
+                                    <div class="input-group form-inline">
+                                        <input type="text" name="topic" class="form-control" value=""
+                                        required
+                                        oninvalid="this.setCustomValidity('Enter topic Here')"
+                                        oninput="this.setCustomValidity('')">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="row">
+                                        
+                                        <div class="col-md-6">
+                                            <h4>Price</h4>
+                                            <div class="input-group form-inline">
+                                                <span class="input-group-prepend"><span
+                                                        class="input-group-text">$</span></span>
+                                                <input type="text" name="price" class="form-control" value=""
+                                                required
+                                                oninvalid="this.setCustomValidity('Enter Price Here')"
+                                                oninput="this.setCustomValidity('')">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>Sale</h4>
+                                            <div class="form-group">
+                                                <div class="input-group form-inline">
+                                                    <input type="text" name="isSell" class="form-control" value=""
+                                                    required oninvalid="this.setCustomValidity('Enter Sale Here')"
+                                                    oninput="this.setCustomValidity('')">
+                                                    <span class="input-group-prepend"><span
+                                                        class="input-group-text">%</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             
                             <h4>Tags</h4>
                             <div class="form-group">
                                 <input type="text" name="tags" class="form-control"
-                                    placeholder="enter, badges, here">
+                                    placeholder="enter, badges, here"
+                                    required
+                                    oninvalid="this.setCustomValidity('Enter User Name Here')"
+                                    oninput="this.setCustomValidity('')">
                                 <small class="form-text text-muted">Separate tags with space or comma.</small>
                             </div>
 
@@ -161,43 +219,6 @@
                             <span class="badge badge-primary badge-filter">
                                 <a href="#"><i class="material-icons">close</i></a> Guide
                             </span>
-                        </div>
-                        <div class="col-md-4">
-                            
-                                
-                                <h4>Category</h4>
-                                <div class="form-group">
-                                    <select name="topic" class="form-control custom-select">
-                                        <option value="vuejs">VueJs</option>
-                                        <option value="vuejs">Angular</option>
-                                        <option value="vuejs">React</option>
-                                    </select>
-                                </div>
-    
-                                
-                                <div class="form-group">
-                                    <div class="row">
-                                        
-                                        <div class="col-md-6">
-                                            <h4>Price</h4>
-                                            <div class="input-group form-inline">
-                                                <span class="input-group-prepend"><span
-                                                        class="input-group-text">$</span></span>
-                                                <input type="text" name="price" class="form-control" value="">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h4>Sale</h4>
-                                            <div class="form-group">
-                                                <div class="input-group form-inline">
-                                                    <input type="text" name="isSell" class="form-control" value="">
-                                                    <span class="input-group-prepend"><span
-                                                        class="input-group-text">%</span></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
     
                             <div class="card m-0">
                                 <div class="card-header text-center">
@@ -218,7 +239,7 @@
                         </div>
                         
                     </div>
-                </form>
+                    </form>
                 </div>
             </div>
 
@@ -262,6 +283,20 @@
 
     <!-- App Settings (safe to remove) -->
     <script src="/assets/js/app-settings.js"></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#output-img')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 
 </body>
 

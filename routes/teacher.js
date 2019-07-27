@@ -16,9 +16,11 @@ var storage = multer.diskStorage({
         callback(null, file.originalname);
     }
 });
-var upload = multer({
-    storage: storage
-});
+var upload = multer({ storage : storage}).fields([
+    { name: 'image'},
+    { name: 'video' },
+    { name: 'document'}
+  ])
 
 const axios = require('axios')
 //TODO: edit quiz -> add question to quiz in lesson
@@ -114,25 +116,83 @@ router.get("/add-course", (req, res) => {
         res.redirect('/login')
     } else {
         let getInfoTeacher = jwtDecode(req.session.token)
-        res.render("teacher/instructor-add-course", {
-            avatarTeacher: getInfoTeacher.avatar,
-        });
+        if(getInfoTeacher == "Teacher"){
+            res.render("teacher/instructor-add-course", {
+                teacher: getInfoTeacher,
+            });
+        } else{
+            res.redirect('/')
+        }
     }
 });
 
-router.post("/add-course", upload.single('image'), async (req, res) => {
-    if (!req.session.token) {
-        res.redirect('/login')
-    } else {
+router.post("/add-course", upload, async (req, res) => {
+    
+    if (req.session.token) {
+        let getInfoTeacher = jwtDecode(req.session.token);
+        if (getInfoTeacher.role == "Teacher"){
+            let formData = await new FormData();
+            let readStream = fs.createReadStream(`./public/upload/tmp/${req.files.image.originalname}`);
+
+            const formHeaders = formData.getHeaders();
+            formData.append("name", req.body.name);
+            formData.append("topic", req.body.topic);
+            formData.append("description", req.body.description);
+            formData.append("price", req.body.price);
+            formData.append("image", readStream);
+            // console.log(formData)
+            let config_axios = {
+                headers: {
+                    Authorization: req.session.token,
+                    ...formHeaders
+                }
+            };
+            await axios.post(`${domain}/api/course`, formData, config_axios)
+                .then(function (response) {
+                    fs.unlink(`/public/tmp/${req.file.originalname}`);
+                    res.send(response)
+                    res.redirect("/teacher/courses")
+                })
+                .catch(function (error) {
+                    res.send(error)
+                });
+        } else{
+            res.redirect('/')
+        }
+    } else{
+        res.redirect('/login');
+    }
+});
+
+router.get("/edit-course/:idCourse", (req, res) => {
+    axios({
+        method: 'get',
+        url: `${domain}/api/course/${req.params.idCourse}`
+    }).then(result => {
+        res.render('teacher/instructor-edit-course', {course: result.data});
+    }).catch(error => {
+        res.send(error.message)
+    })
+    
+})
+
+router.post("/edit-lesson/:idCourse", upload ,async (req, res) => {
+    
+})
+
+
+router.post("/add-lesson/:idCourse", upload ,async (req, res) => {
+    // res.json(req.files)
+    for(let i = 0; i < req.body.title.length; i++){
         let formData = await new FormData();
-        let readStream = fs.createReadStream(`./public/upload/tmp/${req.file.originalname}`);
+        let readStreamVideo = fs.createReadStream(`./public/upload/tmp/${req.files.video[i].originalname}`);
+        let readStreamDoc = fs.createReadStream(`./public/upload/tmp/${req.files.document[i].originalname}`);
 
         const formHeaders = formData.getHeaders();
-        formData.append("name", req.body.name);
-        formData.append("topic", req.body.topic);
-        formData.append("description", req.body.description);
-        formData.append("price", req.body.price);
-        formData.append("image", readStream);
+        formData.append("title", req.body.title[i]);
+        formData.append("description", req.body.description[i]);
+        formData.append("video", readStreamVideo);
+        formData.append("document", readStreamDoc);
         // console.log(formData)
         let config_axios = {
             headers: {
@@ -140,20 +200,37 @@ router.post("/add-course", upload.single('image'), async (req, res) => {
                 ...formHeaders
             }
         };
-        await axios.post(`${domain}/api/course`, formData, config_axios)
+        await axios.post(`${domain}/api/lesson/${req.params.idCourse}`, formData, config_axios)
             .then(function (response) {
-                res.send(response)
-                res.redirect("/teacher/courses")
+                fs.unlink(`/public/tmp/${req.files.video[i].originalname}`);
+                fs.unlink(`/public/tmp/${req.files.document[i].originalname}`);
+                console.log(`created successfully for ${req.body.title[i]}`);
             })
             .catch(function (error) {
                 res.send(error)
             });
     }
-});
+    res.redirect("/teacher/courses");
+})
 
 
 router.get("/courses", (req, res) => {
-    res.render("teacher/instructor-courses.ejs");
+    let getInfoTeacher = jwtDecode(req.session.token)
+    axios({
+        method: 'get',
+        url: `${domain}/api/teacher/courses/${getInfoTeacher._id}`,
+        //responseType: 'stream'
+    })
+    .then(response => {
+        // handle success
+        console.log(response.data);
+        res.render("teacher/instructor-courses.ejs",{courses: response.data.courses, user: getInfoTeacher});
+    })
+    .catch(error => {
+        // handle error
+        console.log(error);
+    })
+    
 });
 
 module.exports = router;
