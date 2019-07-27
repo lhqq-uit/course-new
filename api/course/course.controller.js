@@ -11,7 +11,7 @@ module.exports = {
             });
          }
          //each tag separated by comma, remove space in array
-         let tag = req.body.tag.split(',').map(s => s.trim());
+         let tag = [] ||req.body.tag.split(',').map(s => s.trim());
          let newCourse = {
             name: req.body.name,
             topic: req.body.topic,
@@ -42,12 +42,12 @@ module.exports = {
                 err_msg: err_msg
             });
         }
-         res.status(500).send('There was a problem adding the information to the database.');
+         res.status(500).json(error);
       }
    },
    update: async (req, res) => {
       try{
-         let tag = req.body.tag.split(',').map(s => s.trim());
+         let tag = [] || req.body.tag.split(',').map(s => s.trim());
          let newCourse = {
             name: req.body.name,
             topic: req.body.topic,
