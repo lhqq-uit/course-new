@@ -10,11 +10,15 @@ module.exports = {
                err_msg: 'No image received'
             });
          }
+         //each tag separated by comma, remove space in array
+         let tag = req.body.tag.split(',').map(s => s.trim());
          let newCourse = {
             name: req.body.name,
             topic: req.body.topic,
             description: req.body.description,
             price: req.body.price,
+            tag: tag,
+            sale: req.body.sale,
             // total_time: req.body.total_time,
             // level: req.body.level,
             teacher: req.user.data._id,
@@ -43,6 +47,7 @@ module.exports = {
    },
    update: async (req, res) => {
       try{
+         let tag = req.body.tag.split(',').map(s => s.trim());
          let newCourse = {
             name: req.body.name,
             topic: req.body.topic,
@@ -50,6 +55,8 @@ module.exports = {
             price: req.body.price,
             total_time: req.body.total_time,
             level: req.body.level,
+            tag: tag,
+            sale: req.body.sale,
             last_update: Date.now(),
             avatar: req.file.filename,
          }
@@ -140,5 +147,17 @@ module.exports = {
       } catch (error) {
          res.status(500).json(error)
       }
+   },
+   getPriceAfterSale: async (req, res) => {
+      try {
+         let course = await Course.findById(req.params.idCourse);
+         price = course.price - course.price * course.sale / 100;
+         if(price === 0) return res.status(200).json({message: 'Course not sale'})
+         res.status(200).json({'price': price})
+      } catch (error) {
+         res.status(500).json(error)
+      }
+
+
    }
 }

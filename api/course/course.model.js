@@ -36,10 +36,13 @@ var CourseSchema = new mongoose.Schema({
       type: Number,
       default: 0
    },
+   tag: [{
+      type: String,
+   }],
    avatar: String,   //one image
    sale: {
-      type: Boolean,   
-      default: false
+      type: Number,   
+      default: 0
    },
    last_update:{
       type: Date,

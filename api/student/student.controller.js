@@ -21,8 +21,7 @@ module.exports = {
             throw new Error('Your balance is not enough!')
          }
          await Course.findByIdAndUpdate(req.params.idCourse,
-                     { $inc: {students_enrolled: +1,
-                              balance: -course.price}}
+                     { $inc: {students_enrolled: +1}}
          );
          let course_purchased = {
             id_course: req.params.idCourse,
@@ -30,7 +29,8 @@ module.exports = {
          }
          await Student.findOneAndUpdate(
             {user: req.user.data._id},
-            {$push: {courses: course_purchased}}
+            {$push: {courses: course_purchased},
+             $inc: {balance: -course.price}}
          );
          let transaction = {
             course: course._id,
