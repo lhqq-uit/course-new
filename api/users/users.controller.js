@@ -6,6 +6,19 @@ var config = require('../../config/database');
 let nodemailer = require('nodemailer');
 var bcrypt = require('bcrypt-nodejs');
 
+getToken = function (headers) {
+    if (headers && headers.authorization) {
+        var parted = headers.authorization.split(' ');
+        if (parted.length === 2) {
+            return parted[1];
+        } else {
+            return null;
+        }
+    } else {
+        return null;
+    }
+};
+
 module.exports = {
     SignUp: async (req, res)=>{
         if (!req.body.username || !req.body.password) {
@@ -109,6 +122,68 @@ module.exports = {
         });
 
     },
+    changePassword: async (req, res)=>{
+        let token = getToken(req.headers);
+        console.log(token)
+        try {
+            var decode = jwt.verify(token, config.secret);
+        } catch (error) {
+            res.status(401).json({
+                success: false,
+                msg: "Unauthorzition"
+            })
+        }
+        //find user
+        User.findOne({email: decode.email}, (err, user) => {
+
+                if (err) throw err;
+                if (!user) {
+                    res.status(401).send({success: false, msg: 'Authentication failed. User not found.'});
+                } else {
+                    // check if password matches
+                    user.comparePassword(req.body.Oldpassword, function (err, isMatch) {
+                    if (isMatch && !err) {
+                        // if user is found and password is right create a token
+                        var token = jwt.sign(user.toJSON(), config.secret, {
+                        expiresIn: 604800 // 1 week
+                        });
+                        // return the information including token as JSON
+                        console.log(user)
+                        
+                        if(req.body.newPassword==req.body.confirmPassword){
+                            bcrypt.genSalt(10, function (err, salt) {
+                                if (err) {
+                                    return res.send(err);
+                                }
+                                bcrypt.hash(req.body.newPassword, salt, null, function (err, hash) {
+                                    if (err) {
+                                        return res.send(err);
+                                    }
+                                    console.log(hash)
+                                    User.findOneAndUpdate({_id: user._id},{password: hash}, (err, data)=>{
+                                        if(err){
+                                            res.status(500).json({
+                                                msg: err.message
+                                            })
+                                        }
+                                        res.status(200).json({
+                                            success: true,
+                                            msg: "Password was changed"
+                                        })
+                                    })
+                                })
+                            })
+                            
+                        }else{
+                            res.status(401).send({success: false, msg: 'Password not match'});
+                        }
+                    } else {
+                        res.status(401).send({success: false, msg: 'Authentication failed. Wrong Oldpassword.'});
+                    }
+                    });
+                }
+    })
+},
     resetPassword: async (req, res) => {
         
         let token = req.params.token || null;

@@ -13,26 +13,26 @@
     <meta name="robots" content="noindex">
 
     <!-- Perfect Scrollbar -->
-    <link type="text/css" href="assets/vendor/perfect-scrollbar.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/vendor/perfect-scrollbar.css" rel="stylesheet">
 
     <!-- Fix Footer CSS -->
-    <link type="text/css" href="assets/vendor/fix-footer.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/vendor/fix-footer.css" rel="stylesheet">
 
     <!-- Material Design Icons -->
-    <link type="text/css" href="assets/css/material-icons.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/material-icons.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/material-icons.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/material-icons.rtl.css" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
-    <link type="text/css" href="assets/css/fontawesome.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/fontawesome.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/fontawesome.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/fontawesome.rtl.css" rel="stylesheet">
 
     <!-- Preloader -->
-    <link type="text/css" href="assets/css/preloader.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/preloader.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/preloader.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/preloader.rtl.css" rel="stylesheet">
 
     <!-- App CSS -->
-    <link type="text/css" href="assets/css/app.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/app.rtl.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/app.css" rel="stylesheet">
+    <link type="text/css" href="../../assets/css/app.rtl.css" rel="stylesheet">
 
 
 
@@ -88,7 +88,7 @@
 
         <!-- Header -->
 
-        <% include header-dashboard %>
+        <% include ../layout/header-dashboard-student %>
 
         <!-- // END Header -->
 
@@ -97,7 +97,7 @@
 
             <div class="bg-gradient-primary border-bottom-white py-32pt">
                 <div class="container d-flex flex-column flex-md-row align-items-center text-center text-md-left">
-                    <img src="assets/images/illustration/student/128/white.svg" width="104" class="mr-md-32pt mb-32pt mb-md-0" alt="student">
+                    <img src="../../assets/images/illustration/student/128/white.svg" width="104" class="mr-md-32pt mb-32pt mb-md-0" alt="student">
                     <div class="flex mb-32pt mb-md-0">
                         <h2 class="text-white mb-0">Alexander Watson</h2>
                         <p class="lead text-white-50 d-flex align-items-center">Student <span class="ml-16pt d-flex align-items-center"><i class="material-icons icon-16pt mr-4pt">opacity</i> 2,300 IQ</span></p>
@@ -176,49 +176,47 @@
 
 
             <div class="container page__container">
-                <form action="http://tutorio-bootstrap.frontendmatter.com/student-edit-account.html">
+                <form  method='POST'>
                     <div class="row">
                         <div class="col-lg-9">
-
                             <div class="page-section">
                                 <h4>Basic Information</h4>
-                                <div class="list-group list-group-form">
-                                    <div class="list-group-item">
-                                        <div class="form-group row mb-0">
-                                            <label class="col-form-label col-sm-3">First name</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" value="Alexander" placeholder="Your first name ...">
+                                    <div class="list-group list-group-form">
+                                        <div class="list-group-item">
+                                            <div class="form-group row mb-0">
+                                                <label class="col-form-label col-sm-3">Full name</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" value="<%= data.user.fullname %>" placeholder="Your first name ...">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="list-group-item">
+                                            <div class="form-group row mb-0">
+                                                <label class="col-form-label col-sm-3">Last name</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" value="Watson" placeholder="Your last name ...">
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <div class="list-group-item">
+                                            <div class="form-group row mb-0">
+                                                <label class="col-form-label col-sm-3">Email address</label>
+                                                <div class="col-sm-9">
+                                                    <input type="email" class="form-control" value="<%= data.user.email %>" placeholder="Your email address ...">
+                                                    <small class="form-text text-muted">Note that if you change your email, you will have to confirm it again.</small>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="list-group-item">
-                                        <div class="form-group row mb-0">
-                                            <label class="col-form-label col-sm-3">Last name</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" value="Watson" placeholder="Your last name ...">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="list-group-item">
-                                        <div class="form-group row mb-0">
-                                            <label class="col-form-label col-sm-3">Email address</label>
-                                            <div class="col-sm-9">
-                                                <input type="email" class="form-control" value="alexander.watson@fake-mail.com" placeholder="Your email address ...">
-                                                <small class="form-text text-muted">Note that if you change your email, you will have to confirm it again.</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                         </div>
                         <div class="col-lg-3 page-nav">
                             <div class="page-section pt-lg-112pt">
                                 <nav class="nav page-nav__menu">
-                                    <a class="nav-link active" href="student-edit-account.html">Basic Information</a>
-                                    <a class="nav-link" href="student-edit-account-profile.html">Profile &amp; Privacy</a>
-                                    <a class="nav-link" href="student-edit-account-notifications.html">Email Notifications</a>
-                                    <a class="nav-link" href="student-edit-account-password.html">Change Password</a>
+                                    <a class="nav-link active" href="/student/edit-account">Basic Information</a>
+                                    <a class="nav-link" href="/student/edit-account-profile">Profile &amp; Privacy</a>
+                                    <a class="nav-link" href="/student/edit-account-password">Change Password</a>
                                 </nav>
                                 <div class="page-nav__content">
                                     <button type="submit" class="btn btn-accent">Save changes</button>
@@ -231,7 +229,7 @@
 
 
 
-            <% include footer %>
+            <% include ../layout/footer-student %>
 
         </div>
         <!-- // END Header Layout Content -->
@@ -242,35 +240,35 @@
     
 
     <!-- jQuery -->
-    <script src="assets/vendor/jquery.min.js"></script>
+    <script src="../../assets/vendor/jquery.min.js"></script>
 
     <!-- Bootstrap -->
-    <script src="assets/vendor/popper.min.js"></script>
-    <script src="assets/vendor/bootstrap.min.js"></script>
+    <script src="../../assets/vendor/popper.min.js"></script>
+    <script src="../../assets/vendor/bootstrap.min.js"></script>
 
     <!-- Perfect Scrollbar -->
-    <script src="assets/vendor/perfect-scrollbar.min.js"></script>
+    <script src="../../assets/vendor/perfect-scrollbar.min.js"></script>
 
     <!-- DOM Factory -->
-    <script src="assets/vendor/dom-factory.js"></script>
+    <script src="../../assets/vendor/dom-factory.js"></script>
 
     <!-- MDK -->
-    <script src="assets/vendor/material-design-kit.js"></script>
+    <script src="../../assets/vendor/material-design-kit.js"></script>
 
     <!-- Fix Footer -->
-    <script src="assets/vendor/fix-footer.js"></script>
+    <script src="../../assets/vendor/fix-footer.js"></script>
 
     <!-- Chart.js -->
-    <script src="assets/vendor/Chart.min.js"></script>
+    <script src="../../assets/vendor/Chart.min.js"></script>
 
     <!-- App JS -->
-    <script src="assets/js/app.js"></script>
+    <script src="../../assets/js/app.js"></script>
 
     <!-- Highlight.js -->
-    <script src="assets/js/hljs.js"></script>
+    <script src="../../assets/js/hljs.js"></script>
 
     <!-- App Settings (safe to remove) -->
-    <script src="assets/js/app-settings.js"></script>
+    <script src="../../assets/js/app-settings.js"></script>
 
 
 
