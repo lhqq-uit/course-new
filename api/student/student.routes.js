@@ -7,9 +7,9 @@ const checkPermission = require('./../../helper/CheckPermission');
 
 router.get('/info/:idStudent', StudentController.getStudent);
 
-router.get('/courses-purchased',checkPermission.isStudent, StudentController.getAllCoursePurchased);
+router.get('/courses-purchased', checkPermission.isStudent, StudentController.getAllCoursePurchased);
 
-router.get('/courses-not-purchased', StudentController.getAllCourseNotPurchased);
+router.get('/courses-not-purchased', checkPermission.isStudent, StudentController.getAllCourseNotPurchased);
 
 router.put('/buy-course/:idCourse', checkPermission.isStudent, StudentController.buyCourse);
 
