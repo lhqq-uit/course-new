@@ -19,4 +19,6 @@ router.get('/recharge/:idStudent', checkPermission.isAdmin, UserController.recha
 
 router.get('/withdrawal/:idTeacher', UserController.withdrawal);
 
+router.post('/change-password', UserController.changePassword);
+
 module.exports = router;
