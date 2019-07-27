@@ -5,7 +5,9 @@ var router = express.Router();
 let TeacherController = require('./teacher.controller');
 let checkPermission = require("../../helper/CheckPermission");
 
-router.get('/transaction/:timedate', checkPermission.isTeacher, TeacherController.getTransactionOneDay);
+router.get('/transaction-this-month', checkPermission.isTeacher, TeacherController.getTransactionThisMonth);
+
+router.get('/transaction-one-week', checkPermission.isTeacher, TeacherController.getTransactionOneWeek);
 
 //get info of teacher
 //TODO: get teacher information via id user

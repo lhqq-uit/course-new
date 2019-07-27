@@ -1,15 +1,39 @@
 let Teacher = require('./teacher.model');
 
 module.exports = {
-   getTransactionOneDay: async (req, res) => {
+   getTransactionOneWeek: async (req, res) => {
       try{
-         let a = await Teacher.findOne({user: req.user.data._id}).select('transaction -_id')
+         let teacher = await Teacher.findOne({user: req.user.data._id}).select('transaction -_id')
+         let data = [];
+         let valueTransactionsWeek = [];
+         let d = new Date();
+         for (let i = 0 ; i < 7; i++){
+            let sumOneDay = 0;
+            for(j = 0; j< teacher.transaction.length; j++ ){
+               if(teacher.transaction[j].date_trading == d.toLocaleString().split(',')[0]){
+                  data.push(teacher.transaction[j])
+                  sumOneDay += teacher.transaction[j].value
+               }
+            }
+            d.setDate(d.getDate() - 1);
+            valueTransactionsWeek.push(sumOneDay); //array value current time to old
+         }                                         //sort old to current time
+         res.status(200).json({transaction: data, value: valueTransactionsWeek.reverse()});
+      }
+      catch(err) {
+         res.status(500).json({err_msg: err.mesage})
+      }
+   },
+   getTransactionThisMonth: async (req, res) => {
+      try{
+         let teacher = await Teacher.findOne({user: req.user.data._id}).select('transaction -_id')
          let data = [];
          let sum = 0;
-         for(i = 0; i< a.transaction.length; i++ ){
-            if(a.transaction[i].date_trading == req.params.timedate.replace(new RegExp('-', 'g'), '/')){
-               data.push(a.transaction[i])
-               sum += a.transaction[i].value
+         let d = new Date();
+         for(i = 0; i< teacher.transaction.length; i++ ){
+            if(teacher.transaction[i].date_trading.split('/')[0] - 1 === d.getMonth()) {
+               data.push(teacher.transaction[i])
+               sum += teacher.transaction[i].value
             }
          }
          res.status(200).json({transaction: data, value: sum});
