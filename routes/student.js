@@ -7,15 +7,15 @@ const jwtDecode = require('jwt-decode');
 
 //TODO: student-dashboard
 router.get("/dashboard", async (req, res) => {
-    var infoStudent='';
+    var infoStudent = '';
     var notificationLogin = false;
     if (req.session.token) { //TODO: check login session
         notificationLogin = true; // ! if true => push notification -> you are login
 
-        let getInfoTeacher = jwtDecode(req.session.token)
+        let getInfoStudent = jwtDecode(req.session.token)
         await axios({
                 method: 'get',
-                url: `${domain}/api/student/info/${getInfoTeacher._id}`,
+                url: `${domain}/api/student/info/${getInfoStudent._id}`,
                 //responseType: 'stream'
             })
             .then(response => {
@@ -30,8 +30,46 @@ router.get("/dashboard", async (req, res) => {
             })
 
         //console.log(iqTeacher) 
+        let getCoursePurchased = '';
+        await axios({
+                method: "get",
+                url: `${domain}/api/student/courses-purchased`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                //console.log(response.data.courses);
+
+                getCoursePurchased = response.data.courses;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+        let getCourseNotPurchased = '';
+        await axios({
+                method: "get",
+                url: `${domain}/api/student/courses-not-purchased`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                console.log(response.data);
+
+                getCourseNotPurchased = response.data;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
         res.render("student/student-dashboard", {
             infoStudent: infoStudent,
+            getCoursePurchased: getCoursePurchased,
+            getCourseNotPurchased: getCourseNotPurchased,
             notificationLogin: notificationLogin, // ! login true push notification
         });
     } else {

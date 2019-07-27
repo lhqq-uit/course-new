@@ -61,8 +61,8 @@ router.post("/login", (req, res) => {
         }
     }).then(Response => {
         req.session.token = Response.data.token;
-        console.log(req.session.token)
-        console.log()
+        //console.log(req.session.token)
+        // console.log()
         if (req.session.token) {
             res.redirect('/dashboard')
         }
@@ -145,7 +145,7 @@ router.post("/signup", (req, res) => {
             role: req.body.role
         }
     }).then(Response => {
-        console.log(Response.data)
+        //console.log(Response.data)
         req.session.SignUpTrue = true;
         res.redirect('/login');
     }).catch(err => {
