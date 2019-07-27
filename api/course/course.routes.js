@@ -19,6 +19,8 @@ var upload = multer({ storage : storage});
 
 router.get('/populate', CourseController.getCoursePopulate);
 
+router.get('/price/:idCourse', CourseController.getPriceAfterSale);
+
 router.get('/:idCourse', CourseController.getOneCourse);
 
 router.get('/rating/:idCourse', CourseController.getRatingCourse);
