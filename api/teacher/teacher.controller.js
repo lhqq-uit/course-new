@@ -5,7 +5,7 @@ module.exports = {
       try{
          let teacher = await Teacher.findOne({user: req.user.data._id}).select('transaction -_id')
          let data = [];
-         let sumOneWeek = 0;
+         let valueTransactionsWeek = [];
          let d = new Date();
          for (let i = 0 ; i < 7; i++){
             let sumOneDay = 0;
@@ -16,9 +16,9 @@ module.exports = {
                }
             }
             d.setDate(d.getDate() - 1);
-            sumOneWeek += sumOneDay;
-         }        
-         res.status(200).json({transaction: data, value: sumOneWeek});
+            valueTransactionsWeek.push(sumOneDay); //array value current time to old
+         }                                         //sort old to current time
+         res.status(200).json({transaction: data, value: valueTransactionsWeek.reverse()});
       }
       catch(err) {
          res.status(500).json({err_msg: err.mesage})
