@@ -16,11 +16,18 @@ var storage = multer.diskStorage({
         callback(null, file.originalname);
     }
 });
-var upload = multer({ storage : storage}).fields([
-    { name: 'image'},
-    { name: 'video' },
-    { name: 'document'}
-  ])
+var upload = multer({
+    storage: storage
+}).fields([{
+        name: 'image'
+    },
+    {
+        name: 'video'
+    },
+    {
+        name: 'document'
+    }
+])
 
 const axios = require('axios')
 //TODO: edit quiz -> add question to quiz in lesson
@@ -77,7 +84,7 @@ router.post("/edit-quiz/:idLesson", (req, res) => {
 
 //TODO: dashboard teacher
 router.get("/dashboard", async (req, res) => {
-    var infoTeacher='';
+    var infoTeacher = '';
     var notificationLogin = false;
     if (req.session.token) { //TODO: check login session
         notificationLogin = true; // ! if true => push notification -> you are login
@@ -99,9 +106,48 @@ router.get("/dashboard", async (req, res) => {
                 console.log(error);
             })
 
+        var getTransactionOneWeek = '';
+        await axios({
+                method: "get",
+                url: `${domain}/api/teacher/transaction-one-week`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                //console.log(response.data);
+
+                getTransactionOneWeek = response.data;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+        var getTransactionThisMonth = '';
+        await axios({
+                method: "get",
+                url: `${domain}/api/teacher/transaction-this-month`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                //console.log(response.data);
+
+                getTransactionThisMonth = response.data;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+
         //console.log(iqTeacher) 
         res.render("teacher/instructor-dashboard", {
             infoTeacher: infoTeacher,
+            getTransactionThisMonth: getTransactionThisMonth,
+            getTransactionOneWeek: getTransactionOneWeek,
             notificationLogin: notificationLogin, // ! login true push notification
         });
     } else {
@@ -116,21 +162,21 @@ router.get("/add-course", (req, res) => {
         res.redirect('/login')
     } else {
         let getInfoTeacher = jwtDecode(req.session.token)
-        if(getInfoTeacher == "Teacher"){
+        if (getInfoTeacher == "Teacher") {
             res.render("teacher/instructor-add-course", {
                 teacher: getInfoTeacher,
             });
-        } else{
+        } else {
             res.redirect('/')
         }
     }
 });
 
 router.post("/add-course", upload, async (req, res) => {
-    
+
     if (req.session.token) {
         let getInfoTeacher = jwtDecode(req.session.token);
-        if (getInfoTeacher.role == "Teacher"){
+        if (getInfoTeacher.role == "Teacher") {
             let formData = await new FormData();
             let readStream = fs.createReadStream(`./public/upload/tmp/${req.files.image.originalname}`);
 
@@ -156,10 +202,10 @@ router.post("/add-course", upload, async (req, res) => {
                 .catch(function (error) {
                     res.send(error)
                 });
-        } else{
+        } else {
             res.redirect('/')
         }
-    } else{
+    } else {
         res.redirect('/login');
     }
 });
@@ -169,21 +215,23 @@ router.get("/edit-course/:idCourse", (req, res) => {
         method: 'get',
         url: `${domain}/api/course/${req.params.idCourse}`
     }).then(result => {
-        res.render('teacher/instructor-edit-course', {course: result.data});
+        res.render('teacher/instructor-edit-course', {
+            course: result.data
+        });
     }).catch(error => {
         res.send(error.message)
     })
-    
+
 })
 
-router.post("/edit-lesson/:idCourse", upload ,async (req, res) => {
-    
+router.post("/edit-lesson/:idCourse", upload, async (req, res) => {
+
 })
 
 
-router.post("/add-lesson/:idCourse", upload ,async (req, res) => {
+router.post("/add-lesson/:idCourse", upload, async (req, res) => {
     // res.json(req.files)
-    for(let i = 0; i < req.body.title.length; i++){
+    for (let i = 0; i < req.body.title.length; i++) {
         let formData = await new FormData();
         let readStreamVideo = fs.createReadStream(`./public/upload/tmp/${req.files.video[i].originalname}`);
         let readStreamDoc = fs.createReadStream(`./public/upload/tmp/${req.files.document[i].originalname}`);
@@ -217,20 +265,69 @@ router.post("/add-lesson/:idCourse", upload ,async (req, res) => {
 router.get("/courses", (req, res) => {
     let getInfoTeacher = jwtDecode(req.session.token)
     axios({
-        method: 'get',
-        url: `${domain}/api/teacher/courses/${getInfoTeacher._id}`,
-        //responseType: 'stream'
-    })
-    .then(response => {
-        // handle success
-        console.log(response.data);
-        res.render("teacher/instructor-courses.ejs",{courses: response.data.courses, user: getInfoTeacher});
-    })
-    .catch(error => {
-        // handle error
-        console.log(error);
-    })
-    
+            method: 'get',
+            url: `${domain}/api/teacher/courses/${getInfoTeacher._id}`,
+            //responseType: 'stream'
+        })
+        .then(response => {
+            // handle success
+            console.log(response.data);
+            res.render("teacher/instructor-courses.ejs", {
+                courses: response.data.courses,
+                user: getInfoTeacher
+            });
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+        })
+
 });
 
+
+//TODO: show statement
+router.get("/statement", async (req, res) => {
+    if (req.session.token) { //TODO: check login session
+        var getTransactionOneWeek = '';
+        await axios({
+                method: "get",
+                url: `${domain}/api/teacher/transaction-one-week`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                //console.log(response.data);
+
+                getTransactionOneWeek = response.data;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+
+        let getInfoTeacher = jwtDecode(req.session.token)
+        await axios({
+                method: 'get',
+                url: `${domain}/api/teacher/info/${getInfoTeacher._id}`,
+                //responseType: 'stream'
+            })
+            .then(response => {
+                // handle success
+                console.log(response.data);
+
+                infoTeacher = response.data;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+
+        res.render("teacher/instructor-statement", {
+            infoTeacher: infoTeacher,
+            getTransactionOneWeek: getTransactionOneWeek
+        })
+    } else res.redirect("../login")
+})
 module.exports = router;
