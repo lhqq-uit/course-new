@@ -142,10 +142,29 @@ router.get("/dashboard", async (req, res) => {
                 // handle error
                 console.log(error);
             })
+        var getAverageMonthlySalary = '';
+        await axios({
+                method: "get",
+                url: `${domain}/api/teacher/average-salary`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                //console.log(response.data);
 
+                getAverageMonthlySalary = response.data;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
         //console.log(iqTeacher) 
         res.render("teacher/instructor-dashboard", {
             infoTeacher: infoTeacher,
+            dataChartArray: getTransactionOneWeek.value,
+            getAverageMonthlySalary: getAverageMonthlySalary,
             getTransactionThisMonth: getTransactionThisMonth,
             getTransactionOneWeek: getTransactionOneWeek,
             notificationLogin: notificationLogin, // ! login true push notification
