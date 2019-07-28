@@ -24,7 +24,11 @@ var TeacherSchema = new mongoose.Schema({
       },
       date_trading: String,       //using $group to calculate sum value in one date
       value: Number
-   }]
+   }],
+   timeCreated: {
+      type: Date,
+      default: Date.now
+   }
 });
 
 module.exports = mongoose.model('Teacher', TeacherSchema);
