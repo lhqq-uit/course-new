@@ -60,6 +60,34 @@ module.exports = {
          })
       }
    },
+   getAverageMonthlySalary: async (req, res) => {
+      try {
+         let teacher = await Teacher.findOne({
+            user: req.user.data._id
+         });
+         let firstTime = teacher.timeCreated;
+         let currentTime = new Date
+         let numberDay = Math.floor((currentTime - firstTime)/86400000);
+         let avgValue = 0;
+         let totalValue = 0;
+         let numberDayInMonth = numberDay - currentTime.getDate();
+         console.log(numberDayInMonth)
+         if(numberDayInMonth < 1)
+         return res.status(200).json({'Value': avgValue});
+         for (i = 0; i < teacher.transaction.length; i++) {
+            if (teacher.transaction[i].date_trading.split('/')[0] - 1 < currentTime.getMonth() 
+               && teacher.transaction[i].date_trading.split('/')[2] <= currentTime.getFullYear()) {
+               totalValue += teacher.transaction[i].value
+            }
+         }
+         avgValue = totalValue / numberDayInMonth * 30;
+         res.status(200).json({'Value': avgValue});
+      } catch (err) {
+         res.status(500).json({
+            err_msg: err.mesage
+         })
+      }
+   },
    getTeacher: async (req, res) => {
       try {
          let teacher = await Teacher.findOne({
