@@ -1,18 +1,18 @@
-<div class="card">
-    <div class="card-header">
+<div  class="card">
+    <!-- <div class="card-header">
         <div class="float-left">
             <input class="datepicker form-control" type="text" value="01/28/2016">
         </div>
         <div class="clearfix"></div>
-    </div>
+    </div> -->
 
-    <div data-toggle="lists" data-lists-values='[
+    <div  data-toggle="lists" data-lists-values='[
 "js-lists-values-course", 
 "js-lists-values-document",
 "js-lists-values-amount",
 "js-lists-values-date"
 ]' data-lists-sort-by="js-lists-values-date" data-lists-sort-desc="true" class="table-responsive">
-        <table class="table table-flush table-nowrap">
+        <table  class="table table-flush table-nowrap">
             <thead>
                 <tr>
                     <th colspan="2">
@@ -26,105 +26,35 @@
             <tbody class="list">
 
 
+                <% if (getTransactionOneWeek) { %>
+                    <% getTransactionOneWeek.transaction.forEach(function(item) { %>
 
-
-                <tr>
-                    <td>
-                        <div class="d-flex flex-nowrap align-items-center">
-                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
-                                <img src="assets/images/paths/angular_routing_200x168.png" alt="course"
-                                    class="avatar-img rounded">
-                            </a>
-                            <div class="flex">
-                                <a class="text-body js-lists-values-course"
-                                    href="instructor-edit-course.html"><strong>Angular Routing In-Depth</strong></a><br>
-                                <small class="text-muted mr-1">
-                                    Invoice
-                                    <a href="invoice.html" style="color: inherit;"
-                                        class="js-lists-values-document">#8734</a> -
-                                    &dollar;<span class="js-lists-values-amount">89</span> USD
-                                </small>
+                    <tr>
+                        <td>
+                            <div class="d-flex flex-nowrap align-items-center">
+                                <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
+                                    <img src="../upload/images/<%= item.course.avatar %>" alt="course"
+                                        class="avatar-img rounded">
+                                </a>
+                                <div class="flex">
+                                    <a class="text-body js-lists-values-course"
+                                        href="instructor-edit-course.html"><strong><%= item.course.name %></strong></a><br>
+                                    <small class="text-muted mr-1">
+                                        Invoice
+                                        <a href="invoice.html" style="color: inherit;"
+                                            class="js-lists-values-document">#<%= item.index %></a> -
+                                        &dollar;<span class="js-lists-values-amount"><%= item.value %></span> USD
+                                    </small>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <small class="text-muted text-uppercase js-lists-values-date">12 Nov 2018</small>
-                    </td>
-                </tr>
+                        </td>
+                        <td class="text-right">
+                            <small class="text-muted text-uppercase js-lists-values-date"><%= item.date_trading %></small>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td>
-                        <div class="d-flex flex-nowrap align-items-center">
-                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
-                                <img src="assets/images/paths/angular_testing_200x168.png" alt="course"
-                                    class="avatar-img rounded">
-                            </a>
-                            <div class="flex">
-                                <a class="text-body js-lists-values-course"
-                                    href="instructor-edit-course.html"><strong>Angular Unit Testing</strong></a><br>
-                                <small class="text-muted mr-1">
-                                    Invoice
-                                    <a href="invoice.html" style="color: inherit;"
-                                        class="js-lists-values-document">#8735</a> -
-                                    &dollar;<span class="js-lists-values-amount">89</span> USD
-                                </small>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <small class="text-muted text-uppercase js-lists-values-date">13 Nov 2018</small>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="d-flex flex-nowrap align-items-center">
-                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
-                                <img src="assets/images/paths/typescript_200x168.png" alt="course"
-                                    class="avatar-img rounded">
-                            </a>
-                            <div class="flex">
-                                <a class="text-body js-lists-values-course"
-                                    href="instructor-edit-course.html"><strong>Introduction to
-                                        TypeScript</strong></a><br>
-                                <small class="text-muted mr-1">
-                                    Invoice
-                                    <a href="invoice.html" style="color: inherit;"
-                                        class="js-lists-values-document">#8736</a> -
-                                    &dollar;<span class="js-lists-values-amount">89</span> USD
-                                </small>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <small class="text-muted text-uppercase js-lists-values-date">14 Nov 2018</small>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="d-flex flex-nowrap align-items-center">
-                            <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
-                                <img src="assets/images/paths/angular_200x168.png" alt="course"
-                                    class="avatar-img rounded">
-                            </a>
-                            <div class="flex">
-                                <a class="text-body js-lists-values-course"
-                                    href="instructor-edit-course.html"><strong>Learn Angular
-                                        Fundamentals</strong></a><br>
-                                <small class="text-muted mr-1">
-                                    Invoice
-                                    <a href="invoice.html" style="color: inherit;"
-                                        class="js-lists-values-document">#8737</a> -
-                                    &dollar;<span class="js-lists-values-amount">89</span> USD
-                                </small>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="text-right">
-                        <small class="text-muted text-uppercase js-lists-values-date">15 Nov 2018</small>
-                    </td>
-                </tr>
+                    <% }) %>
+                <% } %>
 
             </tbody>
         </table>

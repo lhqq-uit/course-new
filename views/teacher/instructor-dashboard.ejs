@@ -129,7 +129,9 @@
                             <div class="border-1 border-left-3 border-left-accent rounded text-70 text-center mb-lg-0">
                                 <div class="card-body">
                                     Earnings this month
-                                    <p class="lead text-body mb-0"><strong>$1,569.00</strong></p>
+                                    <p class="lead text-body mb-0"><strong>
+                                        $<%= getTransactionThisMonth.value %>
+                                    </strong></p>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +147,9 @@
                             <div class="border rounded text-70 text-center mb-lg-0">
                                 <div class="card-body">
                                     Total Sales
-                                    <p class="lead text-body mb-0"><strong>$10,211.50</strong></p>
+                                    <p class="lead text-body mb-0"><strong>
+                                        $<%= infoTeacher.salary%>
+                                    </strong></p>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +174,7 @@
                 </div>
 
                 <div class="row mb-8pt">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
 
                         <div class="mb-heading d-flex align-items-end">
                             <div class="flex">
@@ -179,10 +183,10 @@
                             </div>
                             <a href="instructor-statement.html" class="text-underline">Statement</a>
                         </div>
-                        <% include ../layout/Transactions %>
+                        <%- include('../layout/Transactions', {getTransactionOneWeek: getTransactionOneWeek}) %>
 
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
 
                         <div class="mb-heading d-flex align-items-center">
                             <div class="flex">
@@ -265,64 +269,7 @@
                             </div>
                         </div>
 
-                        <!-- <div class="mb-heading">
-        <h4 class="card-title">Sales today</h4>
-        <p class="card-subtitle">by course</p>
-      </div>
-
-      <div class="card">
-        <ul class="list-group list-group-flush mb-0">
-          <li class="list-group-item">
-            <div class="media align-items-center">
-              <div class="media-body">
-                <a href="instructor-edit-course.html" class="text-body"><strong>Basics of HTML</strong></a>
-              </div>
-              <div class="media-right">
-                <div class="text-center">
-                  <span class="badge badge-pill badge-primary">15</span>    
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="media align-items-center">
-              <div class="media-body">
-                <a href="instructor-edit-course.html" class="text-body"><strong>Angular in Steps</strong></a>
-              </div>
-              <div class="media-right">
-                <div class="text-center">
-                  <span class="badge badge-pill badge-success">50</span>    
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="media align-items-center">
-              <div class="media-body">
-                <a href="instructor-edit-course.html" class="text-body"><strong>Bootstrap Foundations</strong></a>
-              </div>
-              <div class="media-right">
-                <div class="text-center">
-                  <span class="badge badge-pill badge-warning">14</span>    
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="media align-items-center">
-              <div class="media-body">
-                <a href="instructor-edit-course.html" class="text-body"><strong>GitHub Basics</strong></a>
-              </div>
-              <div class="media-right">
-                <div class="text-center">
-                  <span class="badge badge-pill badge-danger ">14</span>   
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div> -->
-
+                      
                     </div>
                 </div>
 
