@@ -77,7 +77,7 @@ module.exports = {
    },
    getOneCourse: async (req, res) => {
       try {
-         let course = await Course.findById(req.params.idCourse);
+         let course = await Course.findById(req.params.idCourse).populate("lessons");
          res.status(200).json(course);
       } catch (error) {
          res.status(404).json({message: 'No course found'})

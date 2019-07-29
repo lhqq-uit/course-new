@@ -148,7 +148,7 @@
                                             <div class="custom-file">
                                                 <input type="file" name="image" id="file" class="custom-file-input" onchange="readURL(this);" required
                                                 oninvalid="this.setCustomValidity('Enter File Image Here')"
-                                                oninput="this.setCustomValidity('')">
+                                                oninput="this.setCustomValidity('')" accept="image/*">
                                                 <label for="file" class="custom-file-label image-course">Choose file image</label>
                                             </div>
                                         </div>
@@ -188,7 +188,7 @@
                                                     <h4>Sale</h4>
                                                     <div class="form-group">
                                                         <div class="input-group form-inline">
-                                                            <input type="text" name="isSell" class="form-control" value="<%= course.isSell %>"
+                                                            <input type="text" name="sale" class="form-control" value="<%= course.sale %>"
                                                             required oninvalid="this.setCustomValidity('Enter Sale Here')"
                                                             oninput="this.setCustomValidity('')">
                                                             <span class="input-group-prepend"><span
@@ -202,16 +202,16 @@
                                     
                                     <h4>Tags</h4>
                                     <div class="form-group">
-                                        <input type="text" name="tags" class="form-control"
+                                        <input type="text" name="tag" class="form-control"
                                             placeholder="enter, badges, here"
                                             required
-                                            oninvalid="this.setCustomValidity('Enter User Name Here')"
+                                            oninvalid="this.setCustomValidity('Enter tags Here')"
                                             oninput="this.setCustomValidity('')"
-                                            value="<%= course.tags %>">
+                                            value="<%= course.tag %>">
                                         <small class="form-text text-muted">Separate tags with space or comma.</small>
                                     </div>
         
-                                    <small class="text-muted">Your tags:</small>
+                                    <!-- <small class="text-muted">Your tags:</small>
                                     <a href="#" class="float-right"><small>Clear all</small></a>
                                     <div class="clearfix"></div>
                                     <span class="badge badge-primary badge-filter">
@@ -219,7 +219,7 @@
                                     </span>
                                     <span class="badge badge-primary badge-filter">
                                         <a href="#"><i class="material-icons">close</i></a> Guide
-                                    </span>
+                                    </span> -->
             
                                     <div class="card m-0">
                                         <div class="card-header text-center">
@@ -252,35 +252,51 @@
                             <div class="mb-heading d-flex align-items-center">
                                 <h4 class="flex mb-0">Lessons</h4>
                             </div>
-                            <!-- 
-                        <div class="card stack">
-                            <div class="card-header">
-                                <label class="form-label" for="">Title Lessons</label>
-                                <input type="text" class="form-control" id="" placeholder="Enter your lession ..">
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <label class="form-label" for="">Description Lessons</label>
-                                    <textarea class="form-control" rows="3" placeholder="Lession description goes here.."></textarea>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="custom-file">
-                                        <input type="file" id="file" class="custom-file-input">
-                                        <label for="file" class="custom-file-label">Choose file video</label>
+
+                            <% if (course.lessons.length != 0) { %>
+
+                                <% course.lessons.forEach(function(lesson){ %>
+                                    <div class="card stack">
+                                        <div class="card-header">
+                                            <label class="form-label" for="">Title Lessons</label>
+                                            <input type="text" name="title" class="form-control" id="" placeholder="Enter name lessson .."
+                                            required oninvalid="this.setCustomValidity('Enter lesson title Here')"
+                                            oninput="this.setCustomValidity('')" value="<%= lesson.title %>">
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <label class="form-label" for="">Description Lessons</label>
+                                                <textarea class="form-control" name="description" rows="3" placeholder="Course description goes here.."
+                                                required oninvalid="this.setCustomValidity('Enter course title Here')"
+                                                oninput="this.setCustomValidity('')"><%= lesson.description %></textarea>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="custom-file">
+                                                    <input type="file" id="file" name="video" class="custom-file-input"
+                                                    required oninvalid="this.setCustomValidity('Enter file video Here')"
+                                                    oninput="this.setCustomValidity('')" accept="video/*">
+                                                    <label for="file" class="custom-file-label" >Choose file video</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="custom-file">
+                                                    <input type="file" name="document" id="file" class="custom-file-input"
+                                                    required oninvalid="this.setCustomValidity('Enter file document Here')"
+                                                    oninput="this.setCustomValidity('')" accept=
+                                                    "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                                    text/plain, application/pdf, image/*">
+                                                    <label for="file" class="custom-file-label" >Choose file documents</label>
+                                                </div>
+                                            </li>
+                                        </ul>
                                     </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="custom-file">
-                                        <input type="file" id="file" class="custom-file-input">
-                                        <label for="file" class="custom-file-label">Choose file documents</label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div> -->
+                                <% }); %>
+
+                            <% } %>
                         <div class="show-more"></div>
                         <button onclick="appendText();" type="button" class="btn btn-outline-secondary mb-24pt mb-sm-0">Add Lession</button>
                         
-                        <div class="card-header text-center" style="margin: 10px 0 10px">
+                        <div class="text-center" style="margin: 10px 0 10px">
                             <!-- <a href="#" class="btn btn-accent">Save changes</a> -->
                             <button type="submit" class="btn btn-success">Save changes</button>
                         </div>
@@ -290,22 +306,32 @@
                                 let text =`<div class="card stack">
                                                 <div class="card-header">
                                                     <label class="form-label" for="">Title Lessons</label>
-                                                    <input type="text" name="title" class="form-control" id="" placeholder="Enter name lessson ..">
+                                                    <input type="text" name="title" class="form-control" id="" placeholder="Enter name lessson .."
+                                                    required oninvalid="this.setCustomValidity('Enter lesson title Here')"
+                                                    oninput="this.setCustomValidity('')">
                                                 </div>
                                                 <ul class="list-group list-group-flush">
                                                     <li class="list-group-item">
                                                         <label class="form-label" for="">Description Lessons</label>
-                                                        <textarea class="form-control" name="description" rows="3" placeholder="Course description goes here.."></textarea>
+                                                        <textarea class="form-control" name="description" rows="3" placeholder="Course description goes here.."
+                                                        required oninvalid="this.setCustomValidity('Enter course title Here')"
+                                                        oninput="this.setCustomValidity('')"></textarea>
                                                     </li>
                                                     <li class="list-group-item">
                                                         <div class="custom-file">
-                                                            <input type="file" id="file" name="video" class="custom-file-input">
+                                                            <input type="file" id="file" name="video" class="custom-file-input"
+                                                            required oninvalid="this.setCustomValidity('Enter file video Here')"
+                                                            oninput="this.setCustomValidity('')" accept="video/*">
                                                             <label for="file" class="custom-file-label">Choose file video</label>
                                                         </div>
                                                     </li>
                                                     <li class="list-group-item">
                                                         <div class="custom-file">
-                                                            <input type="file" name="document" id="file" class="custom-file-input">
+                                                            <input type="file" name="document" id="file" class="custom-file-input"
+                                                            required oninvalid="this.setCustomValidity('Enter file document Here')"
+                                                            oninput="this.setCustomValidity('')" accept=
+                                                            "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                                            text/plain, application/pdf, image/*">
                                                             <label for="file" class="custom-file-label">Choose file documents</label>
                                                         </div>
                                                     </li>
@@ -367,7 +393,20 @@
     <script src="/assets/js/app-settings.js"></script>
 
 
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function (e) {
+                    $('#output-img')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 
 </body>
 
