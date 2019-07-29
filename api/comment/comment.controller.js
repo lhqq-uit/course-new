@@ -1,6 +1,7 @@
 const User = require('./../users/users.model')
 const Comment = require('./comment.model')
 const Lesson = require('./../lesson/lesson.model')
+const Teacher = require('./../teacher/teacher.model');
 
 module.exports = {
     // ? Parent 
@@ -38,7 +39,7 @@ module.exports = {
             if (error && error.name === 'ValidationError') {
                 let err_msg = error.message.toString().replace('Lesson validation failed: ', '').split(', ')
                 return res.status(400).json({
-                    success: false, 
+                    success: false,
                     err_msg: err_msg
                 });
             }
@@ -224,11 +225,53 @@ module.exports = {
                 '_id': {
                     '$in': getData.comment
                 }
-            }).populate('user','username role')
+            }).populate('user', 'username role')
             res.status(201).json({
                 success: true,
                 msg: "Get all comment success",
                 data: getAllCommentOfLesson,
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: error.message || "Some error occurred while get all the comment."
+            })
+        }
+    },
+    getAllCommentOfCourseByTeacher: async (req, res) => {
+        try {
+            let getCMT = await Teacher.findOne({
+                    // !user: req.user._id
+                    //_id: req.user.data._id
+                    _id: req.params.idTeacher
+                })
+                .populate({
+                    path: "courses",
+                    select: "name lessons -_id",
+                    populate: {
+                        path: "lessons",
+                        select: "comment -_id",
+                        populate: {
+                            path: "comment",
+                            select: "content reply user time -_id",
+                            options: {
+                                sort: {
+                                    _id: -1
+                                }
+                            },
+                            populate: {
+                                path: "reply user",
+                                select: "content time avatar fullname -_id",
+                                populate: {
+                                    path: "reply user",
+                                    select: "content time avatar fullname -_id",
+                                }
+                            }
+                        }
+                    }
+                })
+                .select("courses -_id")
+            res.status(201).json({
+                data: getCMT,
             })
         } catch (error) {
             res.status(500).send({
