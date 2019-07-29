@@ -34,6 +34,7 @@
     <!-- App CSS -->
     <link type="text/css" href="../assets/css/app.css" rel="stylesheet">
     <link type="text/css" href="../assets/css/app.rtl.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 
 
 
@@ -129,15 +130,17 @@
                             <div class="border-1 border-left-3 border-left-accent rounded text-70 text-center mb-lg-0">
                                 <div class="card-body">
                                     Earnings this month
-                                    <p class="lead text-body mb-0"><strong>$1,569.00</strong></p>
+                                    <p class="lead text-body mb-0"><strong>
+                                        $<%= getTransactionThisMonth.value %>
+                                    </strong></p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="border rounded text-70 text-center mb-lg-0">
                                 <div class="card-body">
-                                    Account Balance
-                                    <p class="lead text-body mb-0"><strong>$3,917.80</strong></p>
+                                    Average amount
+                                    <p class="lead text-body mb-0"><strong>$ <%= getAverageMonthlySalary.Value %></strong></p>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +148,9 @@
                             <div class="border rounded text-70 text-center mb-lg-0">
                                 <div class="card-body">
                                     Total Sales
-                                    <p class="lead text-body mb-0"><strong>$10,211.50</strong></p>
+                                    <p class="lead text-body mb-0"><strong>
+                                        $<%= infoTeacher.salary%>
+                                    </strong></p>
                                 </div>
                             </div>
                         </div>
@@ -161,16 +166,16 @@
                         <h4 class="card-title">Earnings</h4>
                         <p class="card-subtitle">Last Week vs. Previous Week</p>
                     </div>
-                    <a href="instructor-earnings.html" class="text-underline">View Earnings</a>
+                    <!-- <a href="instructor-earnings.html" class="text-underline">View Earnings</a> -->
                 </div>
                 <div class="card p-24pt mb-32pt">
-                    <div class="chart" style="height: 320px;">
-                        <canvas id="earningsChart" class="chart-canvas"></canvas>
+                    <div class="chart" style="height: auto;">
+                        <canvas id="myChart" class="chart-canvas"></canvas>
                     </div>
                 </div>
 
                 <div class="row mb-8pt">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
 
                         <div class="mb-heading d-flex align-items-end">
                             <div class="flex">
@@ -179,10 +184,10 @@
                             </div>
                             <a href="instructor-statement.html" class="text-underline">Statement</a>
                         </div>
-                        <% include ../layout/Transactions %>
+                        <%- include('../layout/Transactions', {getTransactionOneWeek: getTransactionOneWeek}) %>
 
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
 
                         <div class="mb-heading d-flex align-items-center">
                             <div class="flex">
@@ -265,64 +270,7 @@
                             </div>
                         </div>
 
-                        <!-- <div class="mb-heading">
-        <h4 class="card-title">Sales today</h4>
-        <p class="card-subtitle">by course</p>
-      </div>
-
-      <div class="card">
-        <ul class="list-group list-group-flush mb-0">
-          <li class="list-group-item">
-            <div class="media align-items-center">
-              <div class="media-body">
-                <a href="instructor-edit-course.html" class="text-body"><strong>Basics of HTML</strong></a>
-              </div>
-              <div class="media-right">
-                <div class="text-center">
-                  <span class="badge badge-pill badge-primary">15</span>    
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="media align-items-center">
-              <div class="media-body">
-                <a href="instructor-edit-course.html" class="text-body"><strong>Angular in Steps</strong></a>
-              </div>
-              <div class="media-right">
-                <div class="text-center">
-                  <span class="badge badge-pill badge-success">50</span>    
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="media align-items-center">
-              <div class="media-body">
-                <a href="instructor-edit-course.html" class="text-body"><strong>Bootstrap Foundations</strong></a>
-              </div>
-              <div class="media-right">
-                <div class="text-center">
-                  <span class="badge badge-pill badge-warning">14</span>    
-                </div>
-              </div>
-            </div>
-          </li>
-          <li class="list-group-item">
-            <div class="media align-items-center">
-              <div class="media-body">
-                <a href="instructor-edit-course.html" class="text-body"><strong>GitHub Basics</strong></a>
-              </div>
-              <div class="media-right">
-                <div class="text-center">
-                  <span class="badge badge-pill badge-danger ">14</span>   
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div> -->
-
+                      
                     </div>
                 </div>
 
@@ -357,6 +305,114 @@
             })
         }
     </script>
+    <script>
+        var dataArray = <%- JSON.stringify(dataChartArray) %>;
+        //console.log(dataArray);
+
+        var data1 = [];
+        var data2 = [];
+        dataArray.forEach(function(item, index, array) {
+            //console.log(item, index);
+            if (index < 7) {
+                data1.push(item);
+            }
+            else{
+                data2.push(item);
+            }
+        });
+
+        var dates = [];
+        for (let index = 0 ;index < 7; index++) {
+            let date = new Date();
+            
+            date.setDate(date.getDate() - index);
+
+            var finalDate = date.getDate()+'/'+ (date.getMonth()+1) +'/'+date.getFullYear();
+            dates.push(finalDate);
+        }
+        var trueDates = dates.reverse();
+     
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: trueDates,
+                datasets: [{
+                    label: 'Last Week',
+                    data: data1,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
+                        // 'rgba(54, 162, 235, 0.7)',
+
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        //'rgba(54, 162, 235, 1)',
+
+                    ],
+                    borderWidth: 1
+                }, {
+                    label: 'This week',
+                    data: data2,
+                    backgroundColor: [
+
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        //'rgba(255, 0, 0, 0.6)'
+
+                    ],
+                    borderColor: [
+                        //'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+
+                    ],
+                    borderWidth: 1,
+
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        //stacked: true hai coi data chong len voi nhau
+                    }],
+                    xAxes: [{
+                        barPercentage: 0.5,
+                        barThickness: 45,
+                        maxBarThickness: 50,
+                        minBarLength: 20,
+                        gridLines: {
+                            offsetGridLines: true
+                        },
+                        //stacked: true
+                    }]
+                },
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0
+                    }
+                },
+                responsive: true,
+
+            }
+        });
+    </script>
 
     <!-- jQuery -->
     <script src="../assets/vendor/jquery.min.js"></script>
@@ -378,7 +434,7 @@
     <script src="../assets/vendor/fix-footer.js"></script>
 
     <!-- Chart.js -->
-    <script src="../assets/vendor/Chart.min.js"></script>
+    <!-- <script src="../assets/vendor/Chart.min.js"></script> -->
 
     <!-- App JS -->
     <script src="../assets/js/app.js"></script>
@@ -398,11 +454,11 @@
     <script src="../assets/vendor/moment-range.min.js"></script>
 
     <!-- Chart.js -->
-    <script src="../assets/vendor/Chart.min.js"></script>
+    <!-- <script src="../assets/vendor/Chart.min.js"></script> -->
 
     <!-- UI Charts Page JS -->
-    <script src="../assets/js/chartjs-rounded-bar.js"></script>
-    <script src="../assets/js/chartjs.js"></script>
+    <!-- <script src="../assets/js/chartjs-rounded-bar.js"></script>
+    <script src="../assets/js/chartjs.js"></script> -->
 
     <!-- Chart.js Samples -->
     <script src="../assets/js/page.instructor-dashboard.js"></script>
