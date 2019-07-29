@@ -43,5 +43,9 @@ router.delete("/child/:idCommentParent/:idCommentChild", passport.authenticate('
     session: false
 }), CommentController.deleteChild);
 
+//TODO: get all cmt form course by teacher, lấy cmt mới nhất từ khóa học trong lesson của teacher ok
+router.get("/teacher/:idTeacher", passport.authenticate('jwt', {
+    session: false
+}), CommentController.getAllCommentOfCourseByTeacher);
 
 module.exports = router;
