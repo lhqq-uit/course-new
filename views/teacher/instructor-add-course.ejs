@@ -55,7 +55,7 @@
 
         <!-- Header -->
 
-        <%- include('../layout/header-dashboard', {avatar: avatarTeacher}); %>
+        <%- include('../layout/header-dashboard', {avatar: teacher.avatar}); %>
 
         <!-- // END Header -->
 
@@ -148,7 +148,7 @@
                                     <div class="custom-file">
                                         <input type="file" name="image" id="file" class="custom-file-input" onchange="readURL(this);" required
                                         oninvalid="this.setCustomValidity('Enter File Image Here')"
-                                        oninput="this.setCustomValidity('')">
+                                        oninput="this.setCustomValidity('')" accept="image/*">
                                         <label for="file" class="custom-file-label image-course">Choose file image</label>
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@
                                             <h4>Sale</h4>
                                             <div class="form-group">
                                                 <div class="input-group form-inline">
-                                                    <input type="text" name="isSell" class="form-control" value=""
+                                                    <input type="text" name="sale" class="form-control" value=""
                                                     required oninvalid="this.setCustomValidity('Enter Sale Here')"
                                                     oninput="this.setCustomValidity('')">
                                                     <span class="input-group-prepend"><span
@@ -202,7 +202,7 @@
                             
                             <h4>Tags</h4>
                             <div class="form-group">
-                                <input type="text" name="tags" class="form-control"
+                                <input type="text" name="tag" class="form-control"
                                     placeholder="enter, badges, here"
                                     required
                                     oninvalid="this.setCustomValidity('Enter User Name Here')"
@@ -210,7 +210,7 @@
                                 <small class="form-text text-muted">Separate tags with space or comma.</small>
                             </div>
 
-                            <small class="text-muted">Your tags:</small>
+                            <!-- <small class="text-muted">Your tags:</small>
                             <a href="#" class="float-right"><small>Clear all</small></a>
                             <div class="clearfix"></div>
                             <span class="badge badge-primary badge-filter">
@@ -218,7 +218,7 @@
                             </span>
                             <span class="badge badge-primary badge-filter">
                                 <a href="#"><i class="material-icons">close</i></a> Guide
-                            </span>
+                            </span> -->
     
                             <div class="card m-0">
                                 <div class="card-header text-center">
