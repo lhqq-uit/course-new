@@ -179,11 +179,7 @@ router.get("/add-course", (req, res) => {
         res.redirect('/login')
     } else {
         let getInfoTeacher = jwtDecode(req.session.token)
-<<<<<<< HEAD
         if(getInfoTeacher.role == "Teacher"){
-=======
-        if (getInfoTeacher == "Teacher") {
->>>>>>> 28273338e5d3317e94a3919b7fbaa638fd1d1059
             res.render("teacher/instructor-add-course", {
                 teacher: getInfoTeacher,
             });
@@ -232,7 +228,6 @@ router.post("/add-course", upload, async (req, res) => {
     }
 });
 
-<<<<<<< HEAD
 router.get("/edit-course/:idCourse", async (req, res) => {
     if(req.session.token){
         let getInfoTeacher = jwtDecode(req.session.token);
@@ -259,7 +254,7 @@ router.post("/edit-course/:idCourse", async (req, res) => {
         res.send(getInfoTeacher)
         if (getInfoTeacher.role == "Teacher"){
             let formData = await new FormData();
-            let readStream = fs.createReadStream(`./public/upload/tmp/${req.files.image.originalname}`);
+            let readStream = fs.createReadStream(`./public/upload/tmp/${req.files.image[0].originalname}`);
 
             const formHeaders = formData.getHeaders();
             formData.append("name", req.body.name);
@@ -277,7 +272,7 @@ router.post("/edit-course/:idCourse", async (req, res) => {
             };
             await axios.put(`${domain}/api/course/${req.params.idCourse}`, formData, config_axios)
                 .then(function (response) {
-                    fs.unlink(`/public/tmp/${req.file.originalname}`);
+                    fs.unlink(`/public/tmp/${req.files.image[0].originalname}`);
                     res.send(response)
                     res.redirect("/teacher/courses")
                 })
@@ -331,57 +326,6 @@ router.post("/add-lesson/:idCourse", upload, async (req, res) => {
 
 router.post("/edit-lesson/:idCourse", upload ,async (req, res) => {
     
-=======
-router.get("/edit-course/:idCourse", (req, res) => {
-    axios({
-        method: 'get',
-        url: `${domain}/api/course/${req.params.idCourse}`
-    }).then(result => {
-        res.render('teacher/instructor-edit-course', {
-            course: result.data
-        });
-    }).catch(error => {
-        res.send(error.message)
-    })
-
-})
-
-router.post("/edit-lesson/:idCourse", upload, async (req, res) => {
-
-})
-
-
-router.post("/add-lesson/:idCourse", upload, async (req, res) => {
-    // res.json(req.files)
-    for (let i = 0; i < req.body.title.length; i++) {
-        let formData = await new FormData();
-        let readStreamVideo = fs.createReadStream(`./public/upload/tmp/${req.files.video[i].originalname}`);
-        let readStreamDoc = fs.createReadStream(`./public/upload/tmp/${req.files.document[i].originalname}`);
-
-        const formHeaders = formData.getHeaders();
-        formData.append("title", req.body.title[i]);
-        formData.append("description", req.body.description[i]);
-        formData.append("video", readStreamVideo);
-        formData.append("document", readStreamDoc);
-        // console.log(formData)
-        let config_axios = {
-            headers: {
-                Authorization: req.session.token,
-                ...formHeaders
-            }
-        };
-        await axios.post(`${domain}/api/lesson/${req.params.idCourse}`, formData, config_axios)
-            .then(function (response) {
-                fs.unlink(`/public/tmp/${req.files.video[i].originalname}`);
-                fs.unlink(`/public/tmp/${req.files.document[i].originalname}`);
-                console.log(`created successfully for ${req.body.title[i]}`);
-            })
-            .catch(function (error) {
-                res.send(error)
-            });
-    }
-    res.redirect("/teacher/courses");
->>>>>>> 28273338e5d3317e94a3919b7fbaa638fd1d1059
 })
 
 router.get("/courses", (req, res) => {
