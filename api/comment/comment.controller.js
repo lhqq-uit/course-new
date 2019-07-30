@@ -273,8 +273,9 @@ module.exports = {
                     }
                 })
                 .select("courses -_id")
+            //getCMT = JSON.stringify(getCMT);
             res.status(201).json({
-                data: getCMT,
+                data: getCMT.courses,
                 // data2: getIdTeacher
             })
         } catch (error) {
