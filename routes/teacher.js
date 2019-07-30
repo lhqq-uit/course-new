@@ -82,12 +82,14 @@ router.post("/edit-quiz/:idLesson", (req, res) => {
 
 //TODO: dashboard teacher
 router.get("/dashboard", async (req, res) => {
-    var infoTeacher = '';
-    var notificationLogin = false;
+
     if (req.session.token) { //TODO: check login session
+
+        var notificationLogin = false;
         notificationLogin = true; // ! if true => push notification -> you are login
 
         let getInfoTeacher = jwtDecode(req.session.token)
+        var infoTeacher = '';
         await axios({
                 method: 'get',
                 url: `${domain}/api/teacher/info/${getInfoTeacher._id}`,
@@ -122,6 +124,7 @@ router.get("/dashboard", async (req, res) => {
                 // handle error
                 console.log(error);
             })
+
         var getTransactionThisMonth = '';
         await axios({
                 method: "get",
@@ -140,6 +143,7 @@ router.get("/dashboard", async (req, res) => {
                 // handle error
                 console.log(error);
             })
+
         var getAverageMonthlySalary = '';
         await axios({
                 method: "get",
@@ -159,8 +163,33 @@ router.get("/dashboard", async (req, res) => {
                 console.log(error);
             })
         //console.log(iqTeacher) 
+
+        var getCommentTeacher = '';
+        await axios({
+                method: 'get',
+                url: `${domain}/api/comment/teacher/${getInfoTeacher._id}`,
+                headers: {
+                    Authorization: req.session.token
+                }
+                //responseType: 'stream'
+            })
+            .then(response => {
+                // handle success
+                //console.log(response.data);
+
+                getCommentTeacher = response.data.data.courses;
+                //console.log(getCommentTeacher)
+                // ? https://pastebin.com/dVDLsgW7
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+
+
         res.render("teacher/instructor-dashboard", {
             infoTeacher: infoTeacher,
+            getCommentTeacher: getCommentTeacher,
             dataChartArray: getTransactionOneWeek.value,
             getAverageMonthlySalary: getAverageMonthlySalary,
             getTransactionThisMonth: getTransactionThisMonth,
@@ -179,7 +208,7 @@ router.get("/add-course", (req, res) => {
         res.redirect('/login')
     } else {
         let getInfoTeacher = jwtDecode(req.session.token)
-        if(getInfoTeacher.role == "Teacher"){
+        if (getInfoTeacher.role == "Teacher") {
             res.render("teacher/instructor-add-course", {
                 teacher: getInfoTeacher,
             });
@@ -229,21 +258,23 @@ router.post("/add-course", upload, async (req, res) => {
 });
 
 router.get("/edit-course/:idCourse", async (req, res) => {
-    if(req.session.token){
+    if (req.session.token) {
         let getInfoTeacher = jwtDecode(req.session.token);
         await axios({
             method: 'get',
             url: `${domain}/api/course/${req.params.idCourse}`
         }).then(result => {
-            if(result.data.teacher == getInfoTeacher._id){
-                res.render('teacher/instructor-edit-course', {course: result.data});
-            }else{
-                 res.redirect('/course');
+            if (result.data.teacher == getInfoTeacher._id) {
+                res.render('teacher/instructor-edit-course', {
+                    course: result.data
+                });
+            } else {
+                res.redirect('/course');
             }
         }).catch(error => {
             res.send(error.message)
         })
-    }else{
+    } else {
         res.redirect('/login');
     }
 });
@@ -252,7 +283,7 @@ router.post("/edit-course/:idCourse", async (req, res) => {
     if (req.session.token) {
         let getInfoTeacher = jwtDecode(req.session.token);
         res.send(getInfoTeacher)
-        if (getInfoTeacher.role == "Teacher"){
+        if (getInfoTeacher.role == "Teacher") {
             let formData = await new FormData();
             let readStream = fs.createReadStream(`./public/upload/tmp/${req.files.image[0].originalname}`);
 
@@ -279,22 +310,22 @@ router.post("/edit-course/:idCourse", async (req, res) => {
                 .catch(function (error) {
                     res.send(error)
                 });
-        } else{
+        } else {
             res.redirect('/')
         }
-    } else{
+    } else {
         res.redirect('/login');
     }
 })
 
 router.post("/add-lesson/:idCourse", upload, async (req, res) => {
     // res.json(req.files) 
-    if(req.session.token){
-        for(let i = 0; i < req.body.title.length; i++){
+    if (req.session.token) {
+        for (let i = 0; i < req.body.title.length; i++) {
             let formData = await new FormData();
             let readStreamVideo = fs.createReadStream(`./public/upload/tmp/${req.files.video[i].originalname}`);
             let readStreamDoc = fs.createReadStream(`./public/upload/tmp/${req.files.document[i].originalname}`);
-    
+
             const formHeaders = formData.getHeaders();
             formData.append("title", req.body.title[i]);
             formData.append("description", req.body.description[i]);
@@ -324,8 +355,8 @@ router.post("/add-lesson/:idCourse", upload, async (req, res) => {
 })
 
 
-router.post("/edit-lesson/:idCourse", upload ,async (req, res) => {
-    
+router.post("/edit-lesson/:idCourse", upload, async (req, res) => {
+
 })
 
 router.get("/courses", (req, res) => {

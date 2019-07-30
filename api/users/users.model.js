@@ -38,7 +38,7 @@ var UserSchema = new Schema({
     },
     avatar: {
         type: String,
-        default: "https://i.imgur.com/zALNWt9.png"
+        default: "zALNWt9.png"
     }
 });
 
