@@ -34,7 +34,7 @@
     <!-- App CSS -->
     <link type="text/css" href="../assets/css/app.css" rel="stylesheet">
     <link type="text/css" href="../assets/css/app.rtl.css" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 
 
 
@@ -42,39 +42,6 @@
 </head>
 
 <body class="layout-navbar-mini-fixed-bottom">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     <div class="preloader">
@@ -104,7 +71,13 @@
                         <h2 class="text-white mb-0"><%= infoStudent.user.fullname %></h2>
                         <p class="lead text-white-50 d-flex align-items-center">Student <span
                                 class="ml-16pt d-flex align-items-center"><i
-                                    class="material-icons icon-16pt mr-4pt">opacity</i><%= infoStudent.iq %> IQ</span></p>
+                                    class="material-icons icon-16pt mr-4pt">opacity</i>
+                                    <% if (getTotalIq == null) { %>
+                                    0 IQ
+                                    <% } else{  %> 
+                                        <%= getTotalIq %>
+                                    <% } %>
+                                </span></p>
                     </div>
                     <a href="/student/edit-account" class="btn btn-outline-white">Edit account</a>
                 </div>
@@ -144,91 +117,31 @@
                 </div>
             </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <div class="container page__container">
                 <div class="page-section">
-                    <!-- <div class="card border-left-4 border-left-accent card-sm mb-lg-32pt">
-                        <div class="card-body pl-16pt">
-                            <div class="media flex-wrap align-items-center">
-                                <div class="media-left">
-                                    <i class="material-icons text-50">access_time</i>
-                                </div>
-                                <div class="media-body" style="min-width: 180px">
-                                    Your subscription ends on <strong>25 February 2015</strong>
-                                </div>
-                                <div class="media-right mt-2 mt-sm-0">
-                                    <a class="btn btn-link text-secondary" href="student-billing.html">Upgrade</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+               
 
                     <div class="row mb-lg-8pt">
                         <div class="col-lg-6">
 
                             <div class="card">
                                 <div class="card-header d-flex align-items-center border-0">
-                                    <div class="h2 mb-0 mr-3 text-accent">432</div>
+                                    <div class="h2 mb-0 mr-3 text-accent"><%= iqTotal7Day %></div>
                                     <div class="flex">
                                         <p class="mb-0"><strong>Experience IQ</strong></p>
-                                        <p class="text-50 mb-0 mt-n1">4 days streak this week</p>
+                                        <p class="text-50 mb-0 mt-n1">7 days streak this week</p>
                                     </div>
                                     <i class="material-icons text-muted ml-2">trending_up</i>
                                 </div>
                                 <div class="card-body pt-0">
-                                    <div class="chart" style="height: 128px;">
+                                    <div class="chart" style="height:auto;">
                                         <canvas id="iqChart" class="chart-canvas"></canvas>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="card">
-                                <div class="card-header d-flex align-items-center">
-                                    <div class="h2 mb-0 mr-3 text-accent">116</div>
-                                    <div class="flex">
-                                        <p class="mb-0"><strong>Angular</strong></p>
-                                        <p class="text-50 mb-0 mt-n1">Best score</p>
-                                    </div>
-                                    <div class="dropdown">
-                                        <a href="#" class="dropdown-toggle text-70" data-toggle="dropdown">Popular Topics</a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item">Popular Topics</a>
-                                            <a href="#" class="dropdown-item">Web Design</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body p-24pt">
-                                    <div class="chart" style="height: 344px;">
-                                        <canvas id="topicIqChart" class="chart-canvas"></canvas>
-                                    </div>
-                                </div>
-                            </div> -->
-
+                          
                         </div>
                         <div class="col-lg-6">
-
-
-
-
-
-
-
-
                             <div id="carouselExampleFade" class="carousel carousel-card slide mb-24pt">
                                 <div class="carousel-inner">
 
@@ -620,7 +533,7 @@
     <script src="../assets/vendor/fix-footer.js"></script>
 
     <!-- Chart.js -->
-    <script src="../assets/vendor/Chart.min.js"></script>
+    <!-- <script src="../assets/vendor/Chart.min.js"></script> -->
 
     <!-- App JS -->
     <script src="../assets/js/app.js"></script>
@@ -640,13 +553,13 @@
     <script src="../assets/vendor/moment-range.min.js"></script>
 
     <!-- Chart.js -->
-    <script src="../assets/vendor/Chart.min.js"></script>
+    <!-- <script src="../assets/vendor/Chart.min.js"></script> -->
 
     <!-- Charts JS -->
-    <script src="../assets/js/chartjs.js"></script>
+    <!-- <script src="../assets/js/chartjs.js"></script> -->
 
     <!-- Chart.js Samples -->
-    <script src="../assets/js/page.student-dashboard.js"></script>
+    <!-- <script src="../assets/js/page.student-dashboard.js"></script> -->
 
 </body>
 

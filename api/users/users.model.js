@@ -19,6 +19,7 @@ var UserSchema = new Schema({
         trim: true,
         required: 'Email address is required',
         validate: [validateEmail, 'Please provide a valid email address'],
+        default: 'socialnetwork@socialnetwork.com' // cái này cho đăng nhập bằng mxh
     },
     password: {
         type: String,
@@ -31,7 +32,7 @@ var UserSchema = new Schema({
     role: {
         type: String,
         enum: ['Admin', 'Student', 'Teacher'],
-        // default: 'Admin' // để  admin cho test api, thực tế sẽ là student
+        default: 'Student' // để  admin cho test api, thực tế sẽ là student, còn bây giờ nó là đăng ký cho mxh
     },
     currentToken: {
         type: String
@@ -39,6 +40,14 @@ var UserSchema = new Schema({
     avatar: {
         type: String,
         default: "zALNWt9.png"
+    },
+    about: {
+        type: String,
+        default: "Write about you."
+    },
+    connect: {
+        type: String,
+        default: "Write connect."
     }
 });
 

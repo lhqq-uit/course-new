@@ -48,26 +48,52 @@ router.get("/dashboard", async (req, res) => {
                 // handle error
                 console.log(error);
             })
-        let getCourseNotPurchased = '';
+        let getTotalIq = '';
         await axios({
                 method: "get",
-                url: `${domain}/api/student/courses-not-purchased`,
+                url: `${domain}/api/student/total-iq`,
                 headers: {
                     Authorization: req.session.token
                 }
             })
             .then(response => {
                 // handle success
-                console.log(response.data);
+                console.log(response.data.total_iq);
 
-                getCourseNotPurchased = response.data;
+                getTotalIq = response.data.total_iq;
             })
             .catch(error => {
                 // handle error
                 console.log(error);
             })
+
+        let getIqAWeek = '';
+        await axios({
+                method: "get",
+                url: `${domain}/api/student/total-iq`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                console.log(response.data.list_iq);
+
+                getIqAWeek = response.data.list_iq;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+        let iqTotal7Day = 0;
+        getIqAWeek.forEach(element => {
+            iqTotal7Day += element * 1;
+        });
         res.render("student/student-dashboard", {
             infoStudent: infoStudent,
+            getTotalIq: getTotalIq,
+            iqTotal7Day: iqTotal7Day,
+            getIqAWeek: getIqAWeek,
             getCoursePurchased: getCoursePurchased,
             getCourseNotPurchased: getCourseNotPurchased,
             notificationLogin: notificationLogin, // ! login true push notification
