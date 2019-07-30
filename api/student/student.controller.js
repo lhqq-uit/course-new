@@ -237,5 +237,30 @@ module.exports = {
       } catch (error) {
          res.status(500).json({message: error})
       }
+   },
+   setCourseStudied: async (req, res) => {
+      try {
+         let student = await Student.findOne({user: req.user.data._id});
+         for(let i = 0; i < student.courses.length; i++){
+            let course = await Course.findById(student.courses[i].id_course);
+            if(student.courses[i].lesson_number.length == course.lessons.length)
+               await Student.findOneAndUpdate(
+                  {user: req.user.data._id},
+                  {$addToSet: {course_studied: student.courses[i]}}
+               );
+         }
+         res.status(200).json({message: 'You are complete this course'})
+      } catch (error) {
+         res.status(500).json({message: error})
+      }
+   },
+   getCourseStudied: async (req, res) => {
+      try {
+         let student = await Student.findOne({user: req.user.data._id})
+                                    .populate('course_studied');
+         res.status(200).json({course_studied: student.course_studied})
+      } catch (error) {
+         res.status(500).json({message: error})
+      }
    }
 }
