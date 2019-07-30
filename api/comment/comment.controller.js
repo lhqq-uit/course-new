@@ -239,10 +239,13 @@ module.exports = {
     },
     getAllCommentOfCourseByTeacher: async (req, res) => {
         try {
+            // let getIdTeacher = await User.findOne({
+            //     _id: req.params.idTeacher
+            // })
             let getCMT = await Teacher.findOne({
                     // !user: req.user._id
                     //_id: req.user.data._id
-                    _id: req.params.idTeacher
+                    user: req.params.idTeacher
                 })
                 .populate({
                     path: "courses",
@@ -272,6 +275,7 @@ module.exports = {
                 .select("courses -_id")
             res.status(201).json({
                 data: getCMT,
+                // data2: getIdTeacher
             })
         } catch (error) {
             res.status(500).send({
