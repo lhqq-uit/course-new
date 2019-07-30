@@ -16,6 +16,9 @@ var StudentSchema = mongoose.Schema({
       },
       lesson_number: []
    }],
+   course_studied: [{
+      type: String
+   }],
    iq: [{
       value: Number,
       date: Date
