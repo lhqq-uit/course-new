@@ -16,25 +16,17 @@ var StudentSchema = mongoose.Schema({
       },
       lesson_number: []
    }],
-   iq: {
-      type: Number,
-      default: 0
-   },
-   quiz:[{
-      id:{
-         type:mongoose.Schema.Types.ObjectId,
-         ref:'Quiz',
-      },
-      answer:String,
-      key:String
+   course_studied: [{
+      type: String
+   }],
+   iq: [{
+      value: Number,
+      date: Date
+   }],
+   quiz_true:[{
+      lesson: String,
+      id: String
    }]
-   // lessons: [{
-   //    id_lesson:{
-   //       type: mongoose.Schema.Types.ObjectId,
-   //       ref:'Lesson'
-   //    },
-   //    quiz_true: []
-
 })
 
 module.exports = mongoose.model('Student', StudentSchema);

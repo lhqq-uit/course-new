@@ -15,6 +15,14 @@ router.put('/buy-course/:idCourse', checkPermission.isStudent, StudentController
 
 router.put('/quiz/:idQuiz', checkPermission.isStudent, StudentController.answerQuestion);
 
-router.put('/:idCourse/:idLesson', checkPermission.isStudent, StudentController.setLessonStudied);
+router.put('/:idLesson', checkPermission.isStudent, StudentController.setLessonStudied);
+
+router.get('/total-iq', checkPermission.isStudent, StudentController.getTotalIq);
+
+router.get('/iq-a-week', checkPermission.isStudent, StudentController.getIqAWeek);
+
+router.get('/set-course-studied', checkPermission.isStudent, StudentController.setCourseStudied);
+
+router.get('/course-studied', checkPermission.isStudent, StudentController.getCourseStudied);
 
 module.exports = router;

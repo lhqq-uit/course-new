@@ -48,26 +48,52 @@ router.get("/dashboard", async (req, res) => {
                 // handle error
                 console.log(error);
             })
-        let getCourseNotPurchased = '';
+        let getTotalIq = '';
         await axios({
                 method: "get",
-                url: `${domain}/api/student/courses-not-purchased`,
+                url: `${domain}/api/student/total-iq`,
                 headers: {
                     Authorization: req.session.token
                 }
             })
             .then(response => {
                 // handle success
-                console.log(response.data);
+                console.log(response.data.total_iq);
 
-                getCourseNotPurchased = response.data;
+                getTotalIq = response.data.total_iq;
             })
             .catch(error => {
                 // handle error
                 console.log(error);
             })
+
+        let getIqAWeek = '';
+        await axios({
+                method: "get",
+                url: `${domain}/api/student/total-iq`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                console.log(response.data.list_iq);
+
+                getIqAWeek = response.data.list_iq;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+        let iqTotal7Day = 0;
+        getIqAWeek.forEach(element => {
+            iqTotal7Day += element * 1;
+        });
         res.render("student/student-dashboard", {
             infoStudent: infoStudent,
+            getTotalIq: getTotalIq,
+            iqTotal7Day: iqTotal7Day,
+            getIqAWeek: getIqAWeek,
             getCoursePurchased: getCoursePurchased,
             getCourseNotPurchased: getCourseNotPurchased,
             notificationLogin: notificationLogin, // ! login true push notification
@@ -93,19 +119,21 @@ exports.Student_Edit_Account = (res, req) => {
 
 //TODO: Student Dashboard>Change Password
 router.get("/edit-account-password", async (req, res) => {
-    if(req.session.token){
+    if (req.session.token) {
         //decode token
         let getInfoStudent = jwtDecode(req.session.token)
         console.log(getInfoStudent)
-        let student=axios({
-            method: 'get',
-            url: `${domain}/api/student/info/${getInfoStudent._id}`
-        })
-        .then( response =>{
-            data=response.data;
-            res.render("student/student-edit-account-password",{data})
-        })
-    }else{
+        let student = axios({
+                method: 'get',
+                url: `${domain}/api/student/info/${getInfoStudent._id}`
+            })
+            .then(response => {
+                data = response.data;
+                res.render("student/student-edit-account-password", {
+                    data
+                })
+            })
+    } else {
         res.redirect("../login")
     }
 })
@@ -117,28 +145,28 @@ router.post("/edit-account-password", (req, res) => {
     } else {
         try {
             axios({
-                method: 'post',
-                url: `${domain}/api/change-password`,
-                headers: {
-                    Authorization: req.session.token
-                },
-                data: {
-                    Oldpassword: req.body.Oldpassword,
-                    newPassword: req.body.newPassword,
-                    confirmPassword: req.body.confirmPassword
+                    method: 'post',
+                    url: `${domain}/api/change-password`,
+                    headers: {
+                        Authorization: req.session.token
+                    },
+                    data: {
+                        Oldpassword: req.body.Oldpassword,
+                        newPassword: req.body.newPassword,
+                        confirmPassword: req.body.confirmPassword
 
-                }
-            })
-            .then(Response => {
-                res.redirect('../login')
-            })
-            .catch(err => {
-                res.redirect('/student/edit-account-password')
-            })
+                    }
+                })
+                .then(Response => {
+                    res.redirect('../login')
+                })
+                .catch(err => {
+                    res.redirect('/student/edit-account-password')
+                })
         } catch (error) {
             res.redirect('/student/edit-account-password')
         }
-        
+
     }
 
 });
@@ -146,38 +174,42 @@ router.post("/edit-account-password", (req, res) => {
 
 //TODO: Student Dashboard>student-edit-account-profile
 router.get("/edit-account", async (req, res) => {
-    if(req.session.token){
+    if (req.session.token) {
         //decode token
         let getInfoStudent = jwtDecode(req.session.token)
         console.log(getInfoStudent)
-        let student=axios({
-            method: 'get',
-            url: `${domain}/api/student/info/${getInfoStudent._id}`
-        })
-        .then( response =>{
-            data=response.data;
-            res.render("student/student-edit-account",{data})
-        })
-    }else{
+        let student = axios({
+                method: 'get',
+                url: `${domain}/api/student/info/${getInfoStudent._id}`
+            })
+            .then(response => {
+                data = response.data;
+                res.render("student/student-edit-account", {
+                    data
+                })
+            })
+    } else {
         res.redirect("../login")
     }
 })
 
 
 router.get("/edit-account-profile", async (req, res) => {
-    if(req.session.token){
+    if (req.session.token) {
         //decode token
         let getInfoStudent = jwtDecode(req.session.token)
         console.log(getInfoStudent)
-        let student=axios({
-            method: 'get',
-            url: `${domain}/api/student/info/${getInfoStudent._id}`
-        })
-        .then( response =>{
-            data=response.data;
-            res.render("student/student-edit-account-profile",{data})
-        })
-    }else{
+        let student = axios({
+                method: 'get',
+                url: `${domain}/api/student/info/${getInfoStudent._id}`
+            })
+            .then(response => {
+                data = response.data;
+                res.render("student/student-edit-account-profile", {
+                    data
+                })
+            })
+    } else {
         res.redirect("../login")
     }
 })
