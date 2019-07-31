@@ -35,7 +35,56 @@
     <link type="text/css" href="../assets/css/app.css" rel="stylesheet">
     <link type="text/css" href="../assets/css/app.rtl.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.1/tiny-slider.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.1/min/tiny-slider.js"></script>
+    <style>
+        .tns-controls [aria-controls] {
+            font-size: 15px;
+            margin: 0 5px;
+            padding: 0 1em;
+            height: 2.5em;
+            color: #000;
+            background: #66CCFF;
+            border-radius: 3px;
+            border: 0;
+        }
 
+        .tns-controls {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .goto-controls {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .goto-controls input,
+        .goto-controls .button {
+            display: inline-block;
+            font-size: 14px;
+            height: 2.6em;
+            line-height: 2.6;
+            padding: 0 1em;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            vertical-align: middle;
+        }
+
+        .goto-controls input {
+            border: 1px solid #ccc;
+        }
+
+        .goto-controls .button {
+            min-width: 4em;
+            border: none;
+            color: #fff;
+            background-color: #333;
+            cursor: pointer;
+        }
+    </style>
 
 
 
@@ -195,86 +244,156 @@
                                 <p class="card-subtitle">Latest comments</p>
                             </div>
                             <div class="d-flex align-items-center text-right">
-                                <a href="#" class="btn btn-outline-secondary btn-sm"><i
-                                        class="material-icons">keyboard_arrow_left</i></a>
-                                <a href="#" class="btn btn-outline-secondary btn-sm ml-8pt"><i
-                                        class="material-icons">keyboard_arrow_right</i></a>
+                                <div class="goto-controls">
+                                    Go to comment: <input type="text" id="getNumberSlide" placeholder="Goto..." > <button class="button goto-button active">Go</button>
+                                </div>
                             </div>
                         </div>
-                        <% if (getCommentTeacher) { %>
-                            
-                            <% getCommentTeacher.forEach(function(item,index) { %>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <a href="#" class="avatar avatar-sm">
-                                                    <img src="../avatar/<%= item.lessons.comment.user.avatar %>" alt="Guy"
-                                                        class="avatar-img rounded-circle">
-                                                </a>
-                                            </div>
-                                            <div class="media-body d-flex flex-column">
-                                                <div class="d-flex align-items-center">
-                                                    <a href="profile.html" class="text-body"><strong>
-                                                        <%= item.lessons.comment.user.fullname %>
-                                                    </strong></a>
-                                                    <small class="ml-auto text-muted">
-                                                        <%= item.lessons.comment.time %>
-                                                    </small><br>
-                                                </div>
-                                                <span class="text-muted">on <a href="instructor-edit-course.html"
-                                                        class="text-50" style="text-decoration: underline;">
-                                                        <%= item.name %>    
-                                                    </a></span>
-                                                <p class="mt-1 mb-0 text-70">
-                                                    <%= item.lessons.comment.time %>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div
-                                            class="media ml-sm-32pt mt-3 border rounded p-3 bg-light d-inline-flex measure-paragraph-max">
-                                            <div class="media-left">
-                                                <a href="#" class="avatar avatar-sm">
-                                                    <img src="../assets/images/people/110/guy-6.jpg" alt="Guy"
-                                                        class="avatar-img rounded-circle">
-                                                </a>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="d-flex align-items-center">
-                                                    <a href="profile.html" class="text-body"><strong>FrontendMatter</strong></a>
-                                                    <small class="ml-auto text-muted">just now</small>
-                                                </div>
-                                                <p class="mt-1 mb-0 text-70">Hi Bogdan,<br> Thank you for purchasing our course!
-                                                    <br><br>Please have a look at the charts library documentation <a href="#"
-                                                        class="text-underline">here</a> and follow the instructions.</p>
-                                            </div>
-                                        </div>
+                        <!--//TODO:  only for test -->
+                        <!-- <div class="card">
+                            <div class="card-body">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#" class="avatar avatar-sm">
+                                            <img src="assets/images/people/110/guy-9.jpg" alt="Guy" class="avatar-img rounded-circle">
+                                        </a>
                                     </div>
-                                    <div class="card-footer">
-                                        <form action="#" id="message-reply">
-                                            <div class="input-group input-group-merge">
-                                                <input type="text" class="form-control form-control-appended" required=""
-                                                    placeholder="Quick Reply">
-                                                <div class="input-group-append">
-                                                    
-                                                    <div class="input-group-text pl-0">
-                                                        <button class="btn btn-flush" type="button"><i
-                                                                class="material-icons">send</i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
+                                    <div class="media-body d-flex flex-column">
+                                        <div class="d-flex align-items-center">
+                                            <a href="profile.html" class="text-body"><strong>Laza Bogdan</strong></a>
+                                            <small class="ml-auto text-muted">27 min ago</small><br>
+                                        </div>
+                                        <span class="text-muted">on <a href="instructor-edit-course.html" class="text-50" style="text-decoration: underline;">Data Visualization With Chart.js</a></span>
+                                        <p class="mt-1 mb-0 text-70">How can I load Charts on a page?</p>
                                     </div>
                                 </div>
-                            <% }) %>
+                                <div class="media ml-sm-32pt mt-3 border rounded p-3 bg-light d-inline-flex measure-paragraph-max">
+                                    <div class="media-left">
+                                        <a href="#" class="avatar avatar-sm">
+                                            <img src="assets/images/people/110/guy-6.jpg" alt="Guy" class="avatar-img rounded-circle">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="d-flex align-items-center">
+                                            <a href="profile.html" class="text-body"><strong>FrontendMatter</strong></a>
+                                            <small class="ml-auto text-muted">just now</small>
+                                        </div>
+                                        <p class="mt-1 mb-0 text-70">Hi Bogdan,<br> Thank you for purchasing our course! <br><br>Please have a look at the charts library documentation <a href="#" class="text-underline">here</a> and follow the instructions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <form action="#" id="message-reply">
+                                    <div class="input-group input-group-merge">
+                                        <input type="text" class="form-control form-control-appended" required="" placeholder="Quick Reply">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text pl-0">
+                                                <button class="btn btn-flush" type="button"><i class="material-icons">send</i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div> -->
+                        <div id="my-slider" class="my-slider">
+                        <% if (getCommentTeacher) { %>   
+                            <% getCommentTeacher.idCourses.forEach(function(e){ %>
+                                <% for (let i = 0; i < e.lessons.length; i++) { %>
+                                    <% for (let j = 0; j < e.lessons[i].comment.length; j++) { %>
+                                    <div class="item">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <a href="#" class="avatar avatar-sm">
+                                                        <img src="../avatar/<%= e.lessons[i].comment[j].user.avatar %>" alt="Guy" class="avatar-img rounded-circle">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body d-flex flex-column">
+                                                    <div class="d-flex align-items-center">
+                                                        <a href="profile.html" class="text-body"><strong>
+                                                            <%= e.lessons[i].comment[j].user.fullname %>
+                                                        </strong></a>
+                                                        <small class="ml-auto text-muted">
+                                                            <script type="text/javascript">
+                                                                //let showtime = moment().startOf('hour').fromNow();
+                                                                document.write(moment("<%= e.lessons[i].comment[j].time %>").fromNow());
+                                                                //document.write(showtime);
+                                                            </script>
+                                                        </small><br>
+                                                    </div>
+                                                    <span class="text-muted">on <a href="instructor-edit-course.html" class="text-50" style="text-decoration: underline;">
+                                                            <%= e.name %>
+                                                            
+                                                    </a></span>
+                                                    <span class="text-muted">at lesson <a href="instructor-edit-course.html" class="text-50" style="text-decoration: underline;">
+                                                        
+
+                                                        <%= e.lessons[i].title %>
+                                                    </a></span>
+                                                    
+                                                    <p class="mt-1 mb-0 text-70">
+                                                        <%= e.lessons[i].comment[j].content %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <% if (e.lessons[i].comment[j].reply.length > 0) { %>
+                                                <% for (let k = 0; k < e.lessons[i].comment[j].reply.length; k++) { %>
+                                                    <div class="container col-12">
+                                                    <div class="media ml-sm-32pt mt-3 border rounded p-3 bg-light d-inline-flex measure-paragraph-max">
+                                                        <div class="media-left">
+                                                            <a href="#" class="avatar avatar-sm">
+                                                                <img src="../avatar/<%= e.lessons[i].comment[j].user.avatar %>" alt="Guy" class="avatar-img rounded-circle">
+                                                            </a>
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <div class="d-flex align-items-center">
+                                                                <a href="profile.html" class="text-body"><strong>
+                                                                    <%= e.lessons[i].comment[j].reply[k].user.fullname %>
+                                                                </strong></a>
+                                                                <small class="ml-5 text-muted">
+                                                                    <script type="text/javascript">
+                                                                        //let showtime = moment().startOf('hour').fromNow();
+                                                                        document.write(moment("<%= e.lessons[i].comment[j].reply[k].time %>").fromNow());
+                                                                        //document.write(showtime);
+                                                                    </script>
+                                                                </small>
+                                                            </div>
+                                                            <p class="mt-1 mb-0 text-70">
+                                                                <%= e.lessons[i].comment[j].reply[k].content %>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                <% } %>
+                                            <% } %>
+                                        </div>
+                                        <div class="card-footer">
+                                            <form action="#" id="message-reply">
+                                                <div class="input-group input-group-merge">
+                                                    <input type="text" class="form-control form-control-appended" required="" placeholder="Quick Reply">
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text pl-0">
+                                                            <button class="btn btn-flush" type="button"><i class="material-icons">send</i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <% } %>
+                                <% } %>
+                            <% }); %>
                         <% } %>
-                      
                     </div>
+                </div>
                 </div>
 
             </div>
+           
 
-
+           
 
             <% include ../layout/footer %>
             
@@ -285,6 +404,24 @@
     <% include ../layout/modal %>
     <!-- // END Header Layout -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script>
+        var slider = tns({
+            container: '.my-slider',
+            items: 1,
+            prevButton: false,
+            nextButton: false,
+            nav: false,
+            autoHeight: true,
+            slideBy: "page",
+            mouseDrag: true,
+            swipeAngle: false,
+            speed: 400,
+
+        });
+        document.querySelector('.goto-button').onclick = function () {
+            slider.goTo(document.getElementById("getNumberSlide").value);
+        };
+    </script>
 
     <script>
         let notificationLogin = <%= notificationLogin %>;
@@ -448,8 +585,8 @@
     <script src="../assets/js/settings.js"></script>
 
     <!-- Moment.js -->
-    <script src="../assets/vendor/moment.min.js"></script>
-    <script src="../assets/vendor/moment-range.min.js"></script>
+    <!-- <script src="../assets/vendor/moment.min.js"></script>
+    <script src="../assets/vendor/moment-range.min.js"></script> -->
 
     <!-- Chart.js -->
     <!-- <script src="../assets/vendor/Chart.min.js"></script> -->

@@ -2,6 +2,7 @@ const User = require('./../users/users.model')
 const Comment = require('./comment.model')
 const Lesson = require('./../lesson/lesson.model')
 const Teacher = require('./../teacher/teacher.model');
+const Course = require("./../course/course.model")
 
 module.exports = {
     // ? Parent 
@@ -242,24 +243,123 @@ module.exports = {
             // let getIdTeacher = await User.findOne({
             //     _id: req.params.idTeacher
             // })
-            let getCMT = await Teacher.findOne({
+            let getIdCourses = await Teacher.findOne({
                     // !user: req.user._id
                     //_id: req.user.data._id
-                    user: req.params.idTeacher
+                    user: req.params.idUser
+                })
+                // .populate({
+                //     path: "courses",
+                //     select: "name lessons -_id",
+                //     // populate: {
+                //     //     path: "lessons",
+                //     //     select: "comment -_id",
+                //     //     // populate: {
+                //     //     //     path: "comment",
+                //     //     //     select: "content reply user time -_id",
+                //     //     //     options: {
+                //     //     //         sort: {
+                //     //     //             _id: -1
+                //     //     //         }
+                //     //     //     },
+                //     //     //     populate: {
+                //     //     //         path: "reply user",
+                //     //     //         select: "content time avatar fullname -_id",
+                //     //     //         populate: {
+                //     //     //             path: "reply user",
+                //     //     //             select: "content time avatar fullname -_id",
+                //     //     //         }
+                //     //     //     }
+                //     //     // }
+                //     // }
+                // })
+                .select("courses -_id")
+            let getIdComment = await Lesson.find({
+                    course: {
+                        $in: getIdCourses.courses
+                    }
+                })
+                // .populate({
+                //     path: "comment",
+                //     select: "_id",
+                //     options: {
+                //         sort: {
+                //             _id: -1
+                //         }
+                //     },
+                // })
+                .select("comment -_id")
+
+            let getArrayIdComment = [];
+            getIdComment.forEach(element => {
+                for (let i = 0; i < element.comment.length; i++) {
+                    getArrayIdComment.push(element.comment[i].toString())
+                }
+            });
+
+            let getCMT = await Comment.find({
+                    _id: {
+                        $in: getArrayIdComment
+                    }
+                })
+                .populate({
+                    path: "reply user",
+                    select: "content time user avatar fullname -_id",
+                    populate: {
+                        path: "user",
+                        select: "fullname avatar -_id"
+                    }
+                })
+                .sort({
+                    _id: -1
+                }).select("-_id")
+
+            // let getArrayIdCMT = [];
+            // // getIdLesson.forEach(e => {
+            // //     getIdCMT.push(e.comment._id.toString())
+            // // });
+            // let nameCourse = [];
+
+            //getCMT = JSON.stringify(getCMT);
+            res.status(201).json({
+                //idCourses: getIdCourses || "null",
+                //idLesson: getIdLesson || "null",
+                //arrayIdComment: getArrayIdComment || "null",
+                data: getCMT || "null",
+                //IdCMT: getArrayIdCMT || "null",
+                // getIdCMT: getIdCMT
+                //courses: nameCourse,
+                // data2: getIdTeacher
+            })
+        } catch (error) {
+            res.status(500).send({
+                message: error.message || "Some error occurred while get all the comment."
+            })
+        }
+    },
+    getAllCommentOfCourseByTeacher1: async (req, res) => {
+        try {
+            // let getIdTeacher = await User.findOne({
+            //     _id: req.params.idTeacher
+            // })
+            let getIdCourses = await Teacher.findOne({
+                    // !user: req.user._id
+                    //_id: req.user.data._id
+                    user: req.params.idUser
                 })
                 .populate({
                     path: "courses",
                     select: "name lessons -_id",
                     populate: {
                         path: "lessons",
-                        select: "comment -_id",
+                        select: "comment title -_id",
                         populate: {
                             path: "comment",
                             select: "content reply user time -_id",
                             options: {
                                 sort: {
                                     _id: -1
-                                }
+                                },
                             },
                             populate: {
                                 path: "reply user",
@@ -273,9 +373,15 @@ module.exports = {
                     }
                 })
                 .select("courses -_id")
-            //getCMT = JSON.stringify(getCMT);
+
             res.status(201).json({
-                data: getCMT.courses,
+                idCourses: getIdCourses.courses || "null",
+                //idLesson: getIdLesson || "null",
+                //arrayIdComment: getArrayIdComment || "null",
+                //data: getCMT || "null",
+                //IdCMT: getArrayIdCMT || "null",
+                // getIdCMT: getIdCMT
+                //courses: nameCourse,
                 // data2: getIdTeacher
             })
         } catch (error) {

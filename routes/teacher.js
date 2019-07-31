@@ -167,7 +167,7 @@ router.get("/dashboard", async (req, res) => {
         var getCommentTeacher = '';
         await axios({
                 method: 'get',
-                url: `${domain}/api/comment/teacher/${getInfoTeacher._id}`,
+                url: `${domain}/api/comment/t/${getInfoTeacher._id}`,
                 headers: {
                     Authorization: req.session.token
                 }
@@ -177,8 +177,11 @@ router.get("/dashboard", async (req, res) => {
                 // handle success
                 //console.log(response.data);
 
-                getCommentTeacher = response.data.data.courses;
+                getCommentTeacher = response.data;
                 //console.log(getCommentTeacher)
+                // getCommentTeacher.forEach(element => {
+                //     console.log(element)
+                // });
                 // ? https://pastebin.com/dVDLsgW7
             })
             .catch(error => {
