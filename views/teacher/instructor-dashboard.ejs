@@ -372,6 +372,14 @@
                                                         </div>
                                                     </div>
                                                     </div>
+                                                    <script>
+                                                        var socket = io();
+                                                        socket.on('testerEvent', function (data) {
+                                                            document.write(data.description)
+                                                        });
+                                                        socket.emit('clientEvent', 'Sent an event from the client!');
+                                                    </script>
+                                                    
                                                 <% } %>
                                             <% } %>
                                         </div>

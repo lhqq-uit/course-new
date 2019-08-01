@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 const domain = require('./../config/domain')
@@ -5,6 +6,7 @@ const FormData = require('form-data');
 const fs = require('fs');
 const multer = require('multer');
 const jwtDecode = require('jwt-decode');
+const io = require('socket.io')(http);
 
 
 var storage = multer.diskStorage({
@@ -189,6 +191,24 @@ router.get("/dashboard", async (req, res) => {
                 console.log(error);
             })
 
+        // io.on('connection', function (socket) {
+        //     console.log('A user connected');
+
+        //     //Send a message when 
+        //     setTimeout(function () {
+        //         //Sending an object when emmiting an event
+        //         socket.emit('testerEvent', {
+        //             description: 'A custom event named testerEvent!'
+        //         });
+        //     }, 4000);
+
+        //     socket.on('disconnect', function () {
+        //         console.log('A user disconnected');
+        //     });
+        //     socket.on('clientEvent', function (data) {
+        //         console.log(data);
+        //     });
+        // });
 
         res.render("teacher/instructor-dashboard", {
             infoTeacher: infoTeacher,
