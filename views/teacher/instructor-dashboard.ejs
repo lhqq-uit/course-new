@@ -32,7 +32,7 @@
     <link type="text/css" href="../assets/css/preloader.rtl.css" rel="stylesheet">
 
     <!-- App CSS -->
-    <link type="text/css" href="../assets/css/app.css" rel="stylesheet">
+    <link type="text/css" href="../assets/ccss/app.css" rel="stylesheet">
     <link type="text/css" href="../assets/css/app.rtl.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
     <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
@@ -320,6 +320,13 @@
                                                                 document.write(moment("<%= e.lessons[i].comment[j].time %>").fromNow());
                                                                 //document.write(showtime);
                                                             </script>
+                                                            <div class="btn-group ml-3">
+                                                                <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" onclick="ShowEdit();">Edit</a>
+                                                                    <a class="dropdown-item" href="#">Delete</a>
+                                                                </div>
+                                                            </div>
                                                         </small><br>
                                                     </div>
                                                     <span class="text-muted">on <a href="instructor-edit-course.html" class="text-50" style="text-decoration: underline;">
