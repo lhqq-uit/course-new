@@ -6,7 +6,7 @@ const FormData = require('form-data');
 const fs = require('fs');
 const multer = require('multer');
 const jwtDecode = require('jwt-decode');
-const io = require('socket.io')(http);
+//const io = require('socket.io')(http);
 
 
 var storage = multer.diskStorage({
