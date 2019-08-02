@@ -38,7 +38,8 @@
     <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.1/tiny-slider.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.1/min/tiny-slider.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    
     <style>
         .tns-controls [aria-controls] {
             font-size: 15px;
@@ -250,52 +251,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--//TODO:  only for test -->
-                        <!-- <div class="card">
-                            <div class="card-body">
-                                <div class="media">
-                                    <div class="media-left">
-                                        <a href="#" class="avatar avatar-sm">
-                                            <img src="assets/images/people/110/guy-9.jpg" alt="Guy" class="avatar-img rounded-circle">
-                                        </a>
-                                    </div>
-                                    <div class="media-body d-flex flex-column">
-                                        <div class="d-flex align-items-center">
-                                            <a href="profile.html" class="text-body"><strong>Laza Bogdan</strong></a>
-                                            <small class="ml-auto text-muted">27 min ago</small><br>
-                                        </div>
-                                        <span class="text-muted">on <a href="instructor-edit-course.html" class="text-50" style="text-decoration: underline;">Data Visualization With Chart.js</a></span>
-                                        <p class="mt-1 mb-0 text-70">How can I load Charts on a page?</p>
-                                    </div>
-                                </div>
-                                <div class="media ml-sm-32pt mt-3 border rounded p-3 bg-light d-inline-flex measure-paragraph-max">
-                                    <div class="media-left">
-                                        <a href="#" class="avatar avatar-sm">
-                                            <img src="assets/images/people/110/guy-6.jpg" alt="Guy" class="avatar-img rounded-circle">
-                                        </a>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="d-flex align-items-center">
-                                            <a href="profile.html" class="text-body"><strong>FrontendMatter</strong></a>
-                                            <small class="ml-auto text-muted">just now</small>
-                                        </div>
-                                        <p class="mt-1 mb-0 text-70">Hi Bogdan,<br> Thank you for purchasing our course! <br><br>Please have a look at the charts library documentation <a href="#" class="text-underline">here</a> and follow the instructions.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <form action="#" id="message-reply">
-                                    <div class="input-group input-group-merge">
-                                        <input type="text" class="form-control form-control-appended" required="" placeholder="Quick Reply">
-                                        <div class="input-group-append">
-                                            <div class="input-group-text pl-0">
-                                                <button class="btn btn-flush" type="button"><i class="material-icons">send</i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div> -->
+
                         <div id="my-slider" class="my-slider">
                         <% if (getCommentTeacher) { %>   
                             <% getCommentTeacher.idCourses.forEach(function(e){ %>
@@ -373,18 +329,13 @@
                                                         </div>
                                                     </div>
                                                     </div>
-                                                    <script>
-                                                        var socket = io();
-                                                        socket.on('testerEvent', function (data) {
-                                                            document.write(data.description)
-                                                        });
-                                                        socket.emit('clientEvent', 'Sent an event from the client!');
-                                                    </script>
                                                     
                                                 <% } %>
                                             <% } %>
+                                            
+                                            
                                         </div>
-                                        <div class="card-footer">
+                                        <!-- <div class="card-footer">
                                             <form action="#" id="message-reply">
                                                 <div class="input-group input-group-merge">
                                                     <input type="text" class="form-control form-control-appended" required="" placeholder="Quick Reply">
@@ -395,9 +346,9 @@
                                                     </div>
                                                 </div>
                                             </form>
-                                        </div>
+                                        </div> -->
                                     </div>
-                                </div>
+                                    </div>
                                     <% } %>
                                 <% } %>
                             <% }); %>
@@ -419,6 +370,14 @@
     </div>
     <% include ../layout/modal %>
     <!-- // END Header Layout -->
+    <!-- <script>
+        var socket = io();
+        socket.on('testerEvent', function (data) {
+            document.write(data.description)
+            //alert(data.description)
+        });
+        socket.emit('clientEvent', 'Sent an event from the client!');
+    </script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <script>
         var slider = tns({
@@ -429,7 +388,7 @@
             nav: false,
             autoHeight: true,
             slideBy: "page",
-            mouseDrag: true,
+            //mouseDrag: true,
             swipeAngle: false,
             speed: 400,
 
