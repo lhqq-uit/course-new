@@ -17,8 +17,8 @@ var UserSchema = new Schema({
     email: {
         type: String,
         trim: true,
-        required: 'Email address is required',
-        validate: [validateEmail, 'Please provide a valid email address'],
+        //required: 'Email address is required',
+        //validate: [validateEmail, 'Please provide a valid email address'],
         default: 'socialnetwork@socialnetwork.com' // cái này cho đăng nhập bằng mxh
     },
     password: {
