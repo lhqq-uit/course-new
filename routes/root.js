@@ -5,8 +5,9 @@ const jwtDecode = require('jwt-decode');
 const axios = require('axios')
 var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-var keys =require("./../config/key")
+var keys = require("./../config/key")
 
 
 // Configure the Facebook strategy for use by Passport.
@@ -30,7 +31,20 @@ passport.use(new Strategy({
         return cb(null, profile);
     }));
 
-
+passport.use(
+    new GoogleStrategy({
+            clientID: keys.googleClientID,
+            clientSecret: keys.googleClientSecret,
+            callbackURL: '/auth/google/callback'
+        },
+        // accessToken => {
+        //     console.log(accessToken);
+        // }
+        (accessToken, refreshToken, profile, cb) => {
+            return cb(null, profile);
+        }
+    )
+);
 // Configure Passport authenticated session persistence.
 //
 // In order to restore authentication state across HTTP requests, Passport needs
@@ -48,6 +62,81 @@ passport.deserializeUser(function (obj, cb) {
     cb(null, obj);
 });
 
+
+//todo: login with google
+router.get(
+    '/auth/google',
+    passport.authenticate('google', {
+        scope: ['profile', 'email']
+    })
+);
+
+router.get('/auth/google/callback',
+    passport.authenticate('google', {
+        failureRedirect: '/login'
+    }),
+    async (req, res) => {
+        await axios({
+                method: "get",
+                url: `${domain}/api/usCheck/${req.user.id}`
+            }).then(response => {
+                if (response.data.checkUser == false) {
+                    axios({
+                        method: 'post',
+                        url: `${domain}/api/signup`,
+                        data: {
+                            //     idUserGG: req.user.id,
+                            //     fullname: req.user.displayName,
+                            //     avatar: req.user._json.picture,
+                            //     email: req.user._json.email,
+                            fullname: req.user.displayName,
+                            username: req.user.id,
+                            email: req.user._json.email,
+                            password: req.user.id,
+                            //avatar: req.user._json.picture,
+                            role: "Student"
+                        }
+                    }).catch(err => {
+                        console.log(err)
+                        res.redirect("/login")
+                    })
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+            .finally(async () => {
+                await axios({
+                    method: 'post',
+                    url: `${domain}/api/signin`,
+                    data: {
+                        username: req.user.id,
+                        password: req.user.id
+                    }
+                }).then(Response => {
+                    req.session.token = Response.data.token;
+                    //console.log(req.session.token)
+                    // console.log()
+                    if (req.session.token) {
+                        res.redirect('/dashboard')
+                    }
+
+                }).catch(err => {
+                    //console.log(err)
+                    if (err.response.data.success == false) {
+                        req.session.catchLogin = false;
+                        res.redirect("/login");
+                    }
+                })
+            })
+        //res.redirect('/authentication'); //TODO: return authentication
+        // res.json({
+        //     idUserGG: req.user.id,
+        //     fullname: req.user.displayName,
+        //     avatar: req.user._json.picture,
+        //     email: req.user._json.email,
+        //     //user: req.user
+        // });
+    });
 
 
 
