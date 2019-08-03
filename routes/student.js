@@ -51,22 +51,22 @@ router.get("/dashboard", async (req, res) => {
 
         let getCourseNotPurchased = '';
         await axios({
-            method: "get",
-            url: `${domain}/api/student/courses-not-purchased`,
-            headers: {
-                Authorization: req.session.token
-            }
-        })
-        .then(response => {
-            // handle success
-            //console.log(response.data);
+                method: "get",
+                url: `${domain}/api/student/courses-not-purchased`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                //console.log(response.data);
 
-            getCourseNotPurchased = response.data;
-        })
-        .catch(error => {
-            // handle error
-            //console.log(error);
-        })
+                getCourseNotPurchased = response.data;
+            })
+            .catch(error => {
+                // handle error
+                //console.log(error);
+            })
         let getTotalIq = '';
         await axios({
                 method: "get",
@@ -111,30 +111,31 @@ router.get("/dashboard", async (req, res) => {
             });
         }
 
-        let getCourseStudied='';
+        let getCourseStudied = '';
         await axios({
-            method: "get",
-            url: `${domain}/api/student/course-studied`,
-            headers: {
-                Authorization: req.session.token
-            }
-        })
-        .then(response => {
-            // handle success
-            console.log(response.data);
+                method: "get",
+                url: `${domain}/api/student/course-studied`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                console.log(response.data);
 
-            getCourseStudied = response.data;
-        })
-        .catch(error => {
-            // handle error
-            console.log(error);
-        })
+                getCourseStudied = response.data.course_studied;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
 
         res.render("student/student-dashboard", {
             infoStudent: infoStudent,
             getTotalIq: getTotalIq,
             iqTotal7Day: iqTotal7Day,
             getIqAWeek: getIqAWeek,
+            getCourseStudied: getCourseStudied,
             getCoursePurchased: getCoursePurchased,
             getCourseNotPurchased: getCourseNotPurchased,
             notificationLogin: notificationLogin, // ! login true push notification

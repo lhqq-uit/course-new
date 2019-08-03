@@ -6,6 +6,8 @@ const axios = require('axios')
 var passport = require('passport');
 var Strategy = require('passport-facebook').Strategy;
 
+var keys =require("./../config/key")
+
 
 // Configure the Facebook strategy for use by Passport.
 //
@@ -15,8 +17,8 @@ var Strategy = require('passport-facebook').Strategy;
 // with a user object, which will be set at `req.user` in route handlers after
 // authentication.
 passport.use(new Strategy({
-        clientID: '694649764313612',
-        clientSecret: '9ec5d49535ec5787874f673ce0e99df6',
+        clientID: keys.facebookClientID,
+        clientSecret: keys.facebookClientSecret,
         callbackURL: '/return'
     },
     function (accessToken, refreshToken, profile, cb) {
