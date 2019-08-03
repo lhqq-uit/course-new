@@ -17,11 +17,11 @@ router.put('/quiz/:idQuiz', checkPermission.isStudent, StudentController.answerQ
 
 router.put('/:idLesson', checkPermission.isStudent, StudentController.setLessonStudied);
 
+router.get('/set-course-studied', checkPermission.isStudent, StudentController.setCourseStudied);
+
 router.get('/total-iq', checkPermission.isStudent, StudentController.getTotalIq);
 
 router.get('/iq-a-week', checkPermission.isStudent, StudentController.getIqAWeek);
-
-router.get('/set-course-studied', checkPermission.isStudent, StudentController.setCourseStudied);
 
 router.get('/course-studied', checkPermission.isStudent, StudentController.getCourseStudied);
 

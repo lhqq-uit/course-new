@@ -6,7 +6,7 @@ const CourseController = require('./course.controller');
 const multer = require('multer')
 const checkPermission = require('./../../helper/CheckPermission');
 
-var storage =   multer.diskStorage({
+var storage = multer.diskStorage({
   // file upload destination
   destination: function (req, file, callback) {
     callback(null, './public/upload/images');
@@ -15,7 +15,7 @@ var storage =   multer.diskStorage({
     callback(null, Date.now() + '-' + file.originalname);
   }
 });
-var upload = multer({ storage : storage});
+var upload = multer({ storage: storage });
 
 router.get('/populate', CourseController.getCoursePopulate);
 
