@@ -64,30 +64,32 @@ router.get('/return',
 router.get('/authentication',
     require('connect-ensure-login').ensureLoggedIn(),
     async (req, res) => {
-        let checkUser = '';
+        // let checkUser = '';
         await axios({
-            method: "get",
-            url: `${domain}/api/usCheck/${req.user.id}`
-        }).then(response => {
-            checkUser = response.data.checkUser;
-        }).catch(err => {
-            console.log(err)
-        })
-
-        if (checkUser == false) {
-            axios({
-                method: 'post',
-                url: `${domain}/api/signup`,
-                data: {
-                    fullname: req.user.displayName,
-                    username: req.user.id,
-                    email: `${req.user.id}112@student.com`,
-                    password: req.user.id,
+                method: "get",
+                url: `${domain}/api/usCheck/${req.user.id}`
+            }).then(response => {
+                if (response.data.checkUser == false) {
+                    axios({
+                        method: 'post',
+                        url: `${domain}/api/signup`,
+                        data: {
+                            fullname: req.user.displayName,
+                            username: req.user.id,
+                            email: `${req.user.id}112@student.com`,
+                            password: req.user.id,
+                            role: "Student"
+                        }
+                    }).catch(err => {
+                        console.log(err)
+                        res.redirect("/login")
+                    })
                 }
             }).catch(err => {
                 console.log(err)
-            }).finally(() => {
-                axios({
+            })
+            .finally(async () => {
+                await axios({
                     method: 'post',
                     url: `${domain}/api/signin`,
                     data: {
@@ -110,30 +112,32 @@ router.get('/authentication',
                     }
                 })
             })
-        } else {
-            axios({
-                method: 'post',
-                url: `${domain}/api/signin`,
-                data: {
-                    username: req.user.id,
-                    password: req.user.id
-                }
-            }).then(Response => {
-                req.session.token = Response.data.token;
-                //console.log(req.session.token)
-                // console.log()
-                if (req.session.token) {
-                    res.redirect('/dashboard')
-                }
+        // if (checkUser == false) {
 
-            }).catch(err => {
-                //console.log(err)
-                if (err.response.data.success == false) {
-                    req.session.catchLogin = false;
-                    res.redirect("/login");
-                }
-            })
-        }
+        // } else {
+        //     axios({
+        //         method: 'post',
+        //         url: `${domain}/api/signin`,
+        //         data: {
+        //             username: req.user.id,
+        //             password: req.user.id
+        //         }
+        //     }).then(Response => {
+        //         req.session.token = Response.data.token;
+        //         //console.log(req.session.token)
+        //         // console.log()
+        //         if (req.session.token) {
+        //             res.redirect('/dashboard')
+        //         }
+
+        //     }).catch(err => {
+        //         //console.log(err)
+        //         if (err.response.data.success == false) {
+        //             req.session.catchLogin = false;
+        //             res.redirect("/login");
+        //         }
+        //     })
+        // }
         //console.log(req.user)
         // res.json({
         //     user: req.user,

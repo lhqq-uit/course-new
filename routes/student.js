@@ -65,7 +65,7 @@ router.get("/dashboard", async (req, res) => {
         })
         .catch(error => {
             // handle error
-            console.log(error);
+            //console.log(error);
         })
         let getTotalIq = '';
         await axios({
