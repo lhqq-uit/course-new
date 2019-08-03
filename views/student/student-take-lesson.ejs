@@ -13,26 +13,26 @@
     <meta name="robots" content="noindex">
 
     <!-- Perfect Scrollbar -->
-    <link type="text/css" href="assets/vendor/perfect-scrollbar.css" rel="stylesheet">
+    <link type="text/css" href="/assets/vendor/perfect-scrollbar.css" rel="stylesheet">
 
     <!-- Fix Footer CSS -->
-    <link type="text/css" href="assets/vendor/fix-footer.css" rel="stylesheet">
+    <link type="text/css" href="/assets/vendor/fix-footer.css" rel="stylesheet">
 
     <!-- Material Design Icons -->
-    <link type="text/css" href="assets/css/material-icons.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/material-icons.rtl.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/material-icons.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/material-icons.rtl.css" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
-    <link type="text/css" href="assets/css/fontawesome.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/fontawesome.rtl.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/fontawesome.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/fontawesome.rtl.css" rel="stylesheet">
 
     <!-- Preloader -->
-    <link type="text/css" href="assets/css/preloader.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/preloader.rtl.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/preloader.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/preloader.rtl.css" rel="stylesheet">
 
     <!-- App CSS -->
-    <link type="text/css" href="assets/css/app.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/app.rtl.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/app.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/app.rtl.css" rel="stylesheet">
 
 
 
@@ -41,40 +41,6 @@
 </head>
 
 <body class="layout-navbar-mini-fixed-bottom">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div class="preloader">
         <div class="sk-double-bounce">
@@ -88,22 +54,12 @@
 
         <!-- Header -->
 
-        <% include header-dashboard %>
+        <% include ../layout/header-dashboard %>
 
         <!-- // END Header -->
 
         <!-- Header Layout Content -->
         <div class="mdk-header-layout__content page-content ">
-
-
-
-
-
-
-
-
-
-
 
             <div class="navbar navbar-list navbar-submenu navbar-light border-0 navbar-expand-sm" style="white-space: nowrap;">
                 <div class="container flex-column flex-sm-row">
@@ -111,13 +67,12 @@
                         <div class="nav-item">
                             <div class="media flex-nowrap">
                                 <div class="media-left mr-16pt">
-                                    <a href="student-take-course.html"><img src="assets/images/paths/angular_64x64.png" width="40" alt="Angular" class="rounded"></a>
+                                    <a href="student-take-course.html"><img src="/upload/images/<%= lesson.course.avatar %>" width="40" alt="Angular" class="rounded"></a>
                                 </div>
                                 <div class="media-body">
-                                    <a href="student-take-course.html" class="card-title text-body mb-0">Angular Fundamentals</a>
+                                    <a href="student-take-course.html" class="card-title text-body mb-0"><%= lesson.title %></a>
                                     <p class="lh-1 d-flex align-items-center mb-0">
-                                        <span class="text-50 small font-weight-bold mr-8pt">Elijah Murray</span>
-                                        <span class="text-50 small">Software Engineer and Developer</span>
+                                        <span class="text-50 small font-weight-bold mr-8pt"><%= lesson.course.teacher.fullname %></span>
                                     </p>
                                 </div>
                             </div>
@@ -150,7 +105,7 @@
                     <div class="js-player embed-responsive embed-responsive-16by9 mb-32pt">
                         <div class="player embed-responsive-item">
                             <div class="player__content">
-                                <div class="player__image" style="--player-image: url(assets/images/illustration/player.svg)"></div>
+                                <div class="player__image" style="--player-image: url(/assets/images/illustration/player.svg)"></div>
                                 <a href="#" class="player__play">
                                     <span class="material-icons">play_arrow</span>
                                 </a>
@@ -162,11 +117,11 @@
                     </div>
 
                     <div class="d-flex flex-wrap align-items-end mb-16pt">
-                        <h1 class="text-white flex m-0">Introduction to TypeScript</h1>
-                        <p class="h1 text-white-50 font-weight-light m-0">50:13</p>
+                        <h1 class="text-white flex m-0"><%= lesson.title %></h1>
+                        <!-- <p class="h1 text-white-50 font-weight-light m-0">50:13</p> -->
                     </div>
 
-                    <p class="hero__lead measure-hero-lead text-white-50 mb-24pt">JavaScript is now used to power backends, create hybrid mobile applications, architect cloud solutions, design neural networks and even control robots. Enter TypeScript: a superset of JavaScript for scalable, secure, performant and feature-rich applications.</p>
+                    <p class="hero__lead measure-hero-lead text-white-50 mb-24pt"><%= lesson.description %></p>
 
                     <a href="#" class="btn btn-white">Resume lesson</a>
                 </div>
@@ -177,21 +132,21 @@
                         <li class="nav-item navbar-list__item">
                             <div class="media align-items-center">
                                 <span class="media-left mr-16pt">
-                                    <img src="assets/images/people/50/guy-6.jpg" width="40" alt="avatar" class="rounded-circle">
+                                    <img src="/avatar/<%= lesson.course.teacher.avatar %>" width="40" alt="avatar" class="rounded-circle">
                                 </span>
                                 <div class="media-body">
-                                    <a class="card-title m-0" href="instructor-profile.html">Eddie Bryan</a>
+                                    <a class="card-title m-0" href="/profile/lesson.course.teacher._id"><%= lesson.course.teacher.fullname %></a>
                                     <p class="text-50 lh-1 mb-0">Instructor</p>
                                 </div>
                             </div>
                         </li>
                         <li class="nav-item navbar-list__item">
                             <i class="material-icons text-muted icon--left">schedule</i>
-                            2h 46m
+                            <%= lesson.course.total_time %>
                         </li>
                         <li class="nav-item navbar-list__item">
                             <i class="material-icons text-muted icon--left">assessment</i>
-                            Beginner
+                            <%= lesson.course.level %>
                         </li>
                         <li class="nav-item ml-sm-auto text-sm-center flex-column navbar-list__item">
                             <div class="rating rating-24">
@@ -212,79 +167,78 @@
             <div class="page-section bg-white">
                 <div class="container page__container">
 
-                    <div class="d-flex align-items-center mb-heading">
-                        <h4 class="m-0">Discussions</h4>
-                        <a href="student-discussions-ask.html" class="text-underline ml-auto">Ask a Question</a>
-                    </div>
-
-                    <div class="border-top">
-
-                        <div class="list-group list-group-flush">
-
-                            <div class="list-group-item p-3">
-                                <div class="row align-items-center">
-                                    <div class="col-md-3 mb-8pt mb-md-0">
-                                        <div class="media">
-                                            <div class="media-left mr-16pt">
-                                                <a href="student-profile.html"><img src="assets/images/people/110/guy-1.jpg" width="40" alt="avatar" class="rounded-circle"></a>
-                                            </div>
-                                            <div class="media-body media-middle">
-                                                <p class="text-muted m-0">2 days ago</p>
-                                                <p class="m-0"><a href="student-profile.html" class="text-body">Laza Bogdan</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col mb-8pt mb-md-0">
-                                        <p class="mb-8pt"><a href="student-discussion.html" class="text-body"><strong>Using Angular HttpClientModule instead of HttpModule</strong></a></p>
-
-
-                                        <a href="student-discussion.html" class="chip chip-outline-secondary">Angular fundamentals</a>
-
-
-                                    </div>
-                                    <div class="col-auto d-flex flex-column align-items-center justify-content-center">
-                                        <h5 class="m-0">1</h5>
-                                        <p class="lh-1 mb-0"><small class="text-70">answers</small></p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="list-group-item p-3">
-                                <div class="row align-items-center">
-                                    <div class="col-md-3 mb-8pt mb-md-0">
-                                        <div class="media">
-                                            <div class="media-left mr-16pt">
-                                                <a href="student-profile.html"><img src="assets/images/people/110/guy-2.jpg" width="40" alt="avatar" class="rounded-circle"></a>
-                                            </div>
-                                            <div class="media-body media-middle">
-                                                <p class="text-muted m-0">3 days ago</p>
-                                                <p class="m-0"><a href="student-profile.html" class="text-body">Adam Curtis</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col mb-8pt mb-md-0">
-                                        <p class="mb-0"><a href="student-discussion.html" class="text-body"><strong>Why am I getting an error when trying to install angular/http@2.4.2</strong></a></p>
-
-                                    </div>
-                                    <div class="col-auto d-flex flex-column align-items-center justify-content-center">
-                                        <h5 class="m-0">1</h5>
-                                        <p class="lh-1 mb-0"><small class="text-70">answers</small></p>
-                                    </div>
-                                </div>
-                            </div>
-
+                    <div class="mb-heading d-flex align-items-center">
+                        <div class="flex">
+                            <h4 class="card-title">Comments</h4>
+                            <p class="card-subtitle">Latest comments</p>
                         </div>
-
+                        <div class="d-flex align-items-center text-right">
+                            <a href="#" class="btn btn-outline-secondary btn-sm"><i class="material-icons">keyboard_arrow_left</i></a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm ml-8pt"><i class="material-icons">keyboard_arrow_right</i></a>
+                        </div>
                     </div>
-
-                    <a href="student-discussions.html" class="btn btn-outline-secondary">See all discussions for this lesson</a>
-
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#" class="avatar avatar-sm">
+                                        <img src="assets/images/people/110/guy-9.jpg" alt="Guy" class="avatar-img rounded-circle">
+                                    </a>
+                                </div>
+                                <div class="media-body d-flex flex-column">
+                                    <div class="d-flex align-items-center">
+                                        <a href="profile.html" class="text-body"><strong>Laza Bogdan</strong></a>
+                                        <small class="ml-auto text-muted">27 min ago</small><br>
+                                    </div>
+                                    <span class="text-muted">on <a href="instructor-edit-course.html" class="text-50" style="text-decoration: underline;">Data Visualization With Chart.js</a></span>
+                                    <p class="mt-1 mb-0 text-70">How can I load Charts on a page?</p>
+                                </div>
+                            </div>
+                            <div class="media ml-sm-32pt mt-3 border rounded p-3 bg-light d-inline-flex measure-paragraph-max">
+                                <div class="media-left">
+                                    <a href="#" class="avatar avatar-sm">
+                                        <img src="assets/images/people/110/guy-6.jpg" alt="Guy" class="avatar-img rounded-circle">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <div class="d-flex align-items-center">
+                                        <a href="profile.html" class="text-body"><strong>FrontendMatter</strong></a>
+                                        <small class="ml-auto text-muted">just now</small>
+                                    </div>
+                                    <p class="mt-1 mb-0 text-70">Hi Bogdan,<br> Thank you for purchasing our course! <br><br>Please have a look at the charts library documentation <a href="#" class="text-underline">here</a> and follow the instructions.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <form action="#" id="message-reply">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" class="form-control form-control-appended" required="" placeholder="Quick Reply">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text pr-2">
+                                            <button class="btn btn-flush" type="button"><i class="material-icons">tag_faces</i></button>
+                                        </div>
+                                        <div class="input-group-text pl-0">
+                                            <div class="custom-file custom-file-naked d-flex" style="width: 24px; overflow: hidden;">
+                                                <input type="file" class="custom-file-input" id="customFile">
+                                                <label class="custom-file-label" style="color: inherit;" for="customFile">
+                                                    <i class="material-icons">attach_file</i>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="input-group-text pl-0">
+                                            <button class="btn btn-flush" type="button"><i class="material-icons">send</i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 
 
 
-            <% include footer %>
+            <% include ../layout/footer %>
         </div>
         <!-- // END Header Layout Content -->
 
@@ -294,35 +248,35 @@
   
 
     <!-- jQuery -->
-    <script src="assets/vendor/jquery.min.js"></script>
+    <script src="/assets/vendor/jquery.min.js"></script>
 
     <!-- Bootstrap -->
-    <script src="assets/vendor/popper.min.js"></script>
-    <script src="assets/vendor/bootstrap.min.js"></script>
+    <script src="/assets/vendor/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap.min.js"></script>
 
     <!-- Perfect Scrollbar -->
-    <script src="assets/vendor/perfect-scrollbar.min.js"></script>
+    <script src="/assets/vendor/perfect-scrollbar.min.js"></script>
 
     <!-- DOM Factory -->
-    <script src="assets/vendor/dom-factory.js"></script>
+    <script src="/assets/vendor/dom-factory.js"></script>
 
     <!-- MDK -->
-    <script src="assets/vendor/material-design-kit.js"></script>
+    <script src="/assets/vendor/material-design-kit.js"></script>
 
     <!-- Fix Footer -->
-    <script src="assets/vendor/fix-footer.js"></script>
+    <script src="/assets/vendor/fix-footer.js"></script>
 
     <!-- Chart.js -->
-    <script src="assets/vendor/Chart.min.js"></script>
+    <script src="/assets/vendor/Chart.min.js"></script>
 
     <!-- App JS -->
-    <script src="assets/js/app.js"></script>
+    <script src="/assets/js/app.js"></script>
 
     <!-- Highlight.js -->
-    <script src="assets/js/hljs.js"></script>
+    <script src="/assets/js/hljs.js"></script>
 
     <!-- App Settings (safe to remove) -->
-    <script src="assets/js/app-settings.js"></script>
+    <script src="/assets/js/app-settings.js"></script>
 
 
 

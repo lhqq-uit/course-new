@@ -148,7 +148,7 @@
                                     <div class="card card--elevated card-course overlay js-overlay mdk-reveal js-mdk-reveal " data-partial-height="40" data-toggle="popover" data-trigger="click">
         
         
-                                        <a href="course.html" class="js-image" data-position="center">
+                                        <a href="/course/<%= item._id %>" class="js-image" data-position="center">
                                             <img src="/upload/images/<%= item.avatar %>" width="250" height="150" alt="course">
                                             <span class="overlay__content">
                                                 <span class="overlay__action d-flex flex-column text-center">
@@ -164,7 +164,7 @@
                                             <div class="card-body">
                                                 <div class="d-flex">
                                                     <div class="flex">
-                                                        <a class="card-title" href="course.html"><%= item.name %></a>
+                                                        <a class="card-title" href="/course/<%= item._id %>"><%= item.name %></a>
                                                         <small class="text-50 font-weight-bold mb-4pt"><%= item.teacher.fullname %></small>
                                                     </div>
                                                     <a href="course.html" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite</a>
@@ -237,7 +237,7 @@
                                                 </div>
                                             </div>
                                             <div class="col text-right">
-                                                <a href="course.html" class="btn btn-primary">Watch trailer</a>
+                                                <a href="/course/<%= item._id %>" class="btn btn-primary">Watch trailer</a>
                                             </div>
                                         </div>
         
