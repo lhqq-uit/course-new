@@ -13,12 +13,12 @@ router.get('/:idQuiz', quizController.getOneQuiz);
 router.get('/', quizController.getAllQuiz);
 
 //create quiz
-router.post('/:idLesson/',  passport.authenticate('jwt', { session: false}), checkPermission.isTeacher, quizController.create);
+router.post('/:idLesson/', passport.authenticate('jwt', { session: false }), checkPermission.isTeacher, quizController.create);
 
 //update quiz
-router.put('/:idQuiz', passport.authenticate('jwt', { session: false}), checkPermission.isTeacher, quizController.update)
+router.put('/:idQuiz', passport.authenticate('jwt', { session: false }), checkPermission.isTeacher, quizController.update)
 
 //delete a quiz
-router.delete('/:idQuiz', passport.authenticate('jwt', { session: false}), checkPermission.isTeacher, quizController.delete)
+router.delete('/:idQuiz', passport.authenticate('jwt', { session: false }), checkPermission.isTeacher, quizController.delete)
 
 module.exports = router;
