@@ -48,6 +48,25 @@ router.get("/dashboard", async (req, res) => {
                 // handle error
                 console.log(error);
             })
+
+        let getCourseNotPurchased = '';
+        await axios({
+            method: "get",
+            url: `${domain}/api/student/courses-not-purchased`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
+        .then(response => {
+            // handle success
+            //console.log(response.data);
+
+            getCourseNotPurchased = response.data;
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+        })
         let getTotalIq = '';
         await axios({
                 method: "get",
@@ -58,7 +77,7 @@ router.get("/dashboard", async (req, res) => {
             })
             .then(response => {
                 // handle success
-                console.log(response.data.total_iq);
+                //console.log(response.data.total_iq);
 
                 getTotalIq = response.data.total_iq;
             })
@@ -70,14 +89,14 @@ router.get("/dashboard", async (req, res) => {
         let getIqAWeek = '';
         await axios({
                 method: "get",
-                url: `${domain}/api/student/total-iq`,
+                url: `${domain}/api/student/iq-a-week`,
                 headers: {
                     Authorization: req.session.token
                 }
             })
             .then(response => {
                 // handle success
-                console.log(response.data.list_iq);
+                //console.log(response.data.list_iq);
 
                 getIqAWeek = response.data.list_iq;
             })
@@ -86,9 +105,31 @@ router.get("/dashboard", async (req, res) => {
                 console.log(error);
             })
         let iqTotal7Day = 0;
-        getIqAWeek.forEach(element => {
-            iqTotal7Day += element * 1;
-        });
+        if (getIqAWeek.length > 0) {
+            getIqAWeek.forEach(element => {
+                iqTotal7Day += element * 1;
+            });
+        }
+
+        let getCourseStudied='';
+        await axios({
+            method: "get",
+            url: `${domain}/api/student/course-studied`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
+        .then(response => {
+            // handle success
+            console.log(response.data);
+
+            getCourseStudied = response.data;
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+        })
+
         res.render("student/student-dashboard", {
             infoStudent: infoStudent,
             getTotalIq: getTotalIq,
