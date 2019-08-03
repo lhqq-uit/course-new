@@ -86,9 +86,9 @@ router.get("/dashboard", async (req, res) => {
                 console.log(error);
             })
         let iqTotal7Day = 0;
-        getIqAWeek.forEach(element => {
-            iqTotal7Day += element * 1;
-        });
+        // getIqAWeek.forEach(element => {
+        //     iqTotal7Day += element * 1;
+        // });
         res.render("student/student-dashboard", {
             infoStudent: infoStudent,
             getTotalIq: getTotalIq,

@@ -95,7 +95,17 @@ module.exports ={
     },
     getOneLesson: async (req, res) => {
         try {
-            let lesson = await Lesson.findById(req.params.idLesson)
+            let lesson = await Lesson.findById(req.params.idLesson).populate({
+                path: 'comment',
+                populate: {
+                    path: 'user'
+                }
+            }).populate({
+                path: 'course',
+                populate: {
+                    path : 'teacher'
+                }
+            })
             res.status(201).json({
                 success: true,
                 msg: "Success get a lesson",

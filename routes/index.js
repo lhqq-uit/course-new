@@ -5,10 +5,12 @@ const rootRouter = require("./root")
 const studentRouter = require("./student")
 const teacherRouter = require("./teacher")
 const userRouter = require("./users")
+const lessonRouter = require("./lesson")
 
 
 router.use("/", rootRouter)
-// router.use("/course", courseRouter)
+router.use("/course", courseRouter)
+router.use("/lesson", lessonRouter)
 router.use("/student", studentRouter)
 router.use("/teacher", teacherRouter)
 // router.use("/user", userRouter)

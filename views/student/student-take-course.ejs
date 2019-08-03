@@ -13,26 +13,26 @@
     <meta name="robots" content="noindex">
 
     <!-- Perfect Scrollbar -->
-    <link type="text/css" href="assets/vendor/perfect-scrollbar.css" rel="stylesheet">
+    <link type="text/css" href="/assets/vendor/perfect-scrollbar.css" rel="stylesheet">
 
     <!-- Fix Footer CSS -->
-    <link type="text/css" href="assets/vendor/fix-footer.css" rel="stylesheet">
+    <link type="text/css" href="/assets/vendor/fix-footer.css" rel="stylesheet">
 
     <!-- Material Design Icons -->
-    <link type="text/css" href="assets/css/material-icons.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/material-icons.rtl.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/material-icons.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/material-icons.rtl.css" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
-    <link type="text/css" href="assets/css/fontawesome.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/fontawesome.rtl.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/fontawesome.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/fontawesome.rtl.css" rel="stylesheet">
 
     <!-- Preloader -->
-    <link type="text/css" href="assets/css/preloader.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/preloader.rtl.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/preloader.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/preloader.rtl.css" rel="stylesheet">
 
     <!-- App CSS -->
-    <link type="text/css" href="assets/css/app.css" rel="stylesheet">
-    <link type="text/css" href="assets/css/app.rtl.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/app.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/app.rtl.css" rel="stylesheet">
 
 
 
@@ -41,40 +41,6 @@
 </head>
 
 <body class="layout-navbar-mini-fixed-bottom">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <div class="preloader">
         <div class="sk-double-bounce">
@@ -88,30 +54,20 @@
 
         <!-- Header -->
 
-        <% include header-dashboard %>
+        <% include ../layout/header-dashboard %>
 
         <!-- // END Header -->
 
         <!-- Header Layout Content -->
         <div class="mdk-header-layout__content page-content ">
 
-
-
-
-
-
-
-
-
-
-
             <div class="mdk-box bg-dark mdk-box--bg-gradient-primary js-mdk-box mb-0" data-effects="blend-background">
                 <div class="mdk-box__content">
                     <div class="hero py-64pt text-center text-sm-left">
                         <div class="container">
-                            <h1 class="text-white">Angular Fundamentals</h1>
-                            <p class="lead text-white-50 measure-hero-lead mb-24pt">It’s not every day that one of the most important front-end libraries in web development gets a complete overhaul. Keep your skills relevant and up-to-date with this comprehensive introduction to Google’s popular community project.</p>
-                            <a href="student-take-lesson.html" class="btn btn-white">Resume course</a>
+                            <h1 class="text-white"><%= course.name%></h1>
+                            <p class="lead text-white-50 measure-hero-lead mb-24pt"><%= course.description %></p>
+                            <a href="/course/<%= course._id%>" class="btn btn-white">Resume course</a>
                         </div>
                     </div>
                     <div class="navbar navbar-expand-sm navbar-submenu navbar-light navbar-list p-0 m-0 align-items-center">
@@ -120,21 +76,21 @@
                                 <li class="nav-item navbar-list__item">
                                     <div class="media align-items-center">
                                         <span class="media-left mr-16pt">
-                                            <img src="assets/images/people/50/guy-6.jpg" width="40" alt="avatar" class="rounded-circle">
+                                            <img src="/avatar/<%= course.teacher.avatar %>" width="40" alt="avatar" class="rounded-circle">
                                         </span>
                                         <div class="media-body">
-                                            <a class="card-title m-0" href="instructor-profile.html">Eddie Bryan</a>
+                                            <a class="card-title m-0" href="/profile/<%= course.teacher._id %>"><%= course.teacher.fullname %></a>
                                             <p class="text-50 lh-1 mb-0">Instructor</p>
                                         </div>
                                     </div>
                                 </li>
                                 <li class="nav-item navbar-list__item">
                                     <i class="material-icons text-muted icon--left">schedule</i>
-                                    2h 46m
+                                    <%= course.total_time %>
                                 </li>
                                 <li class="nav-item navbar-list__item">
                                     <i class="material-icons text-muted icon--left">assessment</i>
-                                    Beginner
+                                    <%= course.level %>
                                 </li>
                                 <li class="nav-item ml-sm-auto text-sm-center flex-column navbar-list__item">
                                     <div class="rating rating-24">
@@ -156,13 +112,13 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="border-left-2 page-section pl-32pt">
-
+                            <% let i=1; course.lessons.forEach(function(lesson){ %>
                             <div class="d-flex align-items-center page-num-container">
-                                <div class="page-num">1</div>
-                                <h4>Getting Started With Angular</h4>
+                                <div class="page-num"><%= i %></div>
+                                <h4><%= lesson.title %></h4>
                             </div>
 
-                            <p class="text-70 mb-24pt">Good tools make application development quick*er and easier to maintain than* if you did everything by hand. The goal in this guide is to build and run a simple Angular application in TypeScript, using the Angular CLI while adhering to the Style Guide recommendations that benefit every Angular project.</p>
+                            <p class="text-70 mb-24pt"><%= lesson.description %></p>
 
                             <div class="card mb-32pt mb-lg-64pt">
                                 <ul class="accordion accordion--boxed js-accordion mb-0" id="toc-1">
@@ -175,81 +131,77 @@
                                             <ul class="list-unstyled collapse show" id="toc-content-1">
                                                 <li class="accordion__menu-link">
                                                     <span class="material-icons icon-16pt icon--left text-body">check_circle</span>
-                                                    <a class="flex" href="student-take-lesson.html">Introduction</a>
-                                                    <span class="text-muted">8m 42s</span>
+                                                    <a class="flex" href="/lesson/<%= lesson._id %>">Introduction</a>
+                                                    <span class="text-muted"></span>
                                                 </li>
                                                 <li class="accordion__menu-link">
                                                     <span class="material-icons icon-16pt icon--left text-body">play_circle_outline</span>
-                                                    <a class="flex" href="student-take-lesson.html">Introduction to TypeScript</a>
-                                                    <span class="text-muted">50m 13s</span>
+                                                    <a class="flex" href="/lesson/<%= lesson._id %>">Video</a>
+                                                    <span class="text-muted"></span>
                                                 </li>
                                                 <li class="accordion__menu-link">
                                                     <span class="material-icons icon-16pt icon--left text-body">play_circle_outline</span>
-                                                    <a class="flex" href="student-take-lesson.html">Comparing Angular to AngularJS</a>
-                                                    <span class="text-muted">12m 10s</span>
+                                                    <a class="flex" href="/lesson/<%= lesson._id %>">Document</a>
+                                                    <span class="text-muted"></span>
                                                 </li>
                                                 <li class="accordion__menu-link">
                                                     <span class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
-                                                    <a class="flex" href="student-take-quiz.html">Quiz: Getting Started With Angular</a>
+                                                    <a class="flex" href="/lesson/<%= lesson._id %>">Quiz: Getting Started With Angular</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
-
-                            <div class="d-flex align-items-center page-num-container">
-                                <div class="page-num">2</div>
-                                <h4>Creating and Communicating Between Angular Components</h4>
-                            </div>
-                            <p class="text-70 mb-24pt">Data sharing is an essential concept to understand before diving into your first Angular project. In this section, you will learn four different methods for sharing data between Angular components.</p>
-
-                            <div class="card mb-0">
-                                <ul class="accordion accordion--boxed js-accordion mb-0" id="toc-2">
-                                    <li class="accordion__item">
-                                        <a class="accordion__toggle" data-toggle="collapse" data-parent="#toc-2" href="#toc-content-2">
-                                            <span class="flex">6 Steps</span>
-                                            <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
-                                        </a>
-                                        <div class="accordion__menu">
-                                            <ul class="list-unstyled collapse" id="toc-content-2">
-                                                <li class="accordion__menu-link">
-                                                    <span class="material-icons icon-16pt icon--left text-body">check_circle</span>
-                                                    <a class="flex" href="student-take-lesson.html">Introduction</a>
-                                                    <span class="text-muted">8m 42s</span>
-                                                </li>
-                                                <li class="accordion__menu-link">
-                                                    <span class="material-icons icon-16pt icon--left text-body">play_circle_outline</span>
-                                                    <a class="flex" href="student-take-lesson.html">Introduction to TypeScript</a>
-                                                    <span class="text-muted">50m 13s</span>
-                                                </li>
-                                                <li class="accordion__menu-link">
-                                                    <span class="material-icons icon-16pt icon--left text-body">play_circle_outline</span>
-                                                    <a class="flex" href="student-take-lesson.html">Comparing Angular to AngularJS</a>
-                                                    <span class="text-muted">12m 10s</span>
-                                                </li>
-                                                <li class="accordion__menu-link">
-                                                    <span class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
-                                                    <a class="flex" href="student-take-quiz.html">Quiz: Getting Started With Angular</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            <% i+= 1; }); %>
 
                         </div>
                     </div>
-                    <div class="col-lg-5 page-nav">
-                        <div class="page-section">
-                            <div class="page-nav__content">
-                                <h4 class="mb-16pt">Table of contents</h4>
+                    <div class="col-lg-5 border-left-md pt-sm-32pt pt-md-0 d-flex flex-column align-items-center ">
+                        <div class="text-center mt-24pt">
+                            <p class="mb-16pt">
+                                <img src="/avatar/<%= course.teacher.avatar %>" alt="guy-6" class="rounded-circle" width="64">
+                            </p>
+                            <h4 class="m-0"><%= course.teacher.fullname %></h4>
+                            <!-- <p class="lh-1">
+                                <small class="text-muted">Angular, Web Development</small>
+                            </p> -->
+                            <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
+                                <a href="instructor-profile.html" class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">Follow</a>
+                                <a href="instructor-profile.html" class="btn btn-outline-secondary">View Profile</a>
                             </div>
-                            <nav class="nav page-nav__menu">
-                                <a class="nav-link active" href="#">Getting Started With Angular</a>
-                                <a class="nav-link" href="#">Creating and Communicating Between Angular Components</a>
-                                <a class="nav-link" href="#">Exploring the Angular Template Syntax</a>
-                            </nav>
+                        </div>
+                        <div class="mb-24pt mb-md-0">
+                            <!-- <h4 text-align="center">About the author</h4> -->
+                            <p class="text-70 mt-24pt mb-24pt"><%= course.teacher.about %></p>
+
+                            <h4>More from the author</h4>
+                            <div class="list-group list-group-flush">
+                                <div class="list-group-item px-0">
+                                    <a href="#" class="d-block mb-4pt">Angular Best Practices</a>
+                                    <p class="lh-1 mb-0">
+                                        <small class="text-muted mr-8pt">6h 40m</small>
+                                        <small class="text-muted mr-8pt">13,876 Views</small>
+                                        <small class="text-muted">13 May 2018</small>
+                                    </p>
+                                </div>
+                                <div class="list-group-item px-0">
+                                    <a href="#" class="d-block mb-4pt">Unit Testing in Angular</a>
+                                    <p class="lh-1 mb-0">
+                                        <small class="text-muted mr-8pt">6h 40m</small>
+                                        <small class="text-muted mr-8pt">13,876 Views</small>
+                                        <small class="text-muted">13 May 2018</small>
+                                    </p>
+                                </div>
+                                <div class="list-group-item px-0">
+                                    <a href="#" class="d-block mb-4pt">Migrating Applications from AngularJS to Angular</a>
+                                    <p class="lh-1 mb-0">
+                                        <small class="text-muted mr-8pt">6h 40m</small>
+                                        <small class="text-muted mr-8pt">13,876 Views</small>
+                                        <small class="text-muted">13 May 2018</small>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -258,57 +210,7 @@
             <div class="bg-white border-top-2">
 
 
-                <div class="page-separator-mask page-section pb-0 js-read-more">
-                    <div class="container page__container">
-                        <div class="row">
-                            <div class="col-md-7">
-                                <h4>About this course</h4>
-                                <p class="text-70">This course will teach you the fundamentals o*f working with Angular 2. You *will learn everything you need to know to create complete applications including: components, services, directives, pipes, routing, HTTP, and even testing.</p>
-                                <p>This course will teach you the fundamentals o*f working with Angular 2. You *will learn everything you need to know to create complete applications including: components, services, directives, pipes, routing, HTTP, and even testing.</p>
-                            </div>
-                            <div class="col-md-5">
-                                <h4>What you’ll learn</h4>
-                                <ul class="list-unstyled">
-                                    <li class="d-flex align-items-center">
-                                        <span class="material-icons text-50 mr-8pt">check</span>
-                                        <span class="text-70">Fundamentals of working with Angular</span>
-                                    </li>
-                                    <li class="d-flex align-items-center">
-                                        <span class="material-icons text-50 mr-8pt">check</span>
-                                        <span class="text-70">Create complete Angular applications</span>
-                                    </li>
-                                    <li class="d-flex align-items-center">
-                                        <span class="material-icons text-50 mr-8pt">check</span>
-                                        <span class="text-70">Working with the Angular CLI</span>
-                                    </li>
-                                    <li class="d-flex align-items-center">
-                                        <span class="material-icons text-50 mr-8pt">check</span>
-                                        <span class="text-70">Understanding Dependency Injection</span>
-                                    </li>
-                                    <li class="d-flex align-items-center">
-                                        <span class="material-icons text-50 mr-8pt">check</span>
-                                        <span class="text-70">Testing with Angular</span>
-                                    </li>
-                                    <li class="d-flex align-items-center">
-                                        <span class="material-icons text-50 mr-8pt">check</span>
-                                        <span class="text-70">Testing with Angular</span>
-                                    </li>
-                                    <li class="d-flex align-items-center">
-                                        <span class="material-icons text-50 mr-8pt">check</span>
-                                        <span class="text-70">Testing with Angular</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="page-separator-mask__content">
-                        <div class="page-separator-mask__top"></div>
-                        <div class="page-separator-mask__bottom"></div>
-                        <div class="page-separator">
-                            <a href="#" class="page-separator__text link-text">read more <i class="material-icons">keyboard_arrow_down</i></a>
-                        </div>
-                    </div>
-                </div>
+                
 
             </div>
 
@@ -350,7 +252,7 @@
                         <div class="col-md-5 border-left-md pt-sm-32pt pt-md-0 d-flex flex-column align-items-center justify-content-center">
                             <div class="text-center">
                                 <p class="mb-16pt">
-                                    <img src="assets/images/people/110/guy-6.jpg" alt="guy-6" class="rounded-circle" width="64">
+                                    <img src="/assets/images/people/110/guy-6.jpg" alt="guy-6" class="rounded-circle" width="64">
                                 </p>
                                 <h4 class="m-0">Eddie Bryan</h4>
                                 <p class="lh-1">
@@ -388,7 +290,7 @@
 
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <img src="assets/images/people/110/guy-1.jpg" width="40" alt="avatar" class="rounded-circle">
+                                                    <img src="/assets/images/people/110/guy-1.jpg" width="40" alt="avatar" class="rounded-circle">
                                                 </div>
                                                 <div class="media-body media-middle">
                                                     <p class="mb-0"><a href="#" class="text-body"><strong>Umberto Kass</strong></a></p>
@@ -412,7 +314,7 @@
 
                                             <div class="media">
                                                 <div class="media-left">
-                                                    <img src="assets/images/people/110/guy-2.jpg" width="40" alt="avatar" class="rounded-circle">
+                                                    <img src="/assets/images/people/110/guy-2.jpg" width="40" alt="avatar" class="rounded-circle">
                                                 </div>
                                                 <div class="media-body media-middle">
                                                     <p class="mb-0"><a href="#" class="text-body"><strong>Umberto Kass</strong></a></p>
@@ -555,7 +457,7 @@
                                 <div class="col-md-3 mb-16pt mb-md-0">
                                     <div class="d-flex">
                                         <a href="student-profile.html" class="avatar avatar-sm mr-16pt">
-                                            <img src="assets/images/people/110/guy-1.jpg" alt="avatar" class="avatar-img rounded-circle">
+                                            <img src="/assets/images/people/110/guy-1.jpg" alt="avatar" class="avatar-img rounded-circle">
                                         </a>
                                         <div class="flex">
                                             <p class="text-muted m-0">2 days ago</p>
@@ -579,7 +481,7 @@
                                 <div class="col-md-3 mb-16pt mb-md-0">
                                     <div class="d-flex">
                                         <a href="student-profile.html" class="avatar avatar-sm mr-16pt">
-                                            <img src="assets/images/people/110/guy-1.jpg" alt="avatar" class="avatar-img rounded-circle">
+                                            <img src="/assets/images/people/110/guy-1.jpg" alt="avatar" class="avatar-img rounded-circle">
                                         </a>
                                         <div class="flex">
                                             <p class="text-muted m-0">2 days ago</p>
@@ -603,7 +505,7 @@
                                 <div class="col-md-3 mb-16pt mb-md-0">
                                     <div class="d-flex">
                                         <a href="student-profile.html" class="avatar avatar-sm mr-16pt">
-                                            <img src="assets/images/people/110/guy-1.jpg" alt="avatar" class="avatar-img rounded-circle">
+                                            <img src="/assets/images/people/110/guy-1.jpg" alt="avatar" class="avatar-img rounded-circle">
                                         </a>
                                         <div class="flex">
                                             <p class="text-muted m-0">2 days ago</p>
@@ -661,7 +563,7 @@
 
 
                                         <a href="course.html" class="js-image" data-position="">
-                                            <img src="assets/images/paths/angular_430x168.png" alt="course">
+                                            <img src="/assets/images/paths/angular_430x168.png" alt="course">
                                             <span class="overlay__content">
                                                 <span class="overlay__action d-flex flex-column text-center">
                                                     <i class="material-icons">play_circle_outline</i>
@@ -697,7 +599,7 @@
                                     <div class="popoverContainer d-none">
                                         <div class="media">
                                             <div class="media-left">
-                                                <img src="assets/images/paths/angular_40x40%402x.png" width="40" height="40" alt="Angular" class="rounded">
+                                                <img src="/assets/images/paths/angular_40x40%402x.png" width="40" height="40" alt="Angular" class="rounded">
                                             </div>
                                             <div class="media-body">
                                                 <div class="card-title mb-0">Learn Angular fundamentals</div>
@@ -763,7 +665,7 @@
 
 
                                         <a href="course.html" class="js-image" data-position="">
-                                            <img src="assets/images/paths/swift_430x168.png" alt="course">
+                                            <img src="/assets/images/paths/swift_430x168.png" alt="course">
                                             <span class="overlay__content">
                                                 <span class="overlay__action d-flex flex-column text-center">
                                                     <i class="material-icons">play_circle_outline</i>
@@ -797,7 +699,7 @@
                                     <div class="popoverContainer d-none">
                                         <div class="media">
                                             <div class="media-left">
-                                                <img src="assets/images/paths/swift_40x40%402x.png" width="40" height="40" alt="Angular" class="rounded">
+                                                <img src="/assets/images/paths/swift_40x40%402x.png" width="40" height="40" alt="Angular" class="rounded">
                                             </div>
                                             <div class="media-body">
                                                 <div class="card-title mb-0">Build an iOS Application in Swift</div>
@@ -863,7 +765,7 @@
 
 
                                         <a href="course.html" class="js-image" data-position="">
-                                            <img src="assets/images/paths/wordpress_430x168.png" alt="course">
+                                            <img src="/assets/images/paths/wordpress_430x168.png" alt="course">
                                             <span class="overlay__content">
                                                 <span class="overlay__action d-flex flex-column text-center">
                                                     <i class="material-icons">play_circle_outline</i>
@@ -897,7 +799,7 @@
                                     <div class="popoverContainer d-none">
                                         <div class="media">
                                             <div class="media-left">
-                                                <img src="assets/images/paths/wordpress_40x40%402x.png" width="40" height="40" alt="Angular" class="rounded">
+                                                <img src="/assets/images/paths/wordpress_40x40%402x.png" width="40" height="40" alt="Angular" class="rounded">
                                             </div>
                                             <div class="media-body">
                                                 <div class="card-title mb-0">Build a WordPress Website</div>
@@ -963,7 +865,7 @@
 
 
                                         <a href="course.html" class="js-image" data-position="left">
-                                            <img src="assets/images/paths/react_430x168.png" alt="course">
+                                            <img src="/assets/images/paths/react_430x168.png" alt="course">
                                             <span class="overlay__content">
                                                 <span class="overlay__action d-flex flex-column text-center">
                                                     <i class="material-icons">play_circle_outline</i>
@@ -997,7 +899,7 @@
                                     <div class="popoverContainer d-none">
                                         <div class="media">
                                             <div class="media-left">
-                                                <img src="assets/images/paths/react_40x40%402x.png" width="40" height="40" alt="Angular" class="rounded">
+                                                <img src="/assets/images/paths/react_40x40%402x.png" width="40" height="40" alt="Angular" class="rounded">
                                             </div>
                                             <div class="media-body">
                                                 <div class="card-title mb-0">Become a React Native Developer</div>
@@ -1067,7 +969,7 @@
 
 
 
-            <% include footer %>
+            <% include ../layout/footer %>
 
         </div>
         <!-- // END Header Layout Content -->
@@ -1078,35 +980,35 @@
   
 
     <!-- jQuery -->
-    <script src="assets/vendor/jquery.min.js"></script>
+    <script src="/assets/vendor/jquery.min.js"></script>
 
     <!-- Bootstrap -->
-    <script src="assets/vendor/popper.min.js"></script>
-    <script src="assets/vendor/bootstrap.min.js"></script>
+    <script src="/assets/vendor/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap.min.js"></script>
 
     <!-- Perfect Scrollbar -->
-    <script src="assets/vendor/perfect-scrollbar.min.js"></script>
+    <script src="/assets/vendor/perfect-scrollbar.min.js"></script>
 
     <!-- DOM Factory -->
-    <script src="assets/vendor/dom-factory.js"></script>
+    <script src="/assets/vendor/dom-factory.js"></script>
 
     <!-- MDK -->
-    <script src="assets/vendor/material-design-kit.js"></script>
+    <script src="/assets/vendor/material-design-kit.js"></script>
 
     <!-- Fix Footer -->
-    <script src="assets/vendor/fix-footer.js"></script>
+    <script src="/assets/vendor/fix-footer.js"></script>
 
     <!-- Chart.js -->
-    <script src="assets/vendor/Chart.min.js"></script>
+    <script src="/assets/vendor/Chart.min.js"></script>
 
     <!-- App JS -->
-    <script src="assets/js/app.js"></script>
+    <script src="/assets/js/app.js"></script>
 
     <!-- Highlight.js -->
-    <script src="assets/js/hljs.js"></script>
+    <script src="/assets/js/hljs.js"></script>
 
     <!-- App Settings (safe to remove) -->
-    <script src="assets/js/app-settings.js"></script>
+    <script src="/assets/js/app-settings.js"></script>
 
 
 
