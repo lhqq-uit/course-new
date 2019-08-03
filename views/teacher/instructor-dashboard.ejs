@@ -143,7 +143,7 @@
                             <ul class="nav navbar-nav">
 
                                 <li class="nav-item active">
-                                    <a href="instructor-dashboard.html" class="nav-link">Dashboard</a>
+                                    <a href="#" class="nav-link">Dashboard</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manage</a>
@@ -286,11 +286,11 @@
                                                             </div>
                                                         </small><br>
                                                     </div>
-                                                    <span class="text-muted">on <a href="instructor-edit-course.html" class="text-50" style="text-decoration: underline;">
+                                                    <span class="text-muted">on <a href="../course/<%= e._id %>" class="text-50" target="_blank" style="text-decoration: underline;">
                                                             <%= e.name %>
                                                             
                                                     </a></span>
-                                                    <span class="text-muted">at lesson <a href="instructor-edit-course.html" class="text-50" style="text-decoration: underline;">
+                                                    <span class="text-muted">at lesson <a href="../lesson/ <%= e.lessons[i]._id %>" target="_blank" class="text-50" style="text-decoration: underline;">
                                                         
 
                                                         <%= e.lessons[i].title %>

@@ -349,7 +349,7 @@ module.exports = {
                 })
                 .populate({
                     path: "courses",
-                    select: "name lessons -_id",
+                    select: "name lessons _id",
                     populate: {
                         path: "lessons",
                         select: "comment title _id",
