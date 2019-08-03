@@ -144,20 +144,6 @@ router.get("/dashboard", async (req, res) => {
     }
 })
 
-exports.Student_Dashboard = (req, res) => {
-    res.render("student-dashboard");
-};
-
-//TODO: Student Dashboard>Discussions
-exports.Student_Discussions = (res, req) => {
-    res.render("student-discussions");
-};
-
-//TODO: Student Dashboard> Edit Account> Basic Information
-exports.Student_Edit_Account = (res, req) => {
-    res.render("student/student-edit-account");
-};
-
 //TODO: Student Dashboard>Change Password
 router.get("/edit-account-password", async (req, res) => {
     if (req.session.token) {
@@ -178,7 +164,6 @@ router.get("/edit-account-password", async (req, res) => {
         res.redirect("../login")
     }
 })
-
 
 router.post("/edit-account-password", (req, res) => {
     if (!req.session.token) {
@@ -234,7 +219,6 @@ router.get("/edit-account", async (req, res) => {
     }
 })
 
-
 router.get("/edit-account-profile", async (req, res) => {
     if (req.session.token) {
         //decode token
@@ -254,18 +238,6 @@ router.get("/edit-account-profile", async (req, res) => {
         res.redirect("../login")
     }
 })
-
-
-
-//TODO: Student Dashboard> student-my-courses
-exports.Student_My_Courses = (res, req) => {
-    res.render("student-my-courses");
-};
-
-//TODO: Student > student-take-course
-exports.Student_Take_Course = (res, req) => {
-    res.render("student-take-course");
-};
 
 //TODO: Student > student-take-lesson
 router.get('/take-quiz/:idLesson/:numerical', (req, res) => {
@@ -302,11 +274,5 @@ router.get('/take-quiz/:idLesson/:numerical', (req, res) => {
         })
     // res.render('student/student-take-quiz');
 });
-
-
-//TODO: Student > student-take-quiz
-exports.Student_Take_Quiz = (res, req) => {
-    res.render("student-take-quiz");
-};
 
 module.exports = router;
