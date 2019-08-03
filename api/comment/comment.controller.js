@@ -26,10 +26,10 @@ module.exports = {
       await Lesson.findOneAndUpdate({
         _id: req.params.idLesson
       }, {
-          $push: {
-            comment: comment._id
-          }
-        })
+        $push: {
+          comment: comment._id
+        }
+      })
 
       res.status(201).json({
         success: true,
@@ -57,12 +57,12 @@ module.exports = {
       await Lesson.update({
         _id: req.params.idLesson
       }, {
-          $pull: {
-            comment: req.params.idComment
-          }
-        }, {
-          multi: true
-        });
+        $pull: {
+          comment: req.params.idComment
+        }
+      }, {
+        multi: true
+      });
       let getData = await Comment.findById(
         req.params.idComment
       ).select("reply -_id");
@@ -111,8 +111,8 @@ module.exports = {
         _id: req.params.idComment,
         user: req.user._id
       }, {
-          content: req.body.content
-        });
+        content: req.body.content
+      });
       if (!result) {
         return res.status(404).json({
           message: "You not a author or Comment not find"
@@ -148,10 +148,10 @@ module.exports = {
       await Comment.findOneAndUpdate({
         _id: req.params.idCommentParent
       }, {
-          $push: {
-            reply: comment._id
-          }
-        })
+        $push: {
+          reply: comment._id
+        }
+      })
 
       res.status(201).json({
         success: true,
@@ -169,12 +169,12 @@ module.exports = {
       await Comment.update({
         _id: req.params.idCommentParent
       }, {
-          $pull: {
-            reply: req.params.idCommentChild
-          }
-        }, {
-          multi: true
-        });
+        $pull: {
+          reply: req.params.idCommentChild
+        }
+      }, {
+        multi: true
+      });
       await Comment.findByIdAndDelete({
         _id: req.params.idCommentChild
       })
@@ -244,10 +244,10 @@ module.exports = {
       //     _id: req.params.idTeacher
       // })
       let getIdCourses = await Teacher.findOne({
-        // !user: req.user._id
-        //_id: req.user.data._id
-        user: req.params.idUser
-      })
+          // !user: req.user._id
+          //_id: req.user.data._id
+          user: req.params.idUser
+        })
         // .populate({
         //     path: "courses",
         //     select: "name lessons -_id",
@@ -275,10 +275,10 @@ module.exports = {
         // })
         .select("courses -_id")
       let getIdComment = await Lesson.find({
-        course: {
-          $in: getIdCourses.courses
-        }
-      })
+          course: {
+            $in: getIdCourses.courses
+          }
+        })
         // .populate({
         //     path: "comment",
         //     select: "_id",
@@ -298,10 +298,10 @@ module.exports = {
       });
 
       let getCMT = await Comment.find({
-        _id: {
-          $in: getArrayIdComment
-        }
-      })
+          _id: {
+            $in: getArrayIdComment
+          }
+        })
         .populate({
           path: "reply user",
           select: "content time user avatar fullname -_id",
@@ -343,10 +343,10 @@ module.exports = {
       //     _id: req.params.idTeacher
       // })
       let getIdCourses = await Teacher.findOne({
-        // !user: req.user._id
-        //_id: req.user.data._id
-        user: req.params.idUser
-      })
+          // !user: req.user._id
+          //_id: req.user.data._id
+          user: req.params.idUser
+        })
         .populate({
           path: "courses",
           select: "name lessons _id",
