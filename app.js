@@ -12,6 +12,8 @@ var cors = require('cors');
 var config = require('./config/database');
 
 
+
+
 mongoose.Promise = global.Promise;
 
 mongoose.connect(config.database, {
@@ -53,6 +55,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(morgan('dev'));
 app.use(passport.initialize());
+
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+app.use(passport.session());
 
 //static file
 // app.use("/", express.static(path.join(__dirname, "views")));

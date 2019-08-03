@@ -3,7 +3,149 @@ const router = express.Router();
 const domain = require('./../config/domain')
 const jwtDecode = require('jwt-decode');
 const axios = require('axios')
+var passport = require('passport');
+var Strategy = require('passport-facebook').Strategy;
 
+
+// Configure the Facebook strategy for use by Passport.
+//
+// OAuth 2.0-based strategies require a `verify` function which receives the
+// credential (`accessToken`) for accessing the Facebook API on the user's
+// behalf, along with the user's profile.  The function must invoke `cb`
+// with a user object, which will be set at `req.user` in route handlers after
+// authentication.
+passport.use(new Strategy({
+        clientID: '694649764313612',
+        clientSecret: '9ec5d49535ec5787874f673ce0e99df6',
+        callbackURL: '/return'
+    },
+    function (accessToken, refreshToken, profile, cb) {
+        // In this example, the user's Facebook profile is supplied as the user
+        // record.  In a production-quality application, the Facebook profile should
+        // be associated with a user record in the application's database, which
+        // allows for account linking and authentication with other identity
+        // providers.
+        return cb(null, profile);
+    }));
+
+
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  In a
+// production-quality application, this would typically be as simple as
+// supplying the user ID when serializing, and querying the user record by ID
+// from the database when deserializing.  However, due to the fact that this
+// example does not have a database, the complete Facebook profile is serialized
+// and deserialized.
+passport.serializeUser(function (user, cb) {
+    cb(null, user);
+});
+
+passport.deserializeUser(function (obj, cb) {
+    cb(null, obj);
+});
+
+
+
+
+//TODO: login with facebook
+router.get('/login/facebook',
+    passport.authenticate('facebook'));
+
+router.get('/return',
+    passport.authenticate('facebook', {
+        failureRedirect: '/login' //TODO: retutrn login if fail
+    }),
+    function (req, res) {
+        res.redirect('/authentication'); //TODO: return authentication
+    });
+
+router.get('/authentication',
+    require('connect-ensure-login').ensureLoggedIn(),
+    async (req, res) => {
+        // let checkUser = '';
+        await axios({
+                method: "get",
+                url: `${domain}/api/usCheck/${req.user.id}`
+            }).then(response => {
+                if (response.data.checkUser == false) {
+                    axios({
+                        method: 'post',
+                        url: `${domain}/api/signup`,
+                        data: {
+                            fullname: req.user.displayName,
+                            username: req.user.id,
+                            email: `${req.user.id}112@student.com`,
+                            password: req.user.id,
+                            role: "Student"
+                        }
+                    }).catch(err => {
+                        console.log(err)
+                        res.redirect("/login")
+                    })
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+            .finally(async () => {
+                await axios({
+                    method: 'post',
+                    url: `${domain}/api/signin`,
+                    data: {
+                        username: req.user.id,
+                        password: req.user.id
+                    }
+                }).then(Response => {
+                    req.session.token = Response.data.token;
+                    //console.log(req.session.token)
+                    // console.log()
+                    if (req.session.token) {
+                        res.redirect('/dashboard')
+                    }
+
+                }).catch(err => {
+                    //console.log(err)
+                    if (err.response.data.success == false) {
+                        req.session.catchLogin = false;
+                        res.redirect("/login");
+                    }
+                })
+            })
+        // if (checkUser == false) {
+
+        // } else {
+        //     axios({
+        //         method: 'post',
+        //         url: `${domain}/api/signin`,
+        //         data: {
+        //             username: req.user.id,
+        //             password: req.user.id
+        //         }
+        //     }).then(Response => {
+        //         req.session.token = Response.data.token;
+        //         //console.log(req.session.token)
+        //         // console.log()
+        //         if (req.session.token) {
+        //             res.redirect('/dashboard')
+        //         }
+
+        //     }).catch(err => {
+        //         //console.log(err)
+        //         if (err.response.data.success == false) {
+        //             req.session.catchLogin = false;
+        //             res.redirect("/login");
+        //         }
+        //     })
+        // }
+        //console.log(req.user)
+        // res.json({
+        //     user: req.user,
+        //     id: req.user.id,
+        //     name: req.user.displayName,
+        //     check: checkUser
+        // })
+    });
 
 //TODO: show home page
 router.get("/", async (req, res) => {

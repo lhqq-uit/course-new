@@ -11,6 +11,9 @@ router.post('/signup', UserController.SignUp );
 
 router.post('/signin', UserController.SignIn);
 
+//TODO: check id unique
+router.get("/uscheck/:username",UserController.usCheck);
+
 router.post('/forgot-password/', UserController.forgotPassword);
 
 router.post('/reset-password/:token', UserController.resetPassword);

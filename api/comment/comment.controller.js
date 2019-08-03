@@ -349,13 +349,13 @@ module.exports = {
                 })
                 .populate({
                     path: "courses",
-                    select: "name lessons -_id",
+                    select: "name lessons _id",
                     populate: {
                         path: "lessons",
-                        select: "comment title -_id",
+                        select: "comment title _id",
                         populate: {
                             path: "comment",
-                            select: "content reply user time -_id",
+                            select: "content reply user time _id",
                             options: {
                                 sort: {
                                     _id: -1
@@ -363,10 +363,10 @@ module.exports = {
                             },
                             populate: {
                                 path: "reply user",
-                                select: "content time avatar fullname -_id",
+                                select: "content time avatar fullname _id",
                                 populate: {
                                     path: "reply user",
-                                    select: "content time avatar fullname -_id",
+                                    select: "content time avatar fullname _id",
                                 }
                             }
                         }
