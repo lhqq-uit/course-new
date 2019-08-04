@@ -277,20 +277,14 @@
                                                                 document.write(moment("<%= e.lessons[i].comment[j].time %>").fromNow());
                                                                 //document.write(showtime);
                                                             </script>
-                                                            <div class="btn-group ml-3">
-                                                                <button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                                                                <div class="dropdown-menu">
-                                                                    <a class="dropdown-item" onclick="ShowEdit();">Edit</a>
-                                                                    <a class="dropdown-item" href="#">Delete</a>
-                                                                </div>
-                                                            </div>
+                                                            
                                                         </small><br>
                                                     </div>
                                                     <span class="text-muted">on <a href="../course/<%= e._id %>" class="text-50" target="_blank" style="text-decoration: underline;">
                                                             <%= e.name %>
                                                             
                                                     </a></span>
-                                                    <span class="text-muted">at lesson <a href="../lesson/ <%= e.lessons[i]._id %>" target="_blank" class="text-50" style="text-decoration: underline;">
+                                                    <span class="text-muted">at lesson <a href="../lesson/<%= e.lessons[i]._id %>" target="_blank" class="text-50" style="text-decoration: underline;">
                                                         
 
                                                         <%= e.lessons[i].title %>
