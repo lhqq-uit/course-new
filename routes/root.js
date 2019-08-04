@@ -18,10 +18,10 @@ var keys = require("./../config/key")
 // with a user object, which will be set at `req.user` in route handlers after
 // authentication.
 passport.use(new Strategy({
-        clientID: keys.facebookClientID,
-        clientSecret: keys.facebookClientSecret,
-        callbackURL: '/return'
-    },
+    clientID: keys.facebookClientID,
+    clientSecret: keys.facebookClientSecret,
+    callbackURL: '/return'
+},
     function (accessToken, refreshToken, profile, cb) {
         // In this example, the user's Facebook profile is supplied as the user
         // record.  In a production-quality application, the Facebook profile should
@@ -33,10 +33,10 @@ passport.use(new Strategy({
 
 passport.use(
     new GoogleStrategy({
-            clientID: keys.googleClientID,
-            clientSecret: keys.googleClientSecret,
-            callbackURL: '/auth/google/callback'
-        },
+        clientID: keys.googleClientID,
+        clientSecret: keys.googleClientSecret,
+        callbackURL: '/auth/google/callback'
+    },
         // accessToken => {
         //     console.log(accessToken);
         // }
@@ -77,33 +77,33 @@ router.get('/auth/google/callback',
     }),
     async (req, res) => {
         await axios({
-                method: "get",
-                url: `${domain}/api/usCheck/${req.user.id}`
-            }).then(response => {
-                if (response.data.checkUser == false) {
-                    axios({
-                        method: 'post',
-                        url: `${domain}/api/signup`,
-                        data: {
-                            //     idUserGG: req.user.id,
-                            //     fullname: req.user.displayName,
-                            //     avatar: req.user._json.picture,
-                            //     email: req.user._json.email,
-                            fullname: req.user.displayName,
-                            username: req.user.id,
-                            email: req.user._json.email,
-                            password: req.user.id,
-                            //avatar: req.user._json.picture,
-                            role: "Student"
-                        }
-                    }).catch(err => {
-                        console.log(err)
-                        res.redirect("/login")
-                    })
-                }
-            }).catch(err => {
-                console.log(err)
-            })
+            method: "get",
+            url: `${domain}/api/usCheck/${req.user.id}`
+        }).then(response => {
+            if (response.data.checkUser == false) {
+                axios({
+                    method: 'post',
+                    url: `${domain}/api/signup`,
+                    data: {
+                        //     idUserGG: req.user.id,
+                        //     fullname: req.user.displayName,
+                        //     avatar: req.user._json.picture,
+                        //     email: req.user._json.email,
+                        fullname: req.user.displayName,
+                        username: req.user.id,
+                        email: req.user._json.email,
+                        password: req.user.id,
+                        //avatar: req.user._json.picture,
+                        role: "Student"
+                    }
+                }).catch(err => {
+                    console.log(err)
+                    res.redirect("/login")
+                })
+            }
+        }).catch(err => {
+            console.log(err)
+        })
             .finally(async () => {
                 await axios({
                     method: 'post',
@@ -157,28 +157,28 @@ router.get('/authentication',
     async (req, res) => {
         // let checkUser = '';
         await axios({
-                method: "get",
-                url: `${domain}/api/usCheck/${req.user.id}`
-            }).then(response => {
-                if (response.data.checkUser == false) {
-                    axios({
-                        method: 'post',
-                        url: `${domain}/api/signup`,
-                        data: {
-                            fullname: req.user.displayName,
-                            username: req.user.id,
-                            email: `${req.user.id}112@student.com`,
-                            password: req.user.id,
-                            role: "Student"
-                        }
-                    }).catch(err => {
-                        console.log(err)
-                        res.redirect("/login")
-                    })
-                }
-            }).catch(err => {
-                console.log(err)
-            })
+            method: "get",
+            url: `${domain}/api/usCheck/${req.user.id}`
+        }).then(response => {
+            if (response.data.checkUser == false) {
+                axios({
+                    method: 'post',
+                    url: `${domain}/api/signup`,
+                    data: {
+                        fullname: req.user.displayName,
+                        username: req.user.id,
+                        email: `${req.user.id}112@student.com`,
+                        password: req.user.id,
+                        role: "Student"
+                    }
+                }).catch(err => {
+                    console.log(err)
+                    res.redirect("/login")
+                })
+            }
+        }).catch(err => {
+            console.log(err)
+        })
             .finally(async () => {
                 await axios({
                     method: 'post',
@@ -317,12 +317,12 @@ router.get("/reset-password", (req, res) => {
 //TODO: Reset password
 router.post("/reset-password", (req, res) => {
     axios({
-            method: 'post',
-            url: `${domain}/api/forgot-password`,
-            data: {
-                email: req.body.email
-            }
-        })
+        method: 'post',
+        url: `${domain}/api/forgot-password`,
+        data: {
+            email: req.body.email
+        }
+    })
         .then(Response => {
             res.redirect('#')
         })
@@ -340,12 +340,12 @@ router.post("/change-password/:token", (req, res) => {
         res.redirect("#")
     } else {
         axios({
-                method: 'post',
-                url: `${domain}/api/reset-password/${req.params.token}`,
-                data: {
-                    password: req.body.password
-                }
-            })
+            method: 'post',
+            url: `${domain}/api/reset-password/${req.params.token}`,
+            data: {
+                password: req.body.password
+            }
+        })
             .then(Response => {
                 res.redirect('/login')
             })
@@ -389,5 +389,87 @@ router.post("/signup", (req, res) => {
     })
 });
 
+
+router.post("/:idLesson", (req, res) => {
+    let getInfo = jwtDecode(req.session.token);
+    console.log(getInfo)
+    axios({
+        method: "post",
+        url: `${domain}/api/comment/${req.params.idLesson}/${getInfo._id}`,
+        data: {
+            content: req.body.content
+        },
+        headers: {
+            Authorization: req.session.token
+        }
+    }).then(r => {
+        if (r.data.success == true) {
+            res.redirect(`/lesson/${req.params.idLesson}`)
+        }
+    }).catch(err => {
+        console.log(err)
+    })
+})
+
+router.post("/:idCMT/:idLesson", (req, res) => {
+    let getInfo = jwtDecode(req.session.token);
+    console.log(getInfo)
+    axios({
+        method: "post",
+        url: `${domain}/api/comment/child/${req.params.idCMT}/${getInfo._id}`,
+        data: {
+            content: req.body.contentReply
+        },
+        headers: {
+            Authorization: req.session.token
+        }
+    }).then(r => {
+        if (r.data.success == true) {
+            res.redirect(`/lesson/${req.params.idLesson}`)
+        }
+    }).catch(err => {
+        console.log(err)
+    })
+})
+
+router.post("/delete/:idLesson/:idComment", async (req, res) => {
+    let getInfo = jwtDecode(req.session.token);
+    console.log(getInfo)
+    let url = `${domain}/api/comment/delete/${req.params.idLesson}/${req.params.idComment}`;
+    console.log(url);
+    await axios({
+        method: "delete",
+        baseURL: url,
+        headers: {
+            Authorization: req.session.token
+        }
+    }).then(r => {
+        if (r.data.success == true) {
+            res.redirect(`/lesson/${req.params.idLesson}`)
+        }
+    }).catch(err => {
+        console.log(err)
+    })
+})
+
+router.post("/delete/child/:idLesson/:idCommentParent/:idCommentChild", async (req, res) => {
+    let getInfo = jwtDecode(req.session.token);
+    console.log(getInfo)
+    let url = `${domain}/api/comment/child/delete/${req.params.idCommentParent}/${req.params.idCommentChild}`;
+    console.log(url);
+    await axios({
+        method: "delete",
+        baseURL: url,
+        headers: {
+            Authorization: req.session.token
+        }
+    }).then(r => {
+        if (r.data.success == true) {
+            res.redirect(`/lesson/${req.params.idLesson}`)
+        }
+    }).catch(err => {
+        console.log(err)
+    })
+})
 
 module.exports = router;
