@@ -8,7 +8,7 @@ module.exports = {
       })
         .populate({
           path: 'transaction.course',
-          select: 'avatar name -_id'
+          select: 'avatar name'
         })
         .select('transaction -_id')
       let data = [];

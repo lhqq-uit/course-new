@@ -55,7 +55,7 @@
 
         <!-- Header -->
 
-        <%- include('../layout/header-dashboard', {avatar: infoStudent.user.avatar}); %>
+        <%- include('../layout/header-dashboard', {avatar: infoStudent.avatar}); %>
 
 
         <!-- // END Header -->
@@ -212,7 +212,7 @@
                                                     //document.write(showtime);
                                                 </script>
                                             </small><br>
-                                            <% if (e.user._id == infoStudent.user._id) { %>
+                                            <% if (e.user._id == infoStudent._id) { %>
                                                 <div class="ml-5 btn-group">
                                                     <button type="button" class="btn btn-accent dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                                     <div class="dropdown-menu">
@@ -254,7 +254,7 @@
                                                                 //document.write(showtime);
                                                             </script>
                                                         </small>
-                                                        <% if (e.reply[k].user._id == infoStudent.user._id) { %>
+                                                        <% if (e.reply[k].user._id == infoStudent._id) { %>
                                                             
                                                             <div class="ml-5 btn-group float-right">
                                                                     <button type="button" class="btn btn-accent dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>

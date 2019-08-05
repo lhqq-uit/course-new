@@ -6,8 +6,7 @@ const jwtDecode = require("jwt-decode");
 
 /* GET users listing. */
 router.get("/:idLesson", async function (req, res, next) {
-    let getInfoStudent = jwtDecode(req.session.token);
-    console.log(getInfoStudent)
+    
     let lesson;
     await axios({
         method: "get",
@@ -27,27 +26,13 @@ router.get("/:idLesson", async function (req, res, next) {
         cmt = response.data.data;
     });
     
-    await axios({
-        method: "get",
-        url: `${domain}/api/student/info/${getInfoStudent._id}`,
-        //responseType: 'stream'
-    })
-        .then(response => {
-            // handle success
-            //console.log(response.data);
-
-            infoStudent = response.data;
-        })
-        .catch(error => {
-            // handle error
-            console.log(error);
-        });
 
     if (req.session.token) {
+        let getInfoUser = jwtDecode(req.session.token);
         res.render("student/student-take-lesson", {
             lesson,
             cmt,
-            infoStudent,
+            infoStudent: getInfoUser,
         });
     } else {
         res.status(403).send("Unauthorized");
