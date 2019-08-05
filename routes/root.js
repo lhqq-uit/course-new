@@ -246,7 +246,7 @@ router.get("/", async (req, res) => {
         url: `${domain}/api/course/populate/`
     }).then(req => {
         data = req.data;
-        console.log(data)
+        //console.log(data)
     }).catch(error => {
         console.log(error);
     })
@@ -472,22 +472,31 @@ router.post("/delete/child/:idLesson/:idCommentParent/:idCommentChild", async (r
     })
 })
 
+
 router.get("/search", async (req, res) => {
-    console.log(req.params.search)
-    console.log(req.body.search)
+    //console.log("vv")
+    let allcourse;
+    let keySearch = req.param("search");
+    console.log(req.param("search"))
+    //console.log(req.body.search)
     await axios({
         method: "get",
-        url: `${domain}/api/course/search`,
-        data: {
-            search: req.body.search
-        }
+        url: `${domain}/api/course/search/?search=${req.param("search")}`
     }).then(result => {
-        res.send(result.data)
+        allcourse = result.data.data;
     }).catch(err => {
         console.log(err)
+        res.render("course/search", {
+            allcourse,
+            keySearch
+        })
     })
-    //res.send(req.body.search)
+    res.render("course/search", {
+        allcourse,
+        keySearch
+    })
 })
+
 
 router.get("/all-courses", async (req, res) => {
     let allcourse;

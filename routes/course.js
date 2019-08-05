@@ -7,9 +7,9 @@ const jwtDecode = require('jwt-decode');
 /* GET users listing. */
 router.get('/:idCourse', async function (req, res, next) {
     let course;
-    var infoStudent= null;
+    var infoStudent = null;
     if (req.session.token) {
-       
+
         let getInfoStudent = jwtDecode(req.session.token)
         await axios({
             method: 'get',
@@ -46,7 +46,7 @@ router.get('/:idCourse', async function (req, res, next) {
         console.log(err)
     });
     if (req.session.token) {
-        
+
         let bought = false;
         await axios({
             method: 'get',

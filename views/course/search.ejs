@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+
+<!-- Mirrored from tutorio-bootstrap.frontendmatter.com/library.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:04 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Result for "<%= keySearch %>"</title>
+
+    <!-- Prevent the demo from appearing in search engines -->
+    <meta name="robots" content="noindex">
+
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" href="assets/vendor/perfect-scrollbar.css" rel="stylesheet">
+
+    <!-- Fix Footer CSS -->
+    <link type="text/css" href="assets/vendor/fix-footer.css" rel="stylesheet">
+
+    <!-- Material Design Icons -->
+    <link type="text/css" href="assets/css/material-icons.css" rel="stylesheet">
+    <link type="text/css" href="assets/css/material-icons.rtl.css" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link type="text/css" href="assets/css/fontawesome.css" rel="stylesheet">
+    <link type="text/css" href="assets/css/fontawesome.rtl.css" rel="stylesheet">
+
+    <!-- Preloader -->
+    <link type="text/css" href="assets/css/preloader.css" rel="stylesheet">
+    <link type="text/css" href="assets/css/preloader.rtl.css" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link type="text/css" href="assets/css/app.css" rel="stylesheet">
+    <link type="text/css" href="assets/css/app.rtl.css" rel="stylesheet">
+
+
+
+
+
+</head>
+
+<body class="layout-navbar-mini-fixed-bottom">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <!-- Header Layout -->
+    <div class="mdk-header-layout js-mdk-header-layout">
+
+        <!-- Header -->
+
+        <% include ../layout/header %>
+
+        <!-- // END Header -->
+
+        <!-- Header Layout Content -->
+        <div class="mdk-header-layout__content page-content pb-0">
+
+
+            <div class="mdk-box mdk-box--bg-gradient-primary bg-dark js-mdk-box mb-0" data-effects="parallax-background blend-background">
+                <div class="mdk-box__bg">
+                    <div class="mdk-box__bg-front" style="background-image: url(assets/images/1280_writing-down-goals_4460x4460.jpg);"></div>
+                </div>
+               
+            </div>
+
+           
+
+            <div class="page-section">
+                <div class="container page__container">
+                    <div class="page-headline text-center">
+                        <h2>Result for "<%= keySearch %>"</h2>
+                        
+                    </div>
+
+                    <div class="page-heading">
+                        <h4>Top Search</h4>
+                        
+                    </div>
+                    <div class="row">
+                        <% if(allcourse){%>
+                            <% allcourse.forEach(function(e) { %>
+                            <div class="col-lg-4 col-xl-3 col-md-6">
+
+                                <div class="card card--elevated card-course overlay js-overlay mdk-reveal js-mdk-reveal " data-partial-height="40" data-toggle="popover" data-trigger="click">
+
+
+                                    <a href="/course/<%= e._id %>" class="js-image" data-position="center">
+                                        <img src="/upload/images/<%= e.avatar %>" width="250" height="150" alt="course">
+                                        <span class="overlay__content">
+                                            <span class="overlay__action d-flex flex-column text-center">
+                                                <i class="material-icons">play_circle_outline</i>
+                                                <small>Preview course</small>
+                                            </span>
+                                        </span>
+                                    </a>
+                                    <% if( e.sale > 0 ){ %>
+                                        <span class="corner-ribbon corner-ribbon--default-right-top corner-ribbon--shadow bg-accent text-white">SALE</span>
+                                    <% } %>
+                                    <div class="mdk-reveal__content">
+                                        <div class="card-body">
+                                            <div class="d-flex">
+                                                <div class="flex">
+                                                    <a class="card-title" href="course.html"><%= e.name %></a>
+                                                    <small class="text-50 font-weight-bold mb-4pt"><%= e.teacher.fullname %></small>
+                                                </div>
+                                                <a href="course.html" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite</a>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="rating flex">
+                                                    <span class="rating__item"><span class="material-icons">star</span></span>
+                                                    <span class="rating__item"><span class="material-icons">star</span></span>
+                                                    <span class="rating__item"><span class="material-icons">star</span></span>
+                                                    <span class="rating__item"><span class="material-icons">star</span></span>
+                                                    <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                                </div>
+                                                <!-- <small class="text-50">6 hours</small> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="popoverContainer d-none">
+                                    <div class="media">
+                                        <div class="media-left">
+                                            <img src="assets/images/paths/angular_40x40%402x.png" width="40" height="40" alt="Angular" class="rounded">
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="card-title mb-0">Learn Angular fundamentals</div>
+                                            <p class="lh-1 mb-0">
+                                                <span class="text-black-50 small">with</span>
+                                                <span class="text-black-50 small font-weight-bold">Elijah Murray</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <p class="my-16pt text-black-70">
+                                        <%= e.name%>
+                                    </p>
+
+                                    <!-- <div class="mb-16pt">
+                                        <div class="d-flex align-items-center">
+                                            <span class="material-icons icon-16pt text-black-50 mr-8pt">check</span>
+                                            <p class="flex text-black-50 lh-1 mb-0"><small>Fundamentals of working with Angular</small></p>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="material-icons icon-16pt text-black-50 mr-8pt">check</span>
+                                            <p class="flex text-black-50 lh-1 mb-0"><small>Create complete Angular applications</small></p>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="material-icons icon-16pt text-black-50 mr-8pt">check</span>
+                                            <p class="flex text-black-50 lh-1 mb-0"><small>Working with the Angular CLI</small></p>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="material-icons icon-16pt text-black-50 mr-8pt">check</span>
+                                            <p class="flex text-black-50 lh-1 mb-0"><small>Understanding Dependency Injection</small></p>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <span class="material-icons icon-16pt text-black-50 mr-8pt">check</span>
+                                            <p class="flex text-black-50 lh-1 mb-0"><small>Testing with Angular</small></p>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <!-- <div class="d-flex align-items-center mb-4pt">
+                                                <span class="material-icons icon-16pt text-black-50 mr-4pt">access_time</span>
+                                                <p class="flex text-black-50 lh-1 mb-0"><small>6 hours</small></p>
+                                            </div> -->
+                                            <div class="d-flex align-items-center mb-4pt">
+                                                <span class="material-icons icon-16pt text-black-50 mr-4pt">play_circle_outline</span>
+                                                <p class="flex text-black-50 lh-1 mb-0"><small>
+                                                    <%= e.lessons.length %>
+                                                    lessons</small></p>
+                                            </div>
+                                            <div class="d-flex align-items-center">
+                                                <span class="material-icons icon-16pt text-black-50 mr-4pt">assessment</span>
+                                                <p class="flex text-black-50 lh-1 mb-0"><small>Beginner</small></p>
+                                            </div>
+                                        </div>
+                                        <div class="col text-right">
+                                            <a href="/course/<%= e._id %>" class="btn btn-primary">Watch trailer</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <% }) %>
+                        <% } else {%>
+                            <h2>No results found for "<%= keySearch %>" </h2>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="page-separator mt-lg-16pt">
+                    <a href="#" class="page-separator__text">show more <span class="material-icons">keyboard_arrow_down</span></a>
+                </div>
+            </div>
+
+            
+
+
+
+
+           
+        </div>
+        <!-- // END Header Layout Content -->
+
+    </div>
+    <!-- // END Header Layout -->
+
+    <% include ../layout/footer %>
+    <!-- // END drawer -->
+    <!-- App Settings FAB -->
+    <div id="app-settings">
+        <app-settings theme-active="blue-light" :theme-location="{
+      'blue-light': 'http://tutorio-bootstrap.frontendmatter.com/library.html',
+      'blue-dark': 'http://tutorio-dark.frontendmatter.com/library.html',
+      'teal-light': 'http://tutorio-teal.frontendmatter.com/library.html',
+      'teal-dark': 'http://tutorio-teal-dark.frontendmatter.com/library.html'
+    }" sidebar-variant="bg-transparent border-0"></app-settings>
+    </div>
+    <!-- Modal -->
+    <div class="modal courses-modal" id="courses" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6 col-i8-plus bg-body pr-0">
+                            <div class="py-16pt pl-16pt menu">
+                                <ul class="nav flex-column">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#courses-development" data-toggle="tab">Development</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#courses-design" data-toggle="tab">Design</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#courses-photography" data-toggle="tab">Photography</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#courses-marketing" data-toggle="tab">Marketing</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#courses-business" data-toggle="tab">Business</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-6 col-i8-plus-auto tab-content">
+
+
+                            <div id="courses-development" class="tab-pane show active">
+                                <div class="row no-gutters">
+                                    <div class="col-md-6 p-0">
+                                        <div class="p-24pt d-flex h-100 flex-column">
+                                            <div class="flex">
+                                                <h5 class="text-black-100">Courses</h5>
+                                                <ul class="nav flex-column mb-24pt">
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Web Development</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">JavaScript</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">HTML</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">CSS</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">WordPress</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">PHP</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">iOS Development</a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="library.html" class="btn btn-block text-center btn-secondary">Library</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 p-0">
+                                        <div class="p-24pt d-flex h-100 flex-column">
+                                            <div class="flex">
+                                                <h5 class="text-black-100">Learning Paths</h5>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/angular_40x40%402x.png" width="40" height="40" alt="Angular" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Angular</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">24 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/swift_40x40%402x.png" width="40" height="40" alt="Swift" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Swift</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">22 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/react_40x40%402x.png" width="40" height="40" alt="React Native" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">React Native</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">18 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/wordpress_40x40%402x.png" width="40" height="40" alt="WordPress" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">WordPress</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">13 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-24pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/devops_40x40%402x.png" width="40" height="40" alt="Development Tools" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Development Tools</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">5 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <a href="paths.html" class="btn btn-block text-center btn-outline-secondary">Learning Paths</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="courses-design" class="tab-pane">
+                                <div class="row no-gutters">
+                                    <div class="col-md-6 p-0">
+                                        <div class="p-24pt d-flex h-100 flex-column">
+                                            <div class="flex">
+                                                <h5 class="text-black-100">Courses</h5>
+                                                <ul class="nav flex-column mb-24pt">
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Illustration</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Design Skills</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Design Techniques</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Page Layout</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Projects</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Drawing</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Typography</a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="library.html" class="btn btn-block text-center btn-secondary">Library</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 p-0">
+                                        <div class="p-24pt d-flex h-100 flex-column">
+                                            <div class="flex">
+                                                <h5 class="text-black-100">Learning Paths</h5>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/angular_40x40%402x.png" width="40" height="40" alt="Angular" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Angular</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">24 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/swift_40x40%402x.png" width="40" height="40" alt="Swift" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Swift</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">22 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/react_40x40%402x.png" width="40" height="40" alt="React Native" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">React Native</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">18 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/wordpress_40x40%402x.png" width="40" height="40" alt="WordPress" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">WordPress</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">13 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-24pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/devops_40x40%402x.png" width="40" height="40" alt="Development Tools" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Development Tools</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">5 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <a href="paths.html" class="btn btn-block text-center btn-outline-secondary">Learning Paths</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="courses-photography" class="tab-pane">
+                                <div class="row no-gutters">
+                                    <div class="col-md-6 p-0">
+                                        <div class="p-24pt d-flex h-100 flex-column">
+                                            <div class="flex">
+                                                <h5 class="text-black-100">Courses</h5>
+                                                <ul class="nav flex-column mb-24pt">
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Cameras</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Raw Processing</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Masking</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Compositing</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Portraits</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Photo Management</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Lighting</a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="library.html" class="btn btn-block text-center btn-secondary">Library</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 p-0">
+                                        <div class="p-24pt d-flex h-100 flex-column">
+                                            <div class="flex">
+                                                <h5 class="text-black-100">Learning Paths</h5>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/angular_40x40%402x.png" width="40" height="40" alt="Angular" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Angular</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">24 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/swift_40x40%402x.png" width="40" height="40" alt="Swift" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Swift</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">22 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/react_40x40%402x.png" width="40" height="40" alt="React Native" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">React Native</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">18 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/wordpress_40x40%402x.png" width="40" height="40" alt="WordPress" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">WordPress</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">13 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-24pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/devops_40x40%402x.png" width="40" height="40" alt="Development Tools" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Development Tools</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">5 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <a href="paths.html" class="btn btn-block text-center btn-outline-secondary">Learning Paths</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="courses-marketing" class="tab-pane">
+                                <div class="row no-gutters">
+                                    <div class="col-md-6 p-0">
+                                        <div class="p-24pt d-flex h-100 flex-column">
+                                            <div class="flex">
+                                                <h5 class="text-black-100">Courses</h5>
+                                                <ul class="nav flex-column mb-24pt">
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Small Business</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Marketing</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Enterprise Marketing</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Content Marketing</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Online Marketing</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Social Media Marketing</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Advertising</a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="library.html" class="btn btn-block text-center btn-secondary">Library</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 p-0">
+                                        <div class="p-24pt d-flex h-100 flex-column">
+                                            <div class="flex">
+                                                <h5 class="text-black-100">Learning Paths</h5>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/angular_40x40%402x.png" width="40" height="40" alt="Angular" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Angular</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">24 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/swift_40x40%402x.png" width="40" height="40" alt="Swift" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Swift</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">22 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/react_40x40%402x.png" width="40" height="40" alt="React Native" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">React Native</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">18 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/wordpress_40x40%402x.png" width="40" height="40" alt="WordPress" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">WordPress</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">13 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-24pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/devops_40x40%402x.png" width="40" height="40" alt="Development Tools" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Development Tools</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">5 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <a href="paths.html" class="btn btn-block text-center btn-outline-secondary">Learning Paths</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div id="courses-business" class="tab-pane">
+                                <div class="row no-gutters">
+                                    <div class="col-md-6 p-0">
+                                        <div class="p-24pt d-flex h-100 flex-column">
+                                            <div class="flex">
+                                                <h5 class="text-black-100">Courses</h5>
+                                                <ul class="nav flex-column mb-24pt">
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Business Skills</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Productivity</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Communication</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Leadership</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Management</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Career Development</a>
+                                                    </li>
+
+                                                    <li class="nav-item">
+                                                        <a class="nav-link px-0" href="library.html">Spreadsheets</a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <a href="library.html" class="btn btn-block text-center btn-secondary">Library</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 p-0">
+                                        <div class="p-24pt d-flex h-100 flex-column">
+                                            <div class="flex">
+                                                <h5 class="text-black-100">Learning Paths</h5>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/angular_40x40%402x.png" width="40" height="40" alt="Angular" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Angular</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">24 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/swift_40x40%402x.png" width="40" height="40" alt="Swift" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Swift</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">22 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/react_40x40%402x.png" width="40" height="40" alt="React Native" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">React Native</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">18 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-16pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/wordpress_40x40%402x.png" width="40" height="40" alt="WordPress" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">WordPress</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">13 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="mb-24pt">
+                                                    <a href="path.html" class="media text-black-100">
+                                                        <img src="assets/images/paths/devops_40x40%402x.png" width="40" height="40" alt="Development Tools" class="media-left rounded">
+                                                        <span class="media-body">
+                                                            <span class="card-title d-block mb-0">Development Tools</span>
+                                                            <span class="text-muted text-black-70 d-flex lh-1">5 courses</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <a href="paths.html" class="btn btn-block text-center btn-outline-secondary">Learning Paths</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="assets/vendor/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="assets/vendor/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap.min.js"></script>
+
+    <!-- Perfect Scrollbar -->
+    <script src="assets/vendor/perfect-scrollbar.min.js"></script>
+
+    <!-- DOM Factory -->
+    <script src="assets/vendor/dom-factory.js"></script>
+
+    <!-- MDK -->
+    <script src="assets/vendor/material-design-kit.js"></script>
+
+    <!-- Fix Footer -->
+    <script src="assets/vendor/fix-footer.js"></script>
+
+    <!-- Chart.js -->
+    <script src="assets/vendor/Chart.min.js"></script>
+
+    <!-- App JS -->
+    <script src="assets/js/app.js"></script>
+
+    <!-- Highlight.js -->
+    <script src="assets/js/hljs.js"></script>
+
+    <!-- App Settings (safe to remove) -->
+    
+
+
+
+
+</body>
+
+
+<!-- Mirrored from tutorio-bootstrap.frontendmatter.com/library.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:20 GMT -->
+</html>

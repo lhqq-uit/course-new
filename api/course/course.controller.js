@@ -187,7 +187,12 @@ module.exports = {
                         $regex: regexPattern
                     }
                 }))
-            }).limit(8)
+            })
+                .populate({
+                    path: "teacher",
+                    select: "fullname"
+                })
+                .limit(40)
             console.log("TCL: teacher", course)
             if (course.length === 0) return res.status(404).json({ message: 'No course found' })
             res.status(200).json({ data: course })
