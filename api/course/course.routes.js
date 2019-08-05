@@ -19,6 +19,9 @@ var upload = multer({ storage: storage });
 
 router.get('/populate', CourseController.getCoursePopulate);
 
+//search with name, description, tag, topic
+router.get('/search', CourseController.searchCourse);
+
 router.get('/price/:idCourse', CourseController.getPriceAfterSale);
 
 router.get('/:idCourse', CourseController.getOneCourse);

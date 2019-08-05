@@ -166,5 +166,27 @@ module.exports = {
     } catch (error) {
       res.status(500).json(error)
     }
+  },
+
+  searchCourse: async (req, res) => {
+    const search = req.query.search;
+    console.log("TCL: search", search)
+    let regexPattern = new RegExp(".*" + search + ".*", "i");
+    try {
+      course = await Course.find({
+        $or: [
+          'name', 'topic', 'description', 'tag'
+        ].map(key => ({
+          [key]: {
+            $regex: regexPattern
+          }
+        }))
+      }).limit(8)
+      console.log("TCL: teacher", course)
+      if (course.length === 0) return res.status(404).json({ message: 'No course found' })
+      res.status(200).json({ data: course })
+    } catch (error) {
+      res.status(500).json({ message: error.message })
+    }
   }
 }
