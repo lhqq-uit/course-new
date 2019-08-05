@@ -14,10 +14,10 @@ router.get("/dashboard", async (req, res) => {
 
         let getInfoStudent = jwtDecode(req.session.token)
         await axios({
-                method: 'get',
-                url: `${domain}/api/student/info/${getInfoStudent._id}`,
-                //responseType: 'stream'
-            })
+            method: 'get',
+            url: `${domain}/api/student/info/${getInfoStudent._id}`,
+            //responseType: 'stream'
+        })
             .then(response => {
                 // handle success
                 //console.log(response.data);
@@ -32,12 +32,12 @@ router.get("/dashboard", async (req, res) => {
         //console.log(iqTeacher) 
         let getCoursePurchased = '';
         await axios({
-                method: "get",
-                url: `${domain}/api/student/courses-purchased`,
-                headers: {
-                    Authorization: req.session.token
-                }
-            })
+            method: "get",
+            url: `${domain}/api/student/courses-purchased`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
             .then(response => {
                 // handle success
                 //console.log(response.data.courses);
@@ -51,12 +51,12 @@ router.get("/dashboard", async (req, res) => {
 
         let getCourseNotPurchased = '';
         await axios({
-                method: "get",
-                url: `${domain}/api/student/courses-not-purchased`,
-                headers: {
-                    Authorization: req.session.token
-                }
-            })
+            method: "get",
+            url: `${domain}/api/student/courses-not-purchased`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
             .then(response => {
                 // handle success
                 //console.log(response.data);
@@ -69,12 +69,12 @@ router.get("/dashboard", async (req, res) => {
             })
         let getTotalIq = '';
         await axios({
-                method: "get",
-                url: `${domain}/api/student/total-iq`,
-                headers: {
-                    Authorization: req.session.token
-                }
-            })
+            method: "get",
+            url: `${domain}/api/student/total-iq`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
             .then(response => {
                 // handle success
                 //console.log(response.data.total_iq);
@@ -88,12 +88,12 @@ router.get("/dashboard", async (req, res) => {
 
         let getIqAWeek = '';
         await axios({
-                method: "get",
-                url: `${domain}/api/student/iq-a-week`,
-                headers: {
-                    Authorization: req.session.token
-                }
-            })
+            method: "get",
+            url: `${domain}/api/student/iq-a-week`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
             .then(response => {
                 // handle success
                 //console.log(response.data.list_iq);
@@ -113,12 +113,12 @@ router.get("/dashboard", async (req, res) => {
 
         let getCourseStudied = '';
         await axios({
-                method: "get",
-                url: `${domain}/api/student/course-studied`,
-                headers: {
-                    Authorization: req.session.token
-                }
-            })
+            method: "get",
+            url: `${domain}/api/student/course-studied`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
             .then(response => {
                 // handle success
                 console.log(response.data);
@@ -152,9 +152,9 @@ router.get("/edit-account-password", async (req, res) => {
         let getInfoStudent = jwtDecode(req.session.token)
         console.log(getInfoStudent)
         let student = axios({
-                method: 'get',
-                url: `${domain}/api/student/info/${getInfoStudent._id}`
-            })
+            method: 'get',
+            url: `${domain}/api/student/info/${getInfoStudent._id}`
+        })
             .then(response => {
                 data = response.data;
                 res.render("student/student-edit-account-password", {
@@ -172,18 +172,18 @@ router.post("/edit-account-password", (req, res) => {
     } else {
         try {
             axios({
-                    method: 'post',
-                    url: `${domain}/api/change-password`,
-                    headers: {
-                        Authorization: req.session.token
-                    },
-                    data: {
-                        Oldpassword: req.body.Oldpassword,
-                        newPassword: req.body.newPassword,
-                        confirmPassword: req.body.confirmPassword
+                method: 'post',
+                url: `${domain}/api/change-password`,
+                headers: {
+                    Authorization: req.session.token
+                },
+                data: {
+                    Oldpassword: req.body.Oldpassword,
+                    newPassword: req.body.newPassword,
+                    confirmPassword: req.body.confirmPassword
 
-                    }
-                })
+                }
+            })
                 .then(Response => {
                     res.redirect('../login')
                 })
@@ -202,19 +202,48 @@ router.post("/edit-account-password", (req, res) => {
 //TODO: Student Dashboard>student-edit-account-profile
 router.get("/edit-account", async (req, res) => {
     if (req.session.token) {
+        let getTotalIq = '';
+        await axios({
+            method: "get",
+            url: `${domain}/api/student/total-iq`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
+            .then(response => {
+                // handle success
+                //console.log(response.data.total_iq);
+
+                getTotalIq = response.data.total_iq;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
         //decode token
         let getInfoStudent = jwtDecode(req.session.token)
+        let data;
         console.log(getInfoStudent)
-        let student = axios({
-                method: 'get',
-                url: `${domain}/api/student/info/${getInfoStudent._id}`
-            })
+        await axios({
+            method: 'get',
+            url: `${domain}/api/student/info/${getInfoStudent._id}`,
+            //responseType: 'stream'
+        })
             .then(response => {
-                data = response.data;
-                res.render("student/student-edit-account", {
-                    data
-                })
+                // handle success
+                //console.log(response.data);
+
+                infoStudent = response.data;
             })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+            
+        res.render("student/student-edit-account", {
+            infoStudent,
+            getTotalIq
+        })
     } else {
         res.redirect("../login")
     }
@@ -226,9 +255,9 @@ router.get("/edit-account-profile", async (req, res) => {
         let getInfoStudent = jwtDecode(req.session.token)
         console.log(getInfoStudent)
         let student = axios({
-                method: 'get',
-                url: `${domain}/api/student/info/${getInfoStudent._id}`
-            })
+            method: 'get',
+            url: `${domain}/api/student/info/${getInfoStudent._id}`
+        })
             .then(response => {
                 data = response.data;
                 res.render("student/student-edit-account-profile", {
@@ -244,18 +273,18 @@ router.get("/edit-account-profile", async (req, res) => {
 router.get('/take-quiz/:idLesson/:numerical', (req, res) => {
     console.log(`${domain}/api/lesson/${req.params.idLesson}`)
     axios({
-            method: 'get',
-            url: `${domain}/api/lesson/${req.params.idLesson}`,
-        })
+        method: 'get',
+        url: `${domain}/api/lesson/${req.params.idLesson}`,
+    })
         .then(Response => {
             countQuiz = Response.data.data.quizzes
             // for(i=0;i<countQuiz.length;i++){
             //     axios({})
             // }
             axios({
-                    method: 'get',
-                    url: `${domain}/api/quiz/${countQuiz[req.params.numerical]}`,
-                })
+                method: 'get',
+                url: `${domain}/api/quiz/${countQuiz[req.params.numerical]}`,
+            })
                 .then(Response2 => {
                     console.log(Response2.data.data)
                     let data = Response2.data.data
@@ -276,4 +305,90 @@ router.get('/take-quiz/:idLesson/:numerical', (req, res) => {
     // res.render('student/student-take-quiz');
 });
 
+
+//TODO: my course
+router.get('/courses', async (req, res) => {
+
+    if (!req.session.token) {
+        res.redirect("/login")
+    } else {
+        let infoStudent;
+        let getInfoStudent = jwtDecode(req.session.token)
+        await axios({
+            method: 'get',
+            url: `${domain}/api/student/info/${getInfoStudent._id}`,
+            //responseType: 'stream'
+        })
+            .then(response => {
+                // handle success
+                //console.log(response.data);
+
+                infoStudent = response.data;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+        let courses;
+        await axios({
+            method: 'get',
+            url: `${domain}/api/student/courses-purchased/`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
+            .then(Response => {
+                // res.send(Response.data)
+                courses = Response.data.courses
+            })
+
+        let getTotalIq = '';
+        await axios({
+            method: "get",
+            url: `${domain}/api/student/total-iq`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
+            .then(response => {
+                // handle success
+                //console.log(response.data.total_iq);
+
+                getTotalIq = response.data.total_iq;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+        // res.send(courses)
+
+
+        let getCourseStudied = '';
+        await axios({
+            method: "get",
+            url: `${domain}/api/student/course-studied`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
+            .then(response => {
+                // handle success
+                console.log(response.data);
+
+                getCourseStudied = response.data.course_studied;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+        res.render("student/student-my-courses", {
+            getCourseStudied,
+            getTotalIq: getTotalIq,
+            data: courses,
+            infoStudent: infoStudent
+        })
+    }
+
+    // res.render('student/student-take-quiz');
+});
 module.exports = router;

@@ -54,7 +54,13 @@
 
         <!-- Header -->
 
-        <% include ../layout/header-dashboard %>
+               <!-- Header -->
+               <% if (infoStudent == null) { %>
+                
+                <% } else{  %> 
+                    <%- include('../layout/header-dashboard', {avatar: infoStudent.user.avatar}); %>
+                <% } %>
+        
 
         <!-- // END Header -->
 

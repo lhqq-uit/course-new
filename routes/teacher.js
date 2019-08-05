@@ -28,7 +28,7 @@ var upload = multer({
     {
         name: 'document'
     }
-])
+]);
 
 const axios = require('axios')
 //TODO: edit quiz -> add question to quiz in lesson
@@ -287,13 +287,11 @@ router.get("/edit-course/:idCourse", async (req, res) => {
             method: 'get',
             url: `${domain}/api/course/${req.params.idCourse}`
         }).then(result => {
-            if (result.data.teacher == getInfoTeacher._id) {
                 res.render('teacher/instructor-edit-course', {
-                    course: result.data
+                    course: result.data,
+                    user: getInfoTeacher
                 });
-            } else {
-                res.redirect('/course');
-            }
+            
         }).catch(error => {
             res.send(error.message)
         })
@@ -306,7 +304,7 @@ router.post("/edit-course/:idCourse", async (req, res) => {
     if (req.session.token) {
         let getInfoTeacher = jwtDecode(req.session.token);
         res.send(getInfoTeacher)
-        if (getInfoTeacher.role == "Teacher") {
+        // if (getInfoTeacher.role == "Teacher") {
             let formData = await new FormData();
             let readStream = fs.createReadStream(`./public/upload/tmp/${req.files.image[0].originalname}`);
 
@@ -333,9 +331,9 @@ router.post("/edit-course/:idCourse", async (req, res) => {
                 .catch(function (error) {
                     res.send(error)
                 });
-        } else {
-            res.redirect('/')
-        }
+        // } else {
+        //     res.redirect('/')
+        // }
     } else {
         res.redirect('/login');
     }

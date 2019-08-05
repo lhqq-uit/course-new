@@ -14,7 +14,7 @@
                 <span class="d-none d-md-block">Tutorio</span>
             </a>
 
-            <button class="btn btn-black mr-16pt" data-toggle="modal" data-target="#courses">Courses <i class="material-icons">arrow_drop_down</i></button>
+            <!-- <button class="btn btn-black mr-16pt" data-toggle="modal" data-target="#courses">Courses <i class="material-icons">arrow_drop_down</i></button> -->
 
             <form class="search-form search-form--black search-form-courses d-none d-md-flex" action="http://tutorio-bootstrap.frontendmatter.com/library-filters.html">
                 <input type="text" class="form-control" placeholder="What would you like to learn?">
@@ -26,7 +26,9 @@
 
 
             <nav class="nav navbar-nav ml-auto flex-nowrap">
+                    <% if (avatar) { %>
                 <div class="nav-item dropdown d-none d-sm-flex ml-16pt">
+                    
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                         <img width="32" height="32" class="rounded-circle" src="/avatar/<%= avatar %>" alt="student" />
                     </a>
@@ -34,18 +36,18 @@
 
 
                         <div class="dropdown-header"><strong>Instructor</strong></div>
-                        <a class="dropdown-item" href="instructor-dashboard.html">Dashboard</a>
-                        <a class="dropdown-item" href="instructor-courses.html">Courses</a>
-                        <a class="dropdown-item" href="instructor-quizzes.html">Quizzes</a>
+                        <a class="dropdown-item" href="/dashboard">Dashboard</a>
+                        <!-- <a class="dropdown-item" href="instructor-courses.html">Courses</a>
+                        <a class="dropdown-item" href="instructor-quizzes.html">Quizzes</a> -->
                         <div class="dropdown-divider"></div>
                         <div class="dropdown-header"><strong>Account</strong></div>
-                        <a class="dropdown-item" href="student-edit-account.html">Edit Account</a>
-                        <a class="dropdown-item" href="student-billing-history.html">Billing</a>
+                        <!-- <a class="dropdown-item" href="student-edit-account.html">Edit Account</a>
+                        <a class="dropdown-item" href="student-billing-history.html">Billing</a> -->
                         <a class="dropdown-item" href="login.html">Logout</a>
 
                     </div>
                 </div>
-
+                <% } %>
 
 
 

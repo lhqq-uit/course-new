@@ -53,8 +53,12 @@
     <div class="mdk-header-layout js-mdk-header-layout">
 
         <!-- Header -->
+        <% if (infoStudent == null) { %>
+        
+        <% } else{  %> 
+            <%- include('../layout/header-dashboard', {avatar: infoStudent.user.avatar}); %>
+        <% } %>
 
-       <% include ../layout/header %>
 
         <!-- // END Header -->
 

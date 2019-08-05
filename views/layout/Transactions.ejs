@@ -32,13 +32,13 @@
                     <tr>
                         <td>
                             <div class="d-flex flex-nowrap align-items-center">
-                                <a href="instructor-edit-course.html" class="avatar avatar-4by3 avatar-sm mr-3">
+                                <a href="/course/<%= item.course._id %>" class="avatar avatar-4by3 avatar-sm mr-3">
                                     <img src="../upload/images/<%= item.course.avatar %>" alt="course"
                                         class="avatar-img rounded">
                                 </a>
                                 <div class="flex">
                                     <a class="text-body js-lists-values-course"
-                                        href="instructor-edit-course.html"><strong><%= item.course.name %></strong></a><br>
+                                        href="/course/<%= item.course._id %>"><strong><%= item.course.name %></strong></a><br>
                                     <small class="text-muted mr-1">
                                         Invoice
                                         <a href="invoice.html" style="color: inherit;"
