@@ -472,4 +472,35 @@ router.post("/delete/child/:idLesson/:idCommentParent/:idCommentChild", async (r
     })
 })
 
+router.get("/search", async (req, res) => {
+    console.log(req.params.search)
+    console.log(req.body.search)
+    await axios({
+        method: "get",
+        url: `${domain}/api/course/search`,
+        data: {
+            search: req.body.search
+        }
+    }).then(result => {
+        res.send(result.data)
+    }).catch(err => {
+        console.log(err)
+    })
+    //res.send(req.body.search)
+})
+
+router.get("/all-courses", async (req, res) => {
+    let allcourse;
+    await axios({
+        method: "get",
+        url: `${domain}/api/course`,
+    }).then(result => {
+        allcourse = result.data
+    }).catch(err => {
+        console.log(err)
+    })
+    // res.send()
+    res.render("course/allcourse", { allcourse })
+})
+
 module.exports = router;
