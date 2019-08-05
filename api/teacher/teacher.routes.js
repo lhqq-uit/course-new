@@ -17,4 +17,8 @@ router.get('/info/:idTeacher', TeacherController.getTeacher)
 //get all courses of teacher
 router.get('/courses/:idTeacher', TeacherController.getAllCoureseOfTeacher)
 
+
+//search teacher with fullname
+router.get('/', TeacherController.searchTeacher)
+
 module.exports = router;

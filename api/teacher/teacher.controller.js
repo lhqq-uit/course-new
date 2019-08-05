@@ -1,4 +1,5 @@
-let Teacher = require('./teacher.model');
+const Teacher = require('./teacher.model');
+const User = require('./../users/users.model')
 
 module.exports = {
   getTransactionOneWeek: async (req, res) => {
@@ -119,6 +120,26 @@ module.exports = {
       res.status(500).json({
         err_msg: error.message
       })
+    }
+  },
+  searchTeacher: async (req, res) => {
+    const search = req.query.search;
+    let regexPattern = new RegExp(".*" + search + ".*", "i");
+    try {
+      teacher = await User.find({
+        role: 'Teacher',
+        $or: [
+          'fullname'
+        ].map(key => ({
+          [key]: {
+            $regex: regexPattern
+          }
+        }))
+      }).limit(8)
+      if (teacher.length === 0) return res.status(404).json({ message: 'No teacher found' })
+      res.status(200).json({ data: teacher })
+    } catch (error) {
+      res.status(500).json({ message: error.message })
     }
   }
 }
