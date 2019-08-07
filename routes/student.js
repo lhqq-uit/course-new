@@ -40,9 +40,9 @@ router.get("/dashboard", async (req, res) => {
         })
             .then(response => {
                 // handle success
-                //console.log(response.data.courses);
+                console.log(response.data.courses);
 
-                getCoursePurchased = response.data.courses;
+                getCoursePurchased = response.data;
             })
             .catch(error => {
                 // handle error
@@ -130,140 +130,17 @@ router.get("/dashboard", async (req, res) => {
                 console.log(error);
             })
 
+        
         res.render("student/student-dashboard", {
-            infoStudent: infoStudent,
-            getTotalIq: getTotalIq,
-            iqTotal7Day: iqTotal7Day,
-            getIqAWeek: getIqAWeek,
-            getCourseStudied: getCourseStudied,
-            getCoursePurchased: getCoursePurchased,
-            getCourseNotPurchased: getCourseNotPurchased,
-            notificationLogin: notificationLogin, // ! login true push notification
-        });
-    } else {
-        res.redirect("../login")
-    }
-})
-
-//TODO: Student Dashboard>Change Password
-router.get("/edit-account-password", async (req, res) => {
-    if (req.session.token) {
-        //decode token
-        let getInfoStudent = jwtDecode(req.session.token)
-        console.log(getInfoStudent)
-        let student = axios({
-            method: 'get',
-            url: `${domain}/api/student/info/${getInfoStudent._id}`
-        })
-            .then(response => {
-                data = response.data;
-                res.render("student/student-edit-account-password", {
-                    data
-                })
-            })
-    } else {
-        res.redirect("../login")
-    }
-})
-
-router.post("/edit-account-password", (req, res) => {
-    if (!req.session.token) {
-        res.redirect("../login")
-    } else {
-        try {
-            axios({
-                method: 'post',
-                url: `${domain}/api/change-password`,
-                headers: {
-                    Authorization: req.session.token
-                },
-                data: {
-                    Oldpassword: req.body.Oldpassword,
-                    newPassword: req.body.newPassword,
-                    confirmPassword: req.body.confirmPassword
-
-                }
-            })
-                .then(Response => {
-                    res.redirect('../login')
-                })
-                .catch(err => {
-                    res.redirect('/student/edit-account-password')
-                })
-        } catch (error) {
-            res.redirect('/student/edit-account-password')
-        }
-
-    }
-
-});
-
-
-//TODO: Student Dashboard>student-edit-account-profile
-router.get("/edit-account", async (req, res) => {
-    if (req.session.token) {
-        let getTotalIq = '';
-        await axios({
-            method: "get",
-            url: `${domain}/api/student/total-iq`,
-            headers: {
-                Authorization: req.session.token
-            }
-        })
-            .then(response => {
-                // handle success
-                //console.log(response.data.total_iq);
-
-                getTotalIq = response.data.total_iq;
-            })
-            .catch(error => {
-                // handle error
-                console.log(error);
-            })
-        //decode token
-        let getInfoStudent = jwtDecode(req.session.token)
-        let data;
-        console.log(getInfoStudent)
-        await axios({
-            method: 'get',
-            url: `${domain}/api/student/info/${getInfoStudent._id}`,
-            //responseType: 'stream'
-        })
-            .then(response => {
-                // handle success
-                //console.log(response.data);
-
-                infoStudent = response.data;
-            })
-            .catch(error => {
-                // handle error
-                console.log(error);
-            })
-            
-        res.render("student/student-edit-account", {
             infoStudent,
-            getTotalIq
-        })
-    } else {
-        res.redirect("../login")
-    }
-})
-
-router.get("/edit-account-profile", async (req, res) => {
-    if (req.session.token) {
-        //decode token
-        let getInfoStudent = jwtDecode(req.session.token)
-        console.log(getInfoStudent)
-        let student = axios({
-            method: 'get',
-            url: `${domain}/api/student/info/${getInfoStudent._id}`
-        })
-            .then(response => {
-                data = response.data;
-                res.render("student/student-edit-account-profile", {
-                    data
-                })
-            })
+            getTotalIq,
+            iqTotal7Day,
+            getIqAWeek,
+            getCourseStudied,
+            getCoursePurchased,
+            getCourseNotPurchased,
+            notificationLogin, // ! login true push notification
+        });
     } else {
         res.redirect("../login")
     }
@@ -304,7 +181,6 @@ router.get('/take-quiz/:idLesson/:numerical', (req, res) => {
         })
     // res.render('student/student-take-quiz');
 });
-
 
 //TODO: my course
 router.get('/courses', async (req, res) => {

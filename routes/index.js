@@ -13,7 +13,7 @@ router.use("/course", courseRouter)
 router.use("/lesson", lessonRouter)
 router.use("/student", studentRouter)
 router.use("/teacher", teacherRouter)
-// router.use("/user", userRouter)
+router.use("/user", userRouter)
 
 
 module.exports = router;
