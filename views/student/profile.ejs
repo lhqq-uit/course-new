@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+
+<!-- Mirrored from tutorio-bootstrap.frontendmatter.com/student-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:35 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Student Profile</title>
+
+    <!-- Prevent the demo from appearing in search engines -->
+    <meta name="robots" content="noindex">
+
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" href="/assets/vendor/perfect-scrollbar.css" rel="stylesheet">
+
+    <!-- Fix Footer CSS -->
+    <link type="text/css" href="/assets/vendor/fix-footer.css" rel="stylesheet">
+
+    <!-- Material Design Icons -->
+    <link type="text/css" href="/assets/css/material-icons.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/material-icons.rtl.css" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link type="text/css" href="/assets/css/fontawesome.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/fontawesome.rtl.css" rel="stylesheet">
+
+    <!-- Preloader -->
+    <link type="text/css" href="/assets/css/preloader.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/preloader.rtl.css" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link type="text/css" href="/assets/css/app.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/app.rtl.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
+
+
+
+
+
+</head>
+
+<body class="layout-navbar-mini-fixed-bottom">
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <!-- Header Layout -->
+    <div class="mdk-header-layout js-mdk-header-layout">
+
+        <!-- Header -->
+        <% if (checkHeader == 1) { %>
+            <%- include('../layout/header-dashboard', {avatar: infoStudent.user.avatar}); %>
+            <% } else{  %> 
+                <% include ../layout/header %>
+            <% } %> 
+       
+       
+
+        <!-- // END Header -->
+
+        <!-- Header Layout Content -->
+        <div class="mdk-header-layout__content page-content ">
+
+            <div class="bg-gradient-primary border-bottom-white py-32pt">
+                <div class="container d-flex flex-column flex-md-row align-items-center text-center text-md-left">
+                    <img src="/assets/images/illustration/student/128/white.svg" width="104" class="mr-md-32pt mb-32pt mb-md-0" alt="student">
+                    <div class="flex mb-32pt mb-md-0">
+                        <h2 class="text-white mb-0"><%= infoStudent.user.fullname %></h2>
+                        <p class="lead text-white-50 d-flex align-items-center">Student <span class="ml-16pt d-flex align-items-center"><i class="material-icons icon-16pt mr-4pt">opacity</i> 
+                            <% if (getTotalIq == null) { %>
+                                0 IQ
+                                <% } else{  %> 
+                                    <%= getTotalIq %>
+                                <% } %>
+                        </span></p>
+                    </div>
+                    <% if (checkHeader == 1) { %>
+                    <a href="/student/edit-account" class="btn btn-outline-white">Edit account</a>
+                    <% } %> 
+                </div>
+            </div>
+
+
+
+
+            <div class="page-section bg-gradient-primary">
+                <div class="container page__container">
+                    <div class="row">
+                       
+                        <div class="col-lg-12">
+
+
+                            <div id="carouselExampleFade" class="carousel carousel-card slide mb-24pt">
+                                <div class="carousel-inner">
+
+                                    <% if (getCourseStudied.length > 0) { %>
+                                        <% getCourseStudied.forEach(function(item) { %>
+                                        <div class="carousel-item active">
+
+                                            <a class="card mb-0" href="#">
+                                                <img src="../assets/images/achievements/flinto.png" alt="Flinto"
+                                                    class="card-img" style="max-height: 100%; width: initial;">
+                                                <div class="fullbleed bg-primary" style="opacity: .5;"></div>
+                                                <span class="card-body fullbleed">
+                                                    <span class="row">
+                                                        <span class="col-5 text-center">
+                                                            <span
+                                                                class="h5 text-white text-uppercase font-weight-normal m-0 d-block">Achievement</span>
+                                                            <span class="text-white-60 d-block mb-16pt">
+                                                                <script>
+                                                                    document.write(moment("<%= item.last_update %>").fromNow())    
+                                                                </script>
+                                                            </span>
+                                                            <img src="../assets/images/illustration/achievement/128/white.png"
+                                                                alt="achievement">
+                                                        </span>
+                                                        <span class="col-7 d-flex flex-column">
+                                                            <span class="text-right flex">
+                                                                <img src="../assets/images/paths/flinto_40x40%402x.png"
+                                                                    width="64" alt="Flinto" class="rounded">
+                                                            </span>
+                                                            <span>
+                                                                <span class="h4 text-white m-0 d-block">
+                                                                    <%= item.topic %>
+                                                                </span>
+                                                                <span class="text-white-60">
+                                                                    <%= item.name %>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </a>
+
+                                        </div>
+                                        <% }) %>
+                                    <% } else {%>
+                                        <h2>You have not completed any course.</h2>
+                                        <% } %>
+                                </div>
+                                
+                                <% if (getCourseStudied.length > 0) { %>
+                                    <a class="carousel-control-next" href="#carouselExampleFade" role="button"
+                                    data-slide="next">
+                                    <span class="carousel-control-icon material-icons"
+                                        aria-hidden="true">keyboard_arrow_right</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                                <% } %>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header d-flex align-items-center border-0">
+                                    <div class="h2 mb-0 mr-3 text-accent">
+
+                                        <%= iqTotal7Day %>
+                                    </div>
+                                    <div class="flex">
+                                        <p class="mb-0"><strong>Experience IQ</strong></p>
+                                        <p class="text-50 mb-0 mt-n1">7 days streak this week</p>
+                                    </div>
+                                    <i class="material-icons text-muted ml-2">trending_up</i>
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="chart" style="height: auto;">
+                                        <canvas id="myChart" class="chart-canvas"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-section bg-white">
+                <div class="container page__container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>About me</h4>
+                            <p class="text-70">
+                                <%= infoStudent.user.about %>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Connect</h4>
+                            <p class="text-70">
+                                    <%= infoStudent.user.connect %>
+                            </p>
+                            <!-- <div class="d-flex align-items-center">
+                                <a href="#" class="text-accent fab fa-facebook-square font-size-24pt mr-8pt"></a>
+                                <a href="#" class="text-accent fab fa-twitter-square font-size-24pt"></a>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            
+            <% include ../layout/footer %>
+        </div>
+        <!-- // END Header Layout Content -->
+       
+
+    </div>
+    <!-- // END Header Layout -->
+
+   
+    <!-- // END drawer -->
+    <!-- App Settings FAB -->
+    <script>
+        var dataArray = <%- JSON.stringify(getIqAWeek) %>;
+        //console.log(dataArray);
+
+        var dates = [];
+        for (let index = 0 ;index < 7; index++) {
+            let date = new Date();
+            
+            date.setDate(date.getDate() - index);
+
+            var finalDate = date.getDate()+'/'+ (date.getMonth()+1) +'/'+date.getFullYear();
+            dates.push(finalDate);
+        }
+        var trueDates = dates.reverse();
+     
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: trueDates,
+                datasets: [{
+                    label: 'IQ in Week',
+                    data: dataArray,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+
+                        // 'rgba(255, 99, 132, 0.7)',
+                        
+                        // 'rgba(54, 162, 235, 0.7)',
+
+                    ],
+                    borderColor: [
+                        //'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        //stacked: true hai coi data chong len voi nhau
+                    }],
+                    xAxes: [{
+                        barPercentage: 0.5,
+                        barThickness: 45,
+                        maxBarThickness: 50,
+                        minBarLength: 20,
+                        gridLines: {
+                            offsetGridLines: true
+                        },
+                        //stacked: true
+                    }]
+                },
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        bottom: 0
+                    }
+                },
+                responsive: true,
+
+            }
+        });
+    </script>
+
+    <!-- jQuery -->
+    <script src="/assets/vendor/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="/assets/vendor/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap.min.js"></script>
+
+    <!-- Perfect Scrollbar -->
+    <script src="/assets/vendor/perfect-scrollbar.min.js"></script>
+
+    <!-- DOM Factory -->
+    <script src="/assets/vendor/dom-factory.js"></script>
+
+    <!-- MDK -->
+    <script src="/assets/vendor/material-design-kit.js"></script>
+
+    <!-- Fix Footer -->
+    <script src="/assets/vendor/fix-footer.js"></script>
+
+    <!-- Chart.js -->
+    <!-- <script src="/assets/vendor/Chart.min.js"></script> -->
+
+    <!-- App JS -->
+    <script src="/assets/js/app.js"></script>
+
+    <!-- Highlight.js -->
+    <script src="/assets/js/hljs.js"></script>
+
+    <!-- App Settings (safe to remove) -->
+    <!-- <script src="/assets/js/app-settings.js"></script> -->
+
+
+    <!-- Global Settings -->
+    <!-- <script src="/assets/js/settings.js"></script> -->
+
+    <!-- Moment.js -->
+    <script src="/assets/vendor/moment.min.js"></script>
+    <script src="/assets/vendor/moment-range.min.js"></script>
+
+    <!-- Chart.js -->
+    <!-- <script src="/assets/vendor/Chart.min.js"></script> -->
+
+    <!-- Charts JS -->
+    <!-- <script src="/assets/js/chartjs.js"></script> -->
+
+    <!-- Chart.js Samples -->
+    <script src="/assets/js/page.student-profile.js"></script>
+
+</body>
+
+
+<!-- Mirrored from tutorio-bootstrap.frontendmatter.com/student-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:40 GMT -->
+</html>

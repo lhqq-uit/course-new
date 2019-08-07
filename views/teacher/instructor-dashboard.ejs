@@ -123,7 +123,13 @@
                         <h2 class="text-white mb-0"><%= infoTeacher.user.fullname %></h2>
                         <p class="lead text-white-50 d-flex align-items-center">Teacher <span
                                 class="ml-16pt d-flex align-items-center"><i
-                                    class="material-icons icon-16pt mr-4pt">opacity</i> <%= infoTeacher.iq %> IQ</span></p>
+                                    class="material-icons icon-16pt mr-4pt">opacity</i> 
+                                    <% if (infoTeacher.iq == null) { %>
+                                        0 IQ
+                                        <% } else{  %> 
+                                            <%= infoTeacher.iq %>
+                                        <% } %> 
+                                </span></p>
                     </div>
                     <a href="/user/edit-account" class="btn btn-outline-white">Edit account</a>
                 </div>
@@ -165,7 +171,7 @@
                             </ul>
                             <ul class="nav navbar-nav ml-auto">
                                 <li class="nav-item">
-                                    <a href="/user/profile" class="nav-link">Profile</a>
+                                    <a href="/teacher/profile/<%= infoTeacher.user._id %>" class="nav-link">Profile</a>
                                 </li>
                             </ul>
                         </div>

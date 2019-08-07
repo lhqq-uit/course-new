@@ -20,14 +20,14 @@ var storage = multer.diskStorage({
 var upload = multer({
     storage: storage
 }).fields([{
-        name: 'image'
-    },
-    {
-        name: 'video'
-    },
-    {
-        name: 'document'
-    }
+    name: 'image'
+},
+{
+    name: 'video'
+},
+{
+    name: 'document'
+}
 ]);
 
 const axios = require('axios')
@@ -36,9 +36,9 @@ const axios = require('axios')
 router.get("/edit-quiz/:idLesson", (req, res) => {
 
     let info = axios({
-            method: 'get',
-            url: `${domain}/api/lesson/${req.params.idLesson}`,
-        })
+        method: 'get',
+        url: `${domain}/api/lesson/${req.params.idLesson}`,
+    })
         .then(Response => {
             let lesson = Response.data
             let course = axios({
@@ -65,17 +65,17 @@ router.post("/edit-quiz/:idLesson", (req, res) => {
     // res.json(req.body)
     console.log(req.session.token)
     axios({
-            method: 'post',
-            url: `${domain}/api/quiz/${req.params.idLesson}`,
-            data: {
-                question: req.body.question,
-                list_answer: req.body.list_answer,
-                result: req.body.result
-            },
-            headers: {
-                Authorization: req.session.token
-            }
-        })
+        method: 'post',
+        url: `${domain}/api/quiz/${req.params.idLesson}`,
+        data: {
+            question: req.body.question,
+            list_answer: req.body.list_answer,
+            result: req.body.result
+        },
+        headers: {
+            Authorization: req.session.token
+        }
+    })
         .then(Response => {
             res.redirect(`/teacher/edit-quiz/${req.params.idLesson}`)
         })
@@ -92,10 +92,10 @@ router.get("/dashboard", async (req, res) => {
         let getInfoTeacher = jwtDecode(req.session.token)
         var infoTeacher = '';
         await axios({
-                method: 'get',
-                url: `${domain}/api/teacher/info/${getInfoTeacher._id}`,
-                //responseType: 'stream'
-            })
+            method: 'get',
+            url: `${domain}/api/teacher/info/${getInfoTeacher._id}`,
+            //responseType: 'stream'
+        })
             .then(response => {
                 // handle success
                 //console.log(response.data);
@@ -109,12 +109,12 @@ router.get("/dashboard", async (req, res) => {
 
         var getTransactionOneWeek = '';
         await axios({
-                method: "get",
-                url: `${domain}/api/teacher/transaction-one-week`,
-                headers: {
-                    Authorization: req.session.token
-                }
-            })
+            method: "get",
+            url: `${domain}/api/teacher/transaction-one-week`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
             .then(response => {
                 // handle success
                 //console.log(response.data);
@@ -128,12 +128,12 @@ router.get("/dashboard", async (req, res) => {
 
         var getTransactionThisMonth = '';
         await axios({
-                method: "get",
-                url: `${domain}/api/teacher/transaction-this-month`,
-                headers: {
-                    Authorization: req.session.token
-                }
-            })
+            method: "get",
+            url: `${domain}/api/teacher/transaction-this-month`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
             .then(response => {
                 // handle success
                 //console.log(response.data);
@@ -147,12 +147,12 @@ router.get("/dashboard", async (req, res) => {
 
         var getAverageMonthlySalary = '';
         await axios({
-                method: "get",
-                url: `${domain}/api/teacher/average-salary`,
-                headers: {
-                    Authorization: req.session.token
-                }
-            })
+            method: "get",
+            url: `${domain}/api/teacher/average-salary`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
             .then(response => {
                 // handle success
                 //console.log(response.data);
@@ -167,13 +167,13 @@ router.get("/dashboard", async (req, res) => {
 
         var getCommentTeacher = '';
         await axios({
-                method: 'get',
-                url: `${domain}/api/comment/t/${getInfoTeacher._id}`,
-                headers: {
-                    Authorization: req.session.token
-                }
-                //responseType: 'stream'
-            })
+            method: 'get',
+            url: `${domain}/api/comment/t/${getInfoTeacher._id}`,
+            headers: {
+                Authorization: req.session.token
+            }
+            //responseType: 'stream'
+        })
             .then(response => {
                 // handle success
                 //console.log(response.data);
@@ -196,7 +196,7 @@ router.get("/dashboard", async (req, res) => {
             //Send a message when 
             // setTimeout(() => {
             //     //Sending an object when emmiting an event
-               
+
             // },000);
 
             socket.on('disconnect', () => {
@@ -287,11 +287,11 @@ router.get("/edit-course/:idCourse", async (req, res) => {
             method: 'get',
             url: `${domain}/api/course/${req.params.idCourse}`
         }).then(result => {
-                res.render('teacher/instructor-edit-course', {
-                    course: result.data,
-                    user: getInfoTeacher
-                });
-            
+            res.render('teacher/instructor-edit-course', {
+                course: result.data,
+                user: getInfoTeacher
+            });
+
         }).catch(error => {
             res.send(error.message)
         })
@@ -305,32 +305,32 @@ router.post("/edit-course/:idCourse", async (req, res) => {
         let getInfoTeacher = jwtDecode(req.session.token);
         res.send(getInfoTeacher)
         // if (getInfoTeacher.role == "Teacher") {
-            let formData = await new FormData();
-            let readStream = fs.createReadStream(`./public/upload/tmp/${req.files.image[0].originalname}`);
+        let formData = await new FormData();
+        let readStream = fs.createReadStream(`./public/upload/tmp/${req.files.image[0].originalname}`);
 
-            const formHeaders = formData.getHeaders();
-            formData.append("name", req.body.name);
-            formData.append("topic", req.body.topic);
-            formData.append("description", req.body.description);
-            formData.append("price", req.body.price);
-            formData.append("tag", req.body.tag);
-            formData.append("image", readStream);
-            console.log(formData)
-            let config_axios = {
-                headers: {
-                    Authorization: req.session.token,
-                    ...formHeaders
-                }
-            };
-            await axios.put(`${domain}/api/course/${req.params.idCourse}`, formData, config_axios)
-                .then(function (response) {
-                    fs.unlink(`/public/tmp/${req.files.image[0].originalname}`);
-                    res.send(response)
-                    res.redirect("/teacher/courses")
-                })
-                .catch(function (error) {
-                    res.send(error)
-                });
+        const formHeaders = formData.getHeaders();
+        formData.append("name", req.body.name);
+        formData.append("topic", req.body.topic);
+        formData.append("description", req.body.description);
+        formData.append("price", req.body.price);
+        formData.append("tag", req.body.tag);
+        formData.append("image", readStream);
+        console.log(formData)
+        let config_axios = {
+            headers: {
+                Authorization: req.session.token,
+                ...formHeaders
+            }
+        };
+        await axios.put(`${domain}/api/course/${req.params.idCourse}`, formData, config_axios)
+            .then(function (response) {
+                fs.unlink(`/public/tmp/${req.files.image[0].originalname}`);
+                res.send(response)
+                res.redirect("/teacher/courses")
+            })
+            .catch(function (error) {
+                res.send(error)
+            });
         // } else {
         //     res.redirect('/')
         // }
@@ -382,10 +382,10 @@ router.post("/edit-lesson/:idCourse", upload, async (req, res) => {
 router.get("/courses", (req, res) => {
     let getInfoTeacher = jwtDecode(req.session.token)
     axios({
-            method: 'get',
-            url: `${domain}/api/teacher/courses/${getInfoTeacher._id}`,
-            //responseType: 'stream'
-        })
+        method: 'get',
+        url: `${domain}/api/teacher/courses/${getInfoTeacher._id}`,
+        //responseType: 'stream'
+    })
         .then(response => {
             // handle success
             console.log(response.data);
@@ -406,12 +406,12 @@ router.get("/statement", async (req, res) => {
     if (req.session.token) { //TODO: check login session
         var getTransactionOneWeek = '';
         await axios({
-                method: "get",
-                url: `${domain}/api/teacher/transaction-one-week`,
-                headers: {
-                    Authorization: req.session.token
-                }
-            })
+            method: "get",
+            url: `${domain}/api/teacher/transaction-one-week`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
             .then(response => {
                 // handle success
                 //console.log(response.data);
@@ -425,10 +425,10 @@ router.get("/statement", async (req, res) => {
 
         let getInfoTeacher = jwtDecode(req.session.token)
         await axios({
-                method: 'get',
-                url: `${domain}/api/teacher/info/${getInfoTeacher._id}`,
-                //responseType: 'stream'
-            })
+            method: 'get',
+            url: `${domain}/api/teacher/info/${getInfoTeacher._id}`,
+            //responseType: 'stream'
+        })
             .then(response => {
                 // handle success
                 console.log(response.data);
@@ -449,40 +449,84 @@ router.get("/statement", async (req, res) => {
 
 router.get('/delete-lesson/:idLesson', async (req, res) => {
     await axios({
-                method: 'delete',
-                url: `${domain}/api/lesson/${req.params.idLesson}`,
-                headers: {
-                    Authorization: req.session.token
-                }
-            })
-            .then(response => {
-                // handle success
-                res.redirect('back');
-            })
-            .catch(error => {
-                // handle error
-                console.log(error);
-                 res.status(500);
-            })
+        method: 'delete',
+        url: `${domain}/api/lesson/${req.params.idLesson}`,
+        headers: {
+            Authorization: req.session.token
+        }
+    })
+        .then(response => {
+            // handle success
+            res.redirect('back');
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+            res.status(500);
+        })
 })
 
 router.get('/delete-course/:idCourse', async (req, res) => {
     await axios({
-                method: 'delete',
-                url: `${domain}/api/course/${req.params.idCourse}`,
-                headers: {
-                    Authorization: req.session.token
-                }
-            })
+        method: 'delete',
+        url: `${domain}/api/course/${req.params.idCourse}`,
+        headers: {
+            Authorization: req.session.token
+        }
+    })
+        .then(response => {
+            // handle success
+            res.redirect('/teacher/courses');
+        })
+        .catch(error => {
+            // handle error
+            // console.log(error);
+            res.status(500).send(error.message);
+        })
+})
+
+router.get('/profile/:id', async (req, res) => {
+    var checkHeader = null;
+    if (req.session.token) {
+        checkHeader = 1;
+    }
+    await axios({
+        method: 'get',
+        url: `${domain}/api/teacher/info/${req.params.id}`,
+        //responseType: 'stream'
+    })
+        .then(response => {
+            // handle success
+            //console.log(response.data);
+
+            infoTeacher = response.data;
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+        })
+
+        await axios({
+            method: 'get',
+            url: `${domain}/api/teacher/courses/${req.params.id}`,
+            //responseType: 'stream'
+        })
             .then(response => {
                 // handle success
-                res.redirect('/teacher/courses');
+                //console.log(response.data);
+    
+                coursesForTeacher = response.data.courses;
             })
             .catch(error => {
                 // handle error
-                // console.log(error);
-                 res.status(500).send(error.message);
+                console.log(error);
             })
+    
+    res.render("teacher/profile", {
+        coursesForTeacher,
+        infoTeacher,
+        checkHeader
+    })
 })
 
 module.exports = router;

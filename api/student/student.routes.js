@@ -25,4 +25,12 @@ router.get('/iq-a-week', checkPermission.isStudent, StudentController.getIqAWeek
 
 router.get('/course-studied', checkPermission.isStudent, StudentController.getCourseStudied);
 
+//this for ejs
+
+router.get('/total-iq/:id', StudentController.getTotalIq1);
+router.get('/iq-a-week/:id', StudentController.getIqAWeek1);
+router.get('/course-studied/:id', StudentController.getCourseStudied1)
+
+
+
 module.exports = router;

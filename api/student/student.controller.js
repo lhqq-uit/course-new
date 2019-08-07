@@ -277,5 +277,51 @@ module.exports = {
         } catch (error) {
             res.status(500).json({ message: error.message })
         }
-    }
+    },
+
+    getTotalIq1: async (req, res) => {
+        try {
+            let student = await Student.findOne({ user: req.params.id });
+            total_iq = 0;
+            for (let i = 0; i < student.iq.length; i++) {
+                total_iq += student.iq[i].value;
+            }
+            res.status(200).json({ total_iq: total_iq })
+        } catch (error) {
+            res.status(500).json({ message: error.message })
+        }
+    },
+
+    getIqAWeek1: async (req, res) => {
+        try {
+            let student = await Student.findOne({ user: req.params.id });
+            list_iq = []
+            let d = new Date;
+            for (let i = 0; i < 7; i++) {
+                let iqOneDate = 0
+                for (let j = 0; j < student.iq.length; j++) {
+                    if (student.iq[j].date.toLocaleDateString() == d.toLocaleDateString()) {
+                        iqOneDate += student.iq[i].value;
+                    }
+                }
+                list_iq.push(iqOneDate)
+                d.setDate(d.getDate() - 1)
+            }                       //present to pass
+            res.status(200).json({ list_iq: list_iq })
+        } catch (error) {
+            res.status(500).json({ message: error.message })
+        }
+    },
+
+    getCourseStudied1: async (req, res) => {
+        try {
+            let student = await Student.findOne({ user: req.params.id })
+                .populate('course_studied')
+            res.status(200).json({
+                course_studied: student.course_studied
+            })
+        } catch (error) {
+            res.status(500).json({ message: error.message })
+        }
+    },
 }
