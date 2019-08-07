@@ -90,7 +90,7 @@
                             <ul class="nav navbar-nav">
 
                                 <li class="nav-item">
-                                    <a href="instructor-dashboard.html" class="nav-link">Dashboard</a>
+                                    <a href="/dashboard" class="nav-link">Dashboard</a>
                                 </li>
                                 <li class="nav-item dropdown active">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manage</a>
@@ -115,7 +115,7 @@
                                 <li class="nav-item">
                                     <a href="instructor-profile.html" class="nav-link">Profile</a>
                                 </li>
-                            </ul>
+                            </ul>   
                         </div>
                     </div>
                 </div>
@@ -226,15 +226,11 @@
                                             <!-- <a href="#" class="btn btn-accent">Save changes</a> -->
                                             <button type="submit" class="btn btn-accent">Save changes</button>
                                         </div>
-                                        <!-- <div class="list-group list-group-flush">
-                                            <div class="list-group-item d-flex">
-                                                <a class="flex" href="#"><strong>Save Draft</strong></a>
-                                                <i class="material-icons text-muted">check</i>
-                                            </div>
+                                        <div class="list-group list-group-flush">
                                             <div class="list-group-item">
-                                                <a href="#" class="text-danger"><strong>Delete Course</strong></a>
+                                                <a href="/teacher/delete-course/<%= course._id %>" class="text-danger"><strong>Delete Course</strong></a>
                                             </div>
-                                        </div> -->
+                                        </div>
                                     </div>
         
                                 </div>
@@ -287,6 +283,12 @@
                                                     text/plain, application/pdf, image/*">
                                                     <label for="file" class="custom-file-label" >Choose file documents</label>
                                                 </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="float-right">
+                                                    <a name="" id="" class="btn btn-outline-danger" href="/teacher/delete-lesson/<%= lesson._id %>" role="button">Delete</a>
+                                                </div>
+                                                
                                             </li>
                                         </ul>
                                     </div>

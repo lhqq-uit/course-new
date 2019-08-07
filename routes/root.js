@@ -512,4 +512,6 @@ router.get("/all-courses", async (req, res) => {
     res.render("course/allcourse", { allcourse })
 })
 
+
+
 module.exports = router;

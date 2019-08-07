@@ -375,7 +375,6 @@ router.post("/add-lesson/:idCourse", upload, async (req, res) => {
     }
 })
 
-
 router.post("/edit-lesson/:idCourse", upload, async (req, res) => {
 
 })
@@ -401,7 +400,6 @@ router.get("/courses", (req, res) => {
         })
 
 });
-
 
 //TODO: show statement
 router.get("/statement", async (req, res) => {
@@ -447,5 +445,44 @@ router.get("/statement", async (req, res) => {
             getTransactionOneWeek: getTransactionOneWeek
         })
     } else res.redirect("../login")
+});
+
+router.get('/delete-lesson/:idLesson', async (req, res) => {
+    await axios({
+                method: 'delete',
+                url: `${domain}/api/lesson/${req.params.idLesson}`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                res.redirect('back');
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+                 res.status(500);
+            })
 })
+
+router.get('/delete-course/:idCourse', async (req, res) => {
+    await axios({
+                method: 'delete',
+                url: `${domain}/api/course/${req.params.idCourse}`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            })
+            .then(response => {
+                // handle success
+                res.redirect('/teacher/courses');
+            })
+            .catch(error => {
+                // handle error
+                // console.log(error);
+                 res.status(500).send(error.message);
+            })
+})
+
 module.exports = router;

@@ -330,7 +330,7 @@
 
                                     <div class="mdk-carousel__content">
                                         <% if (getCoursePurchased) { %>
-                                            <% getCoursePurchased.forEach(function(item) { %>
+                                            <% getCoursePurchased.courses.forEach( item => { %>
                                             <div class="col-12 col-sm-6">
 
                                                 <div class="card card--elevated card-course overlay js-overlay mdk-reveal js-mdk-reveal "
@@ -350,7 +350,7 @@
                                                             <div class="d-flex">
                                                                 <div class="flex">
                                                                     <a class="card-title"
-                                                                        href="student-take-course.html"><%= item.id_course.name %></a>
+                                                                        href="/course/<%= item.id_course._id %>"><%= item.id_course.name %></a>
                                                                     <small class="text-50 font-weight-bold mb-4pt"><%= item.id_course.teacher.fullname %></small>
                                                                 </div>
                                                                 <a href="student-take-course.html"
@@ -440,7 +440,7 @@
                                                 </div>
 
                                             </div>
-                                            <% }) %>
+                                            <% }); %>
                                         <% } %>
                                       
                                     </div>
