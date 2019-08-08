@@ -1,6 +1,7 @@
 const Course = require('./../course/course.model')
 const Teacher = require('./../teacher/teacher.model')
 const Lesson = require('./lesson.model')
+const Student = require('./../student/student.model')
 const fs = require('fs')
 
 module.exports = {
@@ -104,6 +105,13 @@ module.exports = {
           path: 'teacher'
         }
       })
+      if (!lesson) return res.status(404).json({ message: 'Lesson not found' })
+      let idCourseOfLesson = lesson.course._id;
+      let student = await Student.findOne({ user: req.user.data._id });
+      let listCourseBought = student.courses.map(item => item.id_course.toString());
+      if (!listCourseBought.includes(idCourseOfLesson.toString())) {
+        return res.status(403).json({ message: 'You have not purchased the course' })
+      }
       res.status(201).json({
         success: true,
         msg: "Success get a lesson",
