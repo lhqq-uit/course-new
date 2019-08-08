@@ -300,10 +300,10 @@ router.get("/edit-course/:idCourse", async (req, res) => {
     }
 });
 
-router.post("/edit-course/:idCourse", async (req, res) => {
+router.post("/edit-course/:idCourse", upload, async (req, res) => {
     if (req.session.token) {
         let getInfoTeacher = jwtDecode(req.session.token);
-        res.send(getInfoTeacher)
+        // res.send(getInfoTeacher)
         // if (getInfoTeacher.role == "Teacher") {
         let formData = await new FormData();
         let readStream = fs.createReadStream(`./public/upload/tmp/${req.files.image[0].originalname}`);
@@ -325,7 +325,7 @@ router.post("/edit-course/:idCourse", async (req, res) => {
         await axios.put(`${domain}/api/course/${req.params.idCourse}`, formData, config_axios)
             .then(function (response) {
                 fs.unlink(`/public/tmp/${req.files.image[0].originalname}`);
-                res.send(response)
+                // res.send(response)
                 res.redirect("/teacher/courses")
             })
             .catch(function (error) {
@@ -340,36 +340,41 @@ router.post("/edit-course/:idCourse", async (req, res) => {
 })
 
 router.post("/add-lesson/:idCourse", upload, async (req, res) => {
-    // res.json(req.files) 
+    // res.json(req.files)
     if (req.session.token) {
-        for (let i = 0; i < req.body.title.length; i++) {
-            let formData = await new FormData();
-            let readStreamVideo = fs.createReadStream(`./public/upload/tmp/${req.files.video[i].originalname}`);
-            let readStreamDoc = fs.createReadStream(`./public/upload/tmp/${req.files.document[i].originalname}`);
+        let formData = await new FormData();
+        let readStreamVideo = await fs.createReadStream(`./public/upload/tmp/${req.files.video[0].originalname}`);
+        let readStreamDoc = await fs.createReadStream(`./public/upload/tmp/${req.files.document[0].originalname}`);
 
-            const formHeaders = formData.getHeaders();
-            formData.append("title", req.body.title[i]);
-            formData.append("description", req.body.description[i]);
-            formData.append("video", readStreamVideo);
-            formData.append("document", readStreamDoc);
-            // console.log(formData)
-            let config_axios = {
-                headers: {
-                    Authorization: req.session.token,
-                    ...formHeaders
-                }
-            };
-            await axios.post(`${domain}/api/lesson/${req.params.idCourse}`, formData, config_axios)
-                .then(function (response) {
-                    fs.unlink(`/public/tmp/${req.files.video[i].originalname}`);
-                    fs.unlink(`/public/tmp/${req.files.document[i].originalname}`);
-                    console.log(`created successfully for ${req.body.title[i]}`);
-                })
-                .catch(function (error) {
-                    res.send(error)
-                });
-        }
-        res.redirect("/teacher/courses");
+        const formHeaders = await formData.getHeaders();
+        formData.append("title", req.body.title);
+        formData.append("description", req.body.description);
+        formData.append("video", readStreamVideo);
+        formData.append("document", readStreamDoc);
+        // console.log(formData)
+        let config_axios = {
+            headers: {
+                Authorization: req.session.token,
+                ...formHeaders
+            }
+        };
+
+        await axios({
+                method: 'post',
+                url: `${domain}/api/lesson/${req.params.idCourse}`,
+                data: formData,
+                headers: config_axios.headers
+                //responseType: 'stream'
+            })
+            .then(function (response) {
+                fs.unlink(`/public/tmp/${req.files.video[0].filename}`);
+                fs.unlink(`/public/tmp/${req.files.document[0].file}`);
+                console.log(`created successfully for ${req.body.title} and `);
+                res.send("ok");
+            }).catch(function(error){
+                res.redirect("/teacher/courses");
+            });
+        
     } else {
         res.redirect('/login');
     }
@@ -388,7 +393,7 @@ router.get("/courses", (req, res) => {
     })
         .then(response => {
             // handle success
-            console.log(response.data);
+            // console.log(response.data);
             res.render("teacher/instructor-courses.ejs", {
                 courses: response.data.courses,
                 user: getInfoTeacher

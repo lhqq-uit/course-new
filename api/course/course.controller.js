@@ -102,22 +102,34 @@ module.exports = {
 
     delete: async (req, res) => {
         try {
-            let course = await Course.findOneAndDelete({
+            let numberStudentOfCourse = await Course.findOne({
                 _id: req.params.idCourse,
                 teacher: req.user.data._id
-            });
-            if (!course) return res.status(404).json({
-                err_message: 'No course found or you are not author of course'
-            })
-            await Teacher.findOneAndUpdate(
-                { user: req.user.data._id },
-                {
-                    $pull: { courses: req.params.idCourse },
-                    $inc: { iq: -100 }           //delete course -100 IQ
-                }
-            );
-            fs.unlinkSync(`./public/upload/images/${course.avatar}`);
-            res.status(200).json('Delete successfully!')
+            }).select("students_enrolled");
+
+            if(numberStudentOfCourse !=0){
+                res.status(400).json({
+                    err_message: "you can delete course has student that joining"
+                });
+            } else{
+                let course = await Course.findOneAndDelete({
+                    _id: req.params.idCourse,
+                    teacher: req.user.data._id
+                });
+                if (!course) return res.status(404).json({
+                    err_message: 'No course found or you are not author of course'
+                })
+                await Teacher.findOneAndUpdate(
+                    { user: req.user.data._id },
+                    {
+                        $pull: { courses: req.params.idCourse },
+                        $inc: { iq: -100 }           //delete course -100 IQ
+                    }
+                );
+                fs.unlinkSync(`./public/upload/images/${course.avatar}`);
+                res.status(200).json('Delete successfully!')
+            }
+            
         } catch (error) {
             res.status(500).json({ err_msg: error.message })
         }
