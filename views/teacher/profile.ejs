@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+
+<!-- Mirrored from tutorio-bootstrap.frontendmatter.com/instructor-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:40 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Profile Teacher</title>
+
+    <!-- Prevent the demo from appearing in search engines -->
+    <meta name="robots" content="noindex">
+
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" href="/assets/vendor/perfect-scrollbar.css" rel="stylesheet">
+
+    <!-- Fix Footer CSS -->
+    <link type="text/css" href="/assets/vendor/fix-footer.css" rel="stylesheet">
+
+    <!-- Material Design Icons -->
+    <link type="text/css" href="/assets/css/material-icons.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/material-icons.rtl.css" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link type="text/css" href="/assets/css/fontawesome.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/fontawesome.rtl.css" rel="stylesheet">
+
+    <!-- Preloader -->
+    <link type="text/css" href="/assets/css/preloader.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/preloader.rtl.css" rel="stylesheet">
+
+    <!-- App CSS -->
+    <link type="text/css" href="/assets/css/app.css" rel="stylesheet">
+    <link type="text/css" href="/assets/css/app.rtl.css" rel="stylesheet">
+
+
+
+
+
+</head>
+
+<body class="layout-navbar-mini-fixed-bottom">
+
+
+    <div class="preloader">
+        <div class="sk-double-bounce">
+            <div class="sk-child sk-double-bounce1"></div>
+            <div class="sk-child sk-double-bounce2"></div>
+        </div>
+    </div>
+
+    <!-- Header Layout -->
+    <div class="mdk-header-layout js-mdk-header-layout">
+
+        <!-- Header -->
+        <% if (checkHeader == 1) { %>
+        <%- include('../layout/header-dashboard', {avatar: infoTeacher.user.avatar}); %>
+        <% } else{  %> 
+            <% include ../layout/header %>
+        <% } %> 
+
+       
+        <!-- // END Header -->
+
+        <!-- Header Layout Content -->
+        <div class="mdk-header-layout__content page-content ">
+
+            <div class="bg-gradient-primary border-bottom-white py-32pt">
+                <div class="container d-flex flex-column flex-md-row align-items-center text-center text-md-left">
+                    <img src="/assets/images/illustration/teacher/128/white.svg" width="104" class="mr-md-32pt mb-32pt mb-md-0" alt="instructor">
+                    <div class="flex mb-32pt mb-md-0">
+                        <h2 class="text-white mb-0">
+                            <%= infoTeacher.user.fullname %>
+                        </h2>
+                        <p class="lead text-white-50 d-flex align-items-center">Teacher <span class="ml-16pt d-flex align-items-center"><i class="material-icons icon-16pt mr-4pt">opacity</i> 
+                            <% if (infoTeacher.iq == null) { %>
+                                0 IQ
+                                <% } else{  %> 
+                                    <%= infoTeacher.iq %>
+                                <% } %> 
+                        </span></p>
+                    </div>
+                    <% if (checkHeader == 1) { %>
+                    <a href="/user/edit-account" class="btn btn-outline-white">Edit account</a>
+                    <% } %> 
+                </div>
+            </div>
+
+            <div class="navbar navbar-expand-sm navbar-dark-white bg-gradient-primary p-sm-0 ">
+                <div class="container page__container">
+
+                    <!-- Navbar toggler -->
+                    <button class="navbar-toggler ml-n16pt" type="button" data-toggle="collapse" data-target="#navbar-submenu2">
+                        <span class="material-icons">people_outline</span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbar-submenu2">
+                        <div class="navbar-collapse__content pb-16pt pb-sm-0">
+                            <ul class="nav navbar-nav">
+                                    <% if (checkHeader == 1) { %>
+            
+                                        
+                                <li class="nav-item active">
+                                    <a href="/dashboard" class="nav-link">Dashboard</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manage</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="/teacher/courses">Courses</a>
+                                        <a class="dropdown-item" href="instructor-quizzes.html">Quizzes</a>
+                                        <!-- <a class="dropdown-item" href="instructor-edit-course.html">Edit Course</a>
+                                        <a class="dropdown-item" href="instructor-edit-quiz.html">Edit Quiz</a> -->
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Reports</a>
+                                    <div class="dropdown-menu">
+                                        <!-- <a class="dropdown-item" href="instructor-earnings.html">Earnings</a> -->
+                                        <a class="dropdown-item" href="/teacher/statement">Statement</a>
+                                    </div>
+                                </li>
+                                <% } else{  %> 
+                                            
+                                    <% } %> 
+                            </ul>
+                            <ul class="nav navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a href="/user/profile" class="nav-link">Profile</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="page-section bg-white border-bottom-2">
+                <div class="container page__container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>About me</h4>
+                            <p>
+                                <%= infoTeacher.user.about %>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Connect</h4>
+                            <p>
+                                    <%= infoTeacher.user.connect %>
+                            </p>
+                            <!-- <div class="d-flex align-items-center">
+                                <a href="#" class="text-accent fab fa-facebook-square font-size-24pt mr-8pt"></a>
+                                <a href="#" class="text-accent fab fa-twitter-square font-size-24pt"></a>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container page__container page-section">
+
+                <div class="page-headline text-center">
+                    <h2>Level-up Your Career</h2>
+                    <p class="lead text-70 col-lg-8 mx-auto">Courses by <%= infoTeacher.user.fullname %></p>
+                </div>
+
+
+
+                <div class="card-columns card-columns--2">
+
+                    <% if (coursesForTeacher) { %>   
+                        <% coursesForTeacher.forEach(function(e){ %>
+                        <div class="card card-sm">
+                            <div class="card-body d-flex align-items-center">
+                                <a href="/course/<%= e._id %>" class="avatar avatar-4by3 mr-16pt">
+                                    <img src="/upload/images/<%= e.avatar %>" alt="Angular Routing In-Depth" class="avatar-img rounded">
+                                </a>
+                                <div class="flex">
+                                    <a class="card-title mb-4pt" href="course.html">
+                                        <%= e.name %>
+                                    </a>
+                                    <div class="d-flex align-items-center">
+                                        <div class="rating mr-8pt">
+                                            <script>
+                                                var dataArray = <%- JSON.stringify(e.ratings) %>;
+                                                var sum = 0;
+                                                for (let i = 0; i < dataArray.length; i++) {
+                                                    sum += dataArray[i]*1;
+                                                }
+                                                var result = sum / dataArray.length;
+                                                for (let i = 0; i < 5; i++) {
+                                                    if (i < result) {
+                                                        document.write('<span class="rating__item"><span class="material-icons">star</span></span>')
+                                                    }
+                                                    else{
+                                                        document.write('<span class="rating__item"><span class="material-icons">star_border</span></span>')
+                                                    }
+                                                }
+                                                //console.log(dataArray)
+                                            </script>
+                                        </div>
+                                        <small class="text-muted">
+                                        <script>
+                                            var dataArray = <%- JSON.stringify(e.ratings) %>;
+                                            var sum = 0;
+                                            for (let i = 0; i < dataArray.length; i++) {
+                                                sum += dataArray[i]*1;
+                                            }
+                                            var result = sum / dataArray.length;
+                                            document.write(result.toFixed(1));
+                                            //console.log(dataArray)
+                                        </script>
+                                        /5
+                                        </small>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                    <% } %>
+                
+
+                </div>
+            </div>
+
+
+
+            <% include ../layout/footer %>
+        </div>
+        <!-- // END Header Layout Content -->
+
+    </div>
+    <!-- // END Header Layout -->
+
+    
+    <!-- jQuery -->
+    <script src="/assets/vendor/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="/assets/vendor/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap.min.js"></script>
+
+    <!-- Perfect Scrollbar -->
+    <script src="/assets/vendor/perfect-scrollbar.min.js"></script>
+
+    <!-- DOM Factory -->
+    <script src="/assets/vendor/dom-factory.js"></script>
+
+    <!-- MDK -->
+    <script src="/assets/vendor/material-design-kit.js"></script>
+
+    <!-- Fix Footer -->
+    <script src="/assets/vendor/fix-footer.js"></script>
+
+    <!-- Chart.js -->
+    <script src="/assets/vendor/Chart.min.js"></script>
+
+    <!-- App JS -->
+    <script src="/assets/js/app.js"></script>
+
+    <!-- Highlight.js -->
+    <script src="/assets/js/hljs.js"></script>
+
+
+
+
+
+
+</body>
+
+
+<!-- Mirrored from tutorio-bootstrap.frontendmatter.com/instructor-profile.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:45 GMT -->
+</html>

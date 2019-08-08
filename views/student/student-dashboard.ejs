@@ -98,7 +98,7 @@
                             <ul class="nav navbar-nav">
 
                                 <li class="nav-item active">
-                                    <a href="student-dashboard.html" class="nav-link">Dashboard</a>
+                                    <a href="/student/dashboard" class="nav-link">Dashboard</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="/student/courses" class="nav-link">Courses</a>
@@ -110,7 +110,7 @@
                             </ul>
                             <ul class="nav navbar-nav ml-auto">
                                 <li class="nav-item">
-                                    <a href="student-profile.html" class="nav-link">Profile</a>
+                                    <a href="/student/profile/<%= infoStudent.user._id %>" class="nav-link">Profile</a>
                                 </li>
                             </ul>
                         </div>
@@ -186,7 +186,9 @@
 
                                         </div>
                                         <% }) %>
-                                    <% } %>
+                                    <% } else {%>
+                                        <h2>You have not completed any course.</h2>
+                                        <% } %>
                                 </div>
                                 <!-- <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
     <span class="carousel-control-icon material-icons" aria-hidden="true">keyboard_arrow_left</span>
@@ -290,18 +292,43 @@
                                     <div class="d-flex align-items-center">
                                         <small class="text-black-50 mr-8pt">Rating</small>
                                         <div class="rating mr-8pt">
-                                            <span class="rating__item"><span
-                                                    class="material-icons text-primary">star</span></span>
-                                            <span class="rating__item"><span
-                                                    class="material-icons text-primary">star</span></span>
-                                            <span class="rating__item"><span
-                                                    class="material-icons text-primary">star</span></span>
-                                            <span class="rating__item"><span
-                                                    class="material-icons text-primary">star</span></span>
-                                            <span class="rating__item"><span
-                                                    class="material-icons text-primary">star_border</span></span>
+                                                <div class="inline-block" id="ks2-<%= item._id %>"></div>
+                                                <script>
+                                                    var dataArray = <%- JSON.stringify(item.ratings) %>;
+                                                    var array='';
+                                                    var sum = 0;
+                                                    for (let i = 0; i < dataArray.length; i++) {
+                                                        sum += dataArray[i]*1;
+                                                    }
+                                                    var result = sum / dataArray.length;
+                                                    for (let i = 0; i < 5; i++) {
+                                                        if (i < result) {
+                                                            array+='<span class="rating__item"><span class="material-icons">star</span>';
+                                                        }
+                                                        else{
+                                                            array+='<span class="rating__item"><span class="material-icons">star_border</span>';
+                                                        }
+                                                    }
+                                                    //console.log(dataArray)
+                                                    document.getElementById("ks2-<%= item._id %>").innerHTML = array;
+                                                </script>
                                         </div>
-                                        <small class="text-black-50">4/5</small>
+                                        <small class="text-black-50">
+                                        <div class="inline-block" id="rl1-<%= item._id %>"></div>
+                                        <script>
+                                                var dataArray = <%- JSON.stringify(item.ratings) %>;
+                                                var sum = 0;
+                                                for (let i = 0; i < dataArray.length; i++) {
+                                                    sum += dataArray[i]*1;
+                                                }
+                                                var result = sum / dataArray.length;
+                                                // document.write(result.toFixed(1));
+                                                if (isNaN(result)) {
+                                                    result = 0;
+                                                }
+                                                document.getElementById("rl1-<%= item._id %>").innerHTML = result.toFixed(1) +"/5";
+                                                //console.log(dataArray)
+                                            </script></small>
                                     </div>
                                 </div>
 
@@ -358,16 +385,23 @@
                                                             </div>
                                                             <div class="d-flex">
                                                                 <div class="rating flex">
-                                                                    <span class="rating__item"><span
-                                                                            class="material-icons">star</span></span>
-                                                                    <span class="rating__item"><span
-                                                                            class="material-icons">star</span></span>
-                                                                    <span class="rating__item"><span
-                                                                            class="material-icons">star</span></span>
-                                                                    <span class="rating__item"><span
-                                                                            class="material-icons">star</span></span>
-                                                                    <span class="rating__item"><span
-                                                                            class="material-icons">star_border</span></span>
+                                                                        <script>
+                                                                            var dataArray = <%- JSON.stringify(item.ratings) %>;
+                                                                            var sum = 0;
+                                                                            for (let i = 0; i < dataArray.length; i++) {
+                                                                                sum += dataArray[i]*1;
+                                                                            }
+                                                                            var result = sum / dataArray.length;
+                                                                            for (let i = 0; i < 5; i++) {
+                                                                                if (i < result) {
+                                                                                    document.write('<span class="rating__item"><span class="material-icons">star</span></span>')
+                                                                                }
+                                                                                else{
+                                                                                    document.write('<span class="rating__item"><span class="material-icons">star_border</span></span>')
+                                                                                }
+                                                                            }
+                                                                            //console.log(dataArray)
+                                                                        </script>
                                                                 </div>
                                                                 <!-- <small class="text-50"></small> -->
                                                             </div>
@@ -420,20 +454,44 @@
                                                     </div>
 
                                                     <div class="d-flex align-items-center">
-                                                        <small class="text-black-50 mr-8pt">Your rating</small>
+                                                        <small class="text-black-50 mr-8pt">Rating</small>
                                                         <div class="rating mr-8pt">
-                                                            <span class="rating__item"><span
-                                                                    class="material-icons text-primary">star</span></span>
-                                                            <span class="rating__item"><span
-                                                                    class="material-icons text-primary">star</span></span>
-                                                            <span class="rating__item"><span
-                                                                    class="material-icons text-primary">star</span></span>
-                                                            <span class="rating__item"><span
-                                                                    class="material-icons text-primary">star</span></span>
-                                                            <span class="rating__item"><span
-                                                                    class="material-icons text-primary">star_border</span></span>
+                                                            <div class="inline-block" id="<%= item.id_course._id %>"></div>
+                                                                <script>
+                                                                    var dataArray = <%- JSON.stringify(item.id_course.ratings) %>;
+                                                                    var array='';
+                                                                    var sum = 0;
+                                                                    for (let i = 0; i < dataArray.length; i++) {
+                                                                        sum += dataArray[i]*1;
+                                                                    }
+                                                                    var result = sum / dataArray.length;
+                                                                    for (let i = 0; i < 5; i++) {
+                                                                        if (i < result) {
+                                                                            array+='<span class="rating__item"><span class="material-icons">star</span>';
+                                                                        }
+                                                                        else{
+                                                                            array+='<span class="rating__item"><span class="material-icons">star_border</span>';
+                                                                        }
+                                                                    }
+                                                                    //console.log(dataArray)
+                                                                    document.getElementById("<%= item.id_course._id %>").innerHTML = array;
+                                                                </script>
                                                         </div>
-                                                        <small class="text-black-50">4/5</small>
+                                                        <small class="text-black-50">
+                                                        <div class="inline-block" id="r-<%= item.id_course._id %>"></div>
+                                                        <script>
+                                                                var dataArray = <%- JSON.stringify(item.id_course.ratings) %>;
+                                                                var sum = 0;
+                                                                for (let i = 0; i < dataArray.length; i++) {
+                                                                    sum += dataArray[i]*1;
+                                                                }
+                                                                var result = sum / dataArray.length;
+                                                                // document.write(result.toFixed(1));
+                                                                document.getElementById("r-<%= item.id_course._id %>").innerHTML = result.toFixed(1) +"/5";
+                                                                //console.log(dataArray)
+                                                            </script>
+                                                           
+                                                        </small>
                                                     </div>
 
 

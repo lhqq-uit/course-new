@@ -130,7 +130,7 @@ router.get("/dashboard", async (req, res) => {
                 console.log(error);
             })
 
-        
+
         res.render("student/student-dashboard", {
             infoStudent,
             getTotalIq,
@@ -267,4 +267,93 @@ router.get('/courses', async (req, res) => {
 
     // res.render('student/student-take-quiz');
 });
+
+router.get('/profile/:id', async (req, res) => {
+    var checkHeader = null;
+    if (req.session.token) {
+        checkHeader = 1;
+    }
+    await axios({
+        method: 'get',
+        url: `${domain}/api/student/info/${req.params.id}`,
+        //responseType: 'stream'
+    })
+        .then(response => {
+            // handle success
+            //console.log(response.data);
+
+            infoStudent = response.data;
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+        })
+
+    await axios({
+        method: "get",
+        url: `${domain}/api/student/total-iq/${req.params.id}`,
+
+    })
+        .then(response => {
+            // handle success
+            //console.log(response.data.total_iq);
+
+            getTotalIq = response.data.total_iq;
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+        })
+
+    let getIqAWeek = '';
+    await axios({
+        method: "get",
+        url: `${domain}/api/student/iq-a-week/${req.params.id}`,
+
+    })
+        .then(response => {
+            // handle success
+            //console.log(response.data.list_iq);
+
+            getIqAWeek = response.data.list_iq;
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+        })
+    let iqTotal7Day = 0;
+    if (getIqAWeek.length > 0) {
+        getIqAWeek.forEach(element => {
+            iqTotal7Day += element * 1;
+        });
+    }
+
+    let getCourseStudied = '';
+    await axios({
+        method: "get",
+        url: `${domain}/api/student/course-studied/${req.params.id}`,
+
+    })
+        .then(response => {
+            // handle success
+            console.log(response.data);
+
+            getCourseStudied = response.data.course_studied;
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+        })
+
+    res.render("student/profile", {
+        iqTotal7Day,
+        getIqAWeek,
+        getCourseStudied,
+        getTotalIq,
+        checkHeader,
+        infoStudent
+    })
+    // res.render('student/student-take-quiz');
+});
+
 module.exports = router;

@@ -325,7 +325,11 @@ router.post("/edit-course/:idCourse", upload, async (req, res) => {
         await axios.put(`${domain}/api/course/${req.params.idCourse}`, formData, config_axios)
             .then(function (response) {
                 fs.unlink(`/public/tmp/${req.files.image[0].originalname}`);
+<<<<<<< HEAD
                 // res.send(response)
+=======
+                res.send(response)
+>>>>>>> f5173ff7803977c3beb9485e67f1834f5e18d6eb
                 res.redirect("/teacher/courses")
             })
             .catch(function (error) {
@@ -488,6 +492,53 @@ router.get('/delete-course/:idCourse', async (req, res) => {
             // console.log(error);
             res.status(500).send(error.message);
         })
+<<<<<<< HEAD
+=======
+})
+
+router.get('/profile/:id', async (req, res) => {
+    var checkHeader = null;
+    if (req.session.token) {
+        checkHeader = 1;
+    }
+    await axios({
+        method: 'get',
+        url: `${domain}/api/teacher/info/${req.params.id}`,
+        //responseType: 'stream'
+    })
+        .then(response => {
+            // handle success
+            //console.log(response.data);
+
+            infoTeacher = response.data;
+        })
+        .catch(error => {
+            // handle error
+            console.log(error);
+        })
+
+        await axios({
+            method: 'get',
+            url: `${domain}/api/teacher/courses/${req.params.id}`,
+            //responseType: 'stream'
+        })
+            .then(response => {
+                // handle success
+                //console.log(response.data);
+    
+                coursesForTeacher = response.data.courses;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+    
+    res.render("teacher/profile", {
+        coursesForTeacher,
+        infoTeacher,
+        checkHeader
+    })
+>>>>>>> f5173ff7803977c3beb9485e67f1834f5e18d6eb
 })
 
 module.exports = router;
