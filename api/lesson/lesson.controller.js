@@ -144,7 +144,7 @@ module.exports = {
 
       await Course.findOneAndUpdate(
         {
-          lesson: req.params.idLesson
+          lessons: req.params.idLesson
         },
         {
           $pull: { lessons: req.params.idLesson }

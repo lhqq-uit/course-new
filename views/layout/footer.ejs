@@ -1,4 +1,86 @@
+<style type="text/css">
 
+#google_translate_element {
+  position: absolute;
+  /* right: 16px !important; */
+}
+.goog-te-gadget {
+  font-family: Roboto, 'Open Sans', sans-serif !important;
+  text-transform: uppercase;
+}
+.goog-te-gadget-simple {
+  background-color: rgba(255, 255, 255, 0.20) !important;
+  border: 1px solid rgba(255, 255, 255, 0.50) !important;
+  padding: 8px !important;
+  border-radius: 4px !important;
+  font-size: 1rem !important;
+  line-height: 2rem !important;
+  display: inline-block;
+  cursor: pointer;
+  zoom: 1;
+}
+.goog-te-menu2 {
+  max-width: 100%;
+}
+.goog-te-menu-value {
+  color: #fff !important;
+}
+.goog-te-menu-value:before {
+  font-family: 'Material Icons';
+  content: "\E927";
+  margin-right: 16px;
+  font-size: 2rem;
+  vertical-align: -10px;
+}
+.goog-te-menu-value span:nth-child(5) {
+  display: none;
+}
+.goog-te-menu-value span:nth-child(3) {
+  border: none !important;
+  font-family: 'Material Icons';
+}
+.goog-te-menu-value span:nth-child(3):after {
+  font-family: 'Material Icons';
+  content: "\E5C5";
+  font-size: 1.5rem;
+  vertical-align: -6px;
+}
+.goog-te-gadget-icon {
+  background-image: url(https://placehold.it/32) !important;
+  background-position: 0px 0px;
+  height: 32px !important;
+  width: 32px !important;
+  margin-right: 8px !important;
+  display: none;
+}
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+body {
+  top: 0px !important;
+}
+/* ================================== *\
+ Mediaqueries
+ \* ================================== */
+@media (max-width: 667px) {
+  #google_translate_element {
+    bottom: calc(100% - 50% - 53px);
+    left: 16px !important;
+    width: 100% !important;
+  }
+  #google_translate_element goog-te-gadget {
+    width: 100% !important;
+  }
+  #google_translate_element .skiptranslate {
+    width: 100% !important;
+  }
+  #google_translate_element .goog-te-gadget-simple {
+    width: calc(100% - 32px) !important;
+    text-align: center;
+  }
+}
+
+</style>
 
 <div class="js-fix-footer bg-white border-top-2">
     <div class="container page-section py-lg-48pt">
@@ -36,9 +118,11 @@
             </div>
             <div class="col-md-4 text-md-right">
                 <p class="text-70 brand justify-content-md-end">
-                    <img class="brand-icon" src="../assets/images/logo/black-70%402x.png" width="30" alt="Tutorio"> Tutorio
+                    <img class="brand-icon" src="../assets/images/logo/black-70%402x.png" width="30" alt="Tutorio">
+                    Tutorio
                 </p>
-                <p class="text-muted mb-0 mb-lg-16pt">Tutorio is an online learning platform that helps anyone achieve their personal and professional goals.</p>
+                <p class="text-muted mb-0 mb-lg-16pt">Tutorio is an online learning platform that helps anyone achieve
+                    their personal and professional goals.</p>
             </div>
         </div>
     </div>
@@ -48,14 +132,21 @@
                 <div class="col-md-2 col-sm-4 mb-24pt mb-md-0">
                     <p class="text-white-70 mb-8pt"><strong>Follow us</strong></p>
                     <nav class="nav nav-links nav--flush">
-                        <a href="#" class="nav-link mr-8pt"><img src="../assets/images/icon/footer/facebook-square%402x.png" width="24" height="24" alt="Facebook"></a>
-                        <a href="#" class="nav-link mr-8pt"><img src="../assets/images/icon/footer/twitter-square%402x.png" width="24" height="24" alt="Twitter"></a>
-                        <a href="#" class="nav-link mr-8pt"><img src="../assets/images/icon/footer/vimeo-square%402x.png" width="24" height="24" alt="Vimeo"></a>
-                        <a href="#" class="nav-link"><img src="../assets/images/icon/footer/youtube-square%402x.png" width="24" height="24" alt="YouTube"></a>
+                        <a href="#" class="nav-link mr-8pt"><img
+                                src="../assets/images/icon/footer/facebook-square%402x.png" width="24" height="24"
+                                alt="Facebook"></a>
+                        <a href="#" class="nav-link mr-8pt"><img
+                                src="../assets/images/icon/footer/twitter-square%402x.png" width="24" height="24"
+                                alt="Twitter"></a>
+                        <a href="#" class="nav-link mr-8pt"><img
+                                src="../assets/images/icon/footer/vimeo-square%402x.png" width="24" height="24"
+                                alt="Vimeo"></a>
+                        <a href="#" class="nav-link"><img src="../assets/images/icon/footer/youtube-square%402x.png"
+                                width="24" height="24" alt="YouTube"></a>
                     </nav>
                 </div>
                 <div class="col-md-6 col-sm-4 mb-24pt mb-md-0 d-flex align-items-center">
-                    <a href="#" class="btn btn-outline-white">English <span class="icon--right material-icons">arrow_drop_down</span></a>
+                    <div id="google_translate_element"></div>
                 </div>
                 <div class="col-md-4 text-md-right">
                     <p class="mb-8pt d-flex align-items-md-center justify-content-md-end">
@@ -69,3 +160,70 @@
     </div>
 </div>
 
+<script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false }, 'google_translate_element');
+    }
+</script>
+<!-- jQuery -->
+<script src="assets/vendor/jquery.min.js"></script>
+<script>
+    $('document').ready(function () {
+
+
+        // RESTYLE THE DROPDOWN MENU
+        $('#google_translate_element').on("click", function () {
+
+            // Change font family and color
+            $("iframe").contents().find(".goog-te-menu2-item div, .goog-te-menu2-item:link div, .goog-te-menu2-item:visited div, .goog-te-menu2-item:active div, .goog-te-menu2 *")
+                .css({
+                    'color': '#544F4B',
+                    'font-family': 'Roboto',
+                    'width': '100%'
+                });
+            // Change menu's padding
+            $("iframe").contents().find('.goog-te-menu2-item-selected').css('display', 'none');
+
+            // Change menu's padding
+            $("iframe").contents().find('.goog-te-menu2').css('padding', '0px');
+
+            // Change the padding of the languages
+            $("iframe").contents().find('.goog-te-menu2-item div').css('padding', '20px');
+
+            // Change the width of the languages
+            $("iframe").contents().find('.goog-te-menu2-item').css('width', '100%');
+            $("iframe").contents().find('td').css('width', '100%');
+
+            // Change hover effects
+            $("iframe").contents().find(".goog-te-menu2-item div").hover(function () {
+                $(this).css('background-color', '#4385F5').find('span.text').css('color', 'white');
+            }, function () {
+                $(this).css('background-color', 'white').find('span.text').css('color', '#544F4B');
+            });
+
+            // Change Google's default blue border
+            $("iframe").contents().find('.goog-te-menu2').css('border', 'none');
+
+            // Change the iframe's box shadow
+            $(".goog-te-menu-frame").css('box-shadow', '0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3)');
+
+
+
+            // Change the iframe's size and position?
+            $(".goog-te-menu-frame").css({
+                'height': '100%',
+                'width': '100%',
+                'top': '0px'
+            });
+            // Change iframes's size
+            $("iframe").contents().find('.goog-te-menu2').css({
+                'height': '100%',
+                'width': '100%'
+            });
+        });
+    });
+
+
+</script>

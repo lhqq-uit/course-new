@@ -115,7 +115,7 @@
                                 <li class="nav-item">
                                     <a href="instructor-profile.html" class="nav-link">Profile</a>
                                 </li>
-                            </ul>   
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -124,94 +124,94 @@
 
             <div class="page-section bg-white border-bottom-2">
                 <div class="container page__container">
-                        <form action="/teacher/edit-lesson/<%= course._id %>" method="POST" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h4>Course title</h4>
-                                    <div class="form-group">
-                                        <input type="text" name="name" class="form-control form-control-lg" 
-                                            placeholder="Course title" value="<%= course.name %>" 
-                                            required oninvalid="this.setCustomValidity('Enter course title Here')"
-                                            oninput="this.setCustomValidity('')">
-                                    </div>
-        
-                                    <h4>Description</h4>
-                                    <textarea class="form-control" name="description" rows="3"
-                                        placeholder="Course description goes here.." required
-                                        oninvalid="this.setCustomValidity('Enter Description Here')"
-                                        oninput="this.setCustomValidity('')"><%= course.description %></textarea>
-                                    <br>
-        
-                                    <h4>Image</h4>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="custom-file">
-                                                <input type="file" name="image" id="file" class="custom-file-input" onchange="readURL(this);" required
+                    <form action="/teacher/edit-course/<%= course._id %>" method="POST" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4>Course title</h4>
+                                <div class="form-group">
+                                    <input type="text" name="name" class="form-control form-control-lg"
+                                        placeholder="Course title" value="<%= course.name %>" required
+                                        oninvalid="this.setCustomValidity('Enter course title Here')"
+                                        oninput="this.setCustomValidity('')">
+                                </div>
+
+                                <h4>Description</h4>
+                                <textarea class="form-control" name="description" rows="3"
+                                    placeholder="Course description goes here.." required
+                                    oninvalid="this.setCustomValidity('Enter Description Here')"
+                                    oninput="this.setCustomValidity('')"><%= course.description %></textarea>
+                                <br>
+
+                                <h4>Image</h4>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="custom-file">
+                                            <input type="file" name="image" id="file" class="custom-file-input"
+                                                onchange="readURL(this);" required
                                                 oninvalid="this.setCustomValidity('Enter File Image Here')"
                                                 oninput="this.setCustomValidity('')" accept="image/*">
-                                                <label for="file" class="custom-file-label image-course">Choose file image</label>
-                                            </div>
+                                            <label for="file" class="custom-file-label image-course">Choose file
+                                                image</label>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div style="text-align: center;">
-                                                <img id="output-img" src="/upload/images/<%= course.avatar %>" width="250" height="auto" alt="your image" />
-                                            </div>
-                                        </div>
-                                    </div>`
-                                </div>
-                                <div class="col-md-4">
-                                        <h4>Category</h4>
-                                        <div class="form-group">
-                                            <div class="input-group form-inline">
-                                                <input type="text" name="topic" class="form-control" value="<%= course.topic %>"
-                                                required
-                                                oninvalid="this.setCustomValidity('Enter topic Here')"
-                                                oninput="this.setCustomValidity('')">
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <div class="row">
-                                                
-                                                <div class="col-md-6">
-                                                    <h4>Price</h4>
-                                                    <div class="input-group form-inline">
-                                                        <span class="input-group-prepend"><span
-                                                                class="input-group-text">$</span></span>
-                                                        <input type="text" name="price" class="form-control" value="<%= course.price %>"
-                                                        required
-                                                        oninvalid="this.setCustomValidity('Enter Price Here')"
-                                                        oninput="this.setCustomValidity('')">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <h4>Sale</h4>
-                                                    <div class="form-group">
-                                                        <div class="input-group form-inline">
-                                                            <input type="text" name="sale" class="form-control" value="<%= course.sale %>"
-                                                            required oninvalid="this.setCustomValidity('Enter Sale Here')"
-                                                            oninput="this.setCustomValidity('')">
-                                                            <span class="input-group-prepend"><span
-                                                                class="input-group-text">%</span></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                    
-                                    <h4>Tags</h4>
-                                    <div class="form-group">
-                                        <input type="text" name="tag" class="form-control"
-                                            placeholder="enter, badges, here"
-                                            required
-                                            oninvalid="this.setCustomValidity('Enter tags Here')"
-                                            oninput="this.setCustomValidity('')"
-                                            value="<%= course.tag %>">
-                                        <small class="form-text text-muted">Separate tags with space or comma.</small>
                                     </div>
-        
-                                    <!-- <small class="text-muted">Your tags:</small>
+                                    <div class="col-sm-6">
+                                        <div style="text-align: center;">
+                                            <img id="output-img" src="/upload/images/<%= course.avatar %>" width="250"
+                                                height="auto" alt="your image" />
+                                        </div>
+                                    </div>
+                                </div>`
+                            </div>
+                            <div class="col-md-4">
+                                <h4>Category</h4>
+                                <div class="form-group">
+                                    <div class="input-group form-inline">
+                                        <input type="text" name="topic" class="form-control" value="<%= course.topic %>"
+                                            required oninvalid="this.setCustomValidity('Enter topic Here')"
+                                            oninput="this.setCustomValidity('')">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+
+                                        <div class="col-md-6">
+                                            <h4>Price</h4>
+                                            <div class="input-group form-inline">
+                                                <span class="input-group-prepend"><span
+                                                        class="input-group-text">$</span></span>
+                                                <input type="text" name="price" class="form-control"
+                                                    value="<%= course.price %>" required
+                                                    oninvalid="this.setCustomValidity('Enter Price Here')"
+                                                    oninput="this.setCustomValidity('')">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>Sale</h4>
+                                            <div class="form-group">
+                                                <div class="input-group form-inline">
+                                                    <input type="text" name="sale" class="form-control"
+                                                        value="<%= course.sale %>" required
+                                                        oninvalid="this.setCustomValidity('Enter Sale Here')"
+                                                        oninput="this.setCustomValidity('')">
+                                                    <span class="input-group-prepend"><span
+                                                            class="input-group-text">%</span></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <h4>Tags</h4>
+                                <div class="form-group">
+                                    <input type="text" name="tag" class="form-control" placeholder="enter, badges, here"
+                                        required oninvalid="this.setCustomValidity('Enter tags Here')"
+                                        oninput="this.setCustomValidity('')" value="<%= course.tag %>">
+                                    <small class="form-text text-muted">Separate tags with space or comma.</small>
+                                </div>
+
+                                <!-- <small class="text-muted">Your tags:</small>
                                     <a href="#" class="float-right"><small>Clear all</small></a>
                                     <div class="clearfix"></div>
                                     <span class="badge badge-primary badge-filter">
@@ -220,23 +220,24 @@
                                     <span class="badge badge-primary badge-filter">
                                         <a href="#"><i class="material-icons">close</i></a> Guide
                                     </span> -->
-            
-                                    <div class="card m-0">
-                                        <div class="card-header text-center">
-                                            <!-- <a href="#" class="btn btn-accent">Save changes</a> -->
-                                            <button type="submit" class="btn btn-accent">Save changes</button>
-                                        </div>
-                                        <div class="list-group list-group-flush">
-                                            <div class="list-group-item">
-                                                <a href="/teacher/delete-course/<%= course._id %>" class="text-danger"><strong>Delete Course</strong></a>
-                                            </div>
+
+                                <div class="card m-0">
+                                    <div class="card-header text-center">
+                                        <!-- <a href="#" class="btn btn-accent">Save changes</a> -->
+                                        <button type="submit" class="btn btn-accent">Save changes</button>
+                                    </div>
+                                    <div class="list-group list-group-flush">
+                                        <div class="list-group-item">
+                                            <a href="/teacher/delete-course/<%= course._id %>"
+                                                class="text-danger"><strong>Delete Course</strong></a>
                                         </div>
                                     </div>
-        
                                 </div>
-                                
+
                             </div>
-                        </form>
+
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -244,68 +245,76 @@
                 <div class="row">
                     <div class="col-md-8">
 
-                        <form action="/teacher/add-lesson/<%= course._id %>" method="post" enctype="multipart/form-data">
-                            <div class="mb-heading d-flex align-items-center">
-                                <h4 class="flex mb-0">Lessons</h4>
-                            </div>
-
-                            <% if (course.lessons.length != 0) { %>
-
-                                <% course.lessons.forEach(function(lesson){ %>
-                                    <div class="card stack">
-                                        <div class="card-header">
-                                            <label class="form-label" for="">Title Lessons</label>
-                                            <input type="text" name="title" class="form-control" id="" placeholder="Enter name lessson .."
-                                            required oninvalid="this.setCustomValidity('Enter lesson title Here')"
-                                            oninput="this.setCustomValidity('')" value="<%= lesson.title %>">
-                                        </div>
-                                        <ul class="list-group list-group-flush">
-                                            <li class="list-group-item">
-                                                <label class="form-label" for="">Description Lessons</label>
-                                                <textarea class="form-control" name="description" rows="3" placeholder="Course description goes here.."
-                                                required oninvalid="this.setCustomValidity('Enter course title Here')"
-                                                oninput="this.setCustomValidity('')"><%= lesson.description %></textarea>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <div class="custom-file">
-                                                    <input type="file" id="file" name="video" class="custom-file-input"
-                                                    required oninvalid="this.setCustomValidity('Enter file video Here')"
-                                                    oninput="this.setCustomValidity('')" accept="video/*">
-                                                    <label for="file" class="custom-file-label" >Choose file video</label>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <div class="custom-file">
-                                                    <input type="file" name="document" id="file" class="custom-file-input"
-                                                    required oninvalid="this.setCustomValidity('Enter file document Here')"
-                                                    oninput="this.setCustomValidity('')" accept=
-                                                    "application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                                                    text/plain, application/pdf, image/*">
-                                                    <label for="file" class="custom-file-label" >Choose file documents</label>
-                                                </div>
-                                            </li>
-                                            <li class="list-group-item">
-                                                <div class="float-right">
-                                                    <a name="" id="" class="btn btn-outline-danger" href="/teacher/delete-lesson/<%= lesson._id %>" role="button">Delete</a>
-                                                </div>
-                                                
-                                            </li>
-                                        </ul>
-                                    </div>
-                                <% }); %>
-
-                            <% } %>
-                        <div class="show-more"></div>
-                        <button onclick="appendText();" type="button" class="btn btn-outline-secondary mb-24pt mb-sm-0">Add Lession</button>
-                        
-                        <div class="text-center" style="margin: 10px 0 10px">
-                            <!-- <a href="#" class="btn btn-accent">Save changes</a> -->
-                            <button type="submit" class="btn btn-success">Save changes</button>
+                        <!-- <form action="/teacher/add-lesson/<%= course._id %>" method="post" enctype="multipart/form-data"> -->
+                        <div class="mb-heading d-flex align-items-center">
+                            <h4 class="flex mb-0">Lessons</h4>
                         </div>
+
+                        <% if (course.lessons.length != 0) { %>
+
+                        <% course.lessons.forEach(function(lesson){ %>
+                        <form action="/teacher/edit-lesson/<%= lesson._id %>" method="post"
+                            enctype="multipart/form-data">
+                            <div class="card stack">
+                                <div class="card-header">
+                                    <label class="form-label" for="">Title Lessons</label>
+                                    <input type="text" name="title" class="form-control" id=""
+                                        placeholder="Enter name lessson .." required
+                                        oninvalid="this.setCustomValidity('Enter lesson title Here')"
+                                        oninput="this.setCustomValidity('')" value="<%= lesson.title %>">
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <label class="form-label" for="">Description Lessons</label>
+                                        <textarea class="form-control" name="description" rows="3"
+                                            placeholder="Course description goes here.." required
+                                            oninvalid="this.setCustomValidity('Enter course title Here')"
+                                            oninput="this.setCustomValidity('')"><%= lesson.desciption %></textarea>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="custom-file">
+                                            <input type="file" id="file" name="video" class="custom-file-input" required
+                                                oninvalid="this.setCustomValidity('Enter file video Here')"
+                                                oninput="this.setCustomValidity('')" accept="video/*">
+                                            <label for="file" class="custom-file-label">Choose file video</label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="custom-file">
+                                            <input type="file" name="document" id="file" class="custom-file-input"
+                                                required oninvalid="this.setCustomValidity('Enter file document Here')"
+                                                oninput="this.setCustomValidity('')" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                                    text/plain, application/pdf, image/*">
+                                            <label for="file" class="custom-file-label">Choose file documents</label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="float-right ml-16pt">
+                                            <button type="submit" class="btn btn-outline-primary" role="button">Update
+                                                Lesson</a>
+                                        </div>
+                                        <div class="float-right">
+                                            <a name="" id="" class="btn btn-outline-danger"
+                                                href="/teacher/delete-lesson/<%= lesson._id %>" role="button">Delete</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </form>
+                        <% }); %>
+
+                        <% } %>
+                        <div class="show-more"></div>
+                        <button onclick="appendText();" type="button"
+                            class="btn btn-outline-secondary mb-24pt mb-sm-0">Add Lession</button>
+
+
+                        <!-- </form> -->
                         <script>
-                            function appendText(){
-                                let text =`<div class="card stack">
+                            function appendText() {
+                                let text = `
+                                        <form action="/teacher/add-lesson/<%= course._id %>" method="post" enctype="multipart/form-data">
+                                            <div class="card stack">
                                                 <div class="card-header">
                                                     <label class="form-label" for="">Title Lessons</label>
                                                     <input type="text" name="title" class="form-control" id="" placeholder="Enter name lessson .."
@@ -337,8 +346,15 @@
                                                             <label for="file" class="custom-file-label">Choose file documents</label>
                                                         </div>
                                                     </li>
+                                                    
+                                                    <li class="list-group-item">
+                                                        <div class="float-right">
+                                                            <button type="submit" class="btn btn-outline-primary" role="button">Save Lesson</a>
+                                                        </div>
+                                                    </li>
                                                 </ul>
-                                            </div>`;
+                                            </div>
+                                        </form>`;
                                 let frag = document.createRange().createContextualFragment(text);
                                 document.getElementsByClassName("show-more")[0].appendChild(frag);
                             }
@@ -361,7 +377,7 @@
     </div>
     <!-- // END Header Layout -->
 
-   
+
 
     <!-- jQuery -->
     <script src="/assets/vendor/jquery.min.js"></script>
