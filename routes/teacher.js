@@ -325,11 +325,7 @@ router.post("/edit-course/:idCourse", upload, async (req, res) => {
         await axios.put(`${domain}/api/course/${req.params.idCourse}`, formData, config_axios)
             .then(function (response) {
                 fs.unlink(`/public/tmp/${req.files.image[0].originalname}`);
-<<<<<<< HEAD
                 // res.send(response)
-=======
-                res.send(response)
->>>>>>> f5173ff7803977c3beb9485e67f1834f5e18d6eb
                 res.redirect("/teacher/courses")
             })
             .catch(function (error) {
@@ -492,8 +488,6 @@ router.get('/delete-course/:idCourse', async (req, res) => {
             // console.log(error);
             res.status(500).send(error.message);
         })
-<<<<<<< HEAD
-=======
 })
 
 router.get('/profile/:id', async (req, res) => {
@@ -538,7 +532,6 @@ router.get('/profile/:id', async (req, res) => {
         infoTeacher,
         checkHeader
     })
->>>>>>> f5173ff7803977c3beb9485e67f1834f5e18d6eb
 })
 
 module.exports = router;
