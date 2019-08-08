@@ -157,36 +157,6 @@
 
                     <div class="row">
                         <% if(data){%>
-<<<<<<< HEAD
-                        <% data.forEach(function(item) { %>
-                        <div class="col-sm-6 col-md-4 col-lg-3">
-
-                            <div class="card card--elevated card-course overlay js-overlay mdk-reveal js-mdk-reveal "
-                                data-partial-height="40" data-toggle="popover" data-trigger="click">
-
-
-                                <a href="/course/<%= item._id %>" class="js-image" data-position="center">
-                                    <img src="/upload/images/<%= item.avatar %>" width="250" height="150" alt="course">
-                                    <span class="overlay__content">
-                                        <span class="overlay__action d-flex flex-column text-center">
-                                            <i class="material-icons">play_circle_outline</i>
-                                            <small>Preview course</small>
-                                        </span>
-                                    </span>
-                                </a>
-                                <% if( item.sale > 0 ){ %>
-                                <span
-                                    class="corner-ribbon corner-ribbon--default-right-top corner-ribbon--shadow bg-accent text-white">SALE</span>
-                                <% } %>
-                                <div class="mdk-reveal__content">
-                                    <div class="card-body">
-                                        <div class="d-flex">
-                                            <div class="flex">
-                                                <a class="card-title"
-                                                    href="/course/<%= item._id %>"><%= item.name %></a>
-                                                <small
-                                                    class="text-50 font-weight-bold mb-4pt"><%= item.teacher.fullname %></small>
-=======
                             <% data.forEach(function(item) { %>
                             <div class="col-sm-6 col-md-4 col-lg-3">
 
@@ -236,7 +206,6 @@
                                                     </div>
                                                     <!-- <small class="text-50">6 hours</small> -->
                                                 </div>
->>>>>>> f5173ff7803977c3beb9485e67f1834f5e18d6eb
                                             </div>
                                             <a href="course.html"
                                                 class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite</a>
