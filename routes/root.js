@@ -268,6 +268,27 @@ router.get("/dashboard", (req, res) => {
     }
 })
 
+//todo: show profile
+router.get("/profile/:id", async (req, res) => {
+    var getInfo;
+    await axios({
+        method: "get",
+        url: `${domain}/api/info/${req.params.id}`
+    }).then(result => {
+        getInfo = result.data.info
+        
+    })
+    // console.log(getInfo[0].role)
+    //console.log(getInfoTeacher)
+    if (getInfo[0].role == "Teacher") {
+        res.redirect(`/teacher/profile/${req.params.id}`)
+    } else if (getInfo[0].role == "Student") {
+        res.redirect(`/student/profile/${req.params.id}`)
+    } else {
+        res.redirect("/")
+    }
+})
+
 //TODO: login
 router.get("/login", (req, res) => {
     let notificationError = false;
@@ -355,7 +376,6 @@ router.post("/change-password/:token", (req, res) => {
 
 
 //TODO: Sign Up
-
 router.get("/signup", async (req, res) => {
     var notificationSignUpError = false;
     if (req.session.SignUpTrue == false) { //TODO: signin not true -> push err
@@ -389,7 +409,7 @@ router.post("/signup", (req, res) => {
     })
 });
 
-
+//TODO: this only for cmt
 router.post("/:idLesson", (req, res) => {
     let getInfo = jwtDecode(req.session.token);
     console.log(getInfo)
@@ -472,7 +492,7 @@ router.post("/delete/child/:idLesson/:idCommentParent/:idCommentChild", async (r
     })
 })
 
-
+//TODO: search
 router.get("/search", async (req, res) => {
     //console.log("vv")
     let allcourse;
@@ -497,7 +517,7 @@ router.get("/search", async (req, res) => {
     })
 })
 
-
+//TODO: all course
 router.get("/all-courses", async (req, res) => {
     let allcourse;
     await axios({

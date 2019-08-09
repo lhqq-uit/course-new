@@ -203,14 +203,14 @@
                         <div class="card-body">
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#" class="avatar avatar-sm">
+                                    <a href="/profile/<%= e.user._id %>" class="avatar avatar-sm">
                                         <img src="../avatar/<%= e.user.avatar %>" alt="Guy"
                                             class="avatar-img rounded-circle">
                                     </a>
                                 </div>
                                 <div class="media-body d-flex flex-column">
                                     <div class="d-flex align-items-center">
-                                        <a href="profile.html"
+                                        <a href="/profile/<%= e.user._id %>"
                                             class="text-body"><strong><%= e.user.fullname %></strong></a>
                                         <small class="ml-auto text-muted">
                                             <script type="text/javascript">
@@ -248,14 +248,14 @@
                                 <div
                                     class="media ml-sm-32pt mt-3 border rounded p-3 bg-light d-inline-flex measure-paragraph-max">
                                     <div class="media-left">
-                                        <a href="#" class="avatar avatar-sm">
+                                        <a href="/profile/<%= e.reply[k].user._id %>" class="avatar avatar-sm">
                                             <img src="../avatar/<%=  e.reply[k].user.avatar %>" alt="Guy"
                                                 class="avatar-img rounded-circle">
                                         </a>
                                     </div>
                                     <div class="media-body">
                                         <div class="d-flex align-items-center">
-                                            <a href="profile.html" class="text-body"><strong>
+                                            <a href="/profile/<%= e.reply[k].user._id %>" class="text-body"><strong>
                                                     <%= e.reply[k].user.fullname %>
                                                 </strong></a>
                                             <small class="ml-5 text-muted">
