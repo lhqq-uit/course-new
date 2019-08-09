@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from tutorio-bootstrap.frontendmatter.com/student-take-course.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:49 GMT -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -54,13 +55,13 @@
 
         <!-- Header -->
 
-               <!-- Header -->
-               <% if (infoStudent == null) { %>
-                
-                <% } else{  %> 
-                    <%- include('../layout/header-dashboard', {avatar: infoStudent.user.avatar}); %>
-                <% } %>
-        
+        <!-- Header -->
+        <% if (infoStudent == null) { %>
+
+        <% } else{  %>
+        <%- include('../layout/header-dashboard', {avatar: infoStudent.user.avatar}); %>
+        <% } %>
+
 
         <!-- // END Header -->
 
@@ -75,21 +76,24 @@
                             <p class="lead text-white-50 measure-hero-lead mb-24pt"><%= course.description %></p>
                             <a href="/course/<%= course._id%>" class="btn btn-white">Resume course</a>
                             <% if(!bought){ %>
-                                <a href="/course/<%= course._id%>" class="btn btn-white">Buy course</a>
+                            <a href="/course/<%= course._id%>" class="btn btn-white">Buy course</a>
                             <% }; %>
 
                         </div>
                     </div>
-                    <div class="navbar navbar-expand-sm navbar-submenu navbar-light navbar-list p-0 m-0 align-items-center">
+                    <div
+                        class="navbar navbar-expand-sm navbar-submenu navbar-light navbar-list p-0 m-0 align-items-center">
                         <div class="container page__container">
                             <ul class="nav navbar-nav flex align-items-sm-center">
                                 <li class="nav-item navbar-list__item">
                                     <div class="media align-items-center">
                                         <span class="media-left mr-16pt">
-                                            <img src="/avatar/<%= course.teacher.avatar %>" width="40" alt="avatar" class="rounded-circle">
+                                            <img src="/avatar/<%= course.teacher.avatar %>" width="40" alt="avatar"
+                                                class="rounded-circle">
                                         </span>
                                         <div class="media-body">
-                                            <a class="card-title m-0" href="/profile/<%= course.teacher._id %>"><%= course.teacher.fullname %></a>
+                                            <a class="card-title m-0"
+                                                href="/profile/<%= course.teacher._id %>"><%= course.teacher.fullname %></a>
                                             <p class="text-50 lh-1 mb-0">Instructor</p>
                                         </div>
                                     </div>
@@ -122,6 +126,12 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="border-left-2 page-section pl-32pt">
+                            <div class="d-flex align-items-center page-num-container">
+                                <div class="page-num">0</div>
+                                <h4>Video: </h4>
+                            </div>
+
+                            <p class="text-70 mb-24pt"> Trailer of course</p>
                             <% let i=1; course.lessons.forEach(function(lesson){ %>
                             <div class="d-flex align-items-center page-num-container">
                                 <div class="page-num"><%= i %></div>
@@ -133,30 +143,37 @@
                             <div class="card mb-32pt mb-lg-64pt">
                                 <ul class="accordion accordion--boxed js-accordion mb-0" id="toc-1">
                                     <li class="accordion__item open">
-                                        <a class="accordion__toggle" data-toggle="collapse" data-parent="#toc-1" href="#toc-content-1">
+                                        <a class="accordion__toggle" data-toggle="collapse" data-parent="#toc-1"
+                                            href="#toc-content-1">
                                             <span class="flex">1 of 4 Steps</span>
-                                            <span class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
+                                            <span
+                                                class="accordion__toggle-icon material-icons">keyboard_arrow_down</span>
                                         </a>
                                         <div class="accordion__menu">
                                             <ul class="list-unstyled collapse show" id="toc-content-1">
                                                 <li class="accordion__menu-link">
-                                                    <span class="material-icons icon-16pt icon--left text-body">check_circle</span>
+                                                    <span
+                                                        class="material-icons icon-16pt icon--left text-body">check_circle</span>
                                                     <a class="flex" href="/lesson/<%= lesson._id %>">Introduction</a>
                                                     <span class="text-muted"></span>
                                                 </li>
                                                 <li class="accordion__menu-link">
-                                                    <span class="material-icons icon-16pt icon--left text-body">play_circle_outline</span>
+                                                    <span
+                                                        class="material-icons icon-16pt icon--left text-body">play_circle_outline</span>
                                                     <a class="flex" href="/lesson/<%= lesson._id %>">Video</a>
                                                     <span class="text-muted"></span>
                                                 </li>
                                                 <li class="accordion__menu-link">
-                                                    <span class="material-icons icon-16pt icon--left text-body">play_circle_outline</span>
+                                                    <span
+                                                        class="material-icons icon-16pt icon--left text-body">play_circle_outline</span>
                                                     <a class="flex" href="/lesson/<%= lesson._id %>">Document</a>
                                                     <span class="text-muted"></span>
                                                 </li>
                                                 <li class="accordion__menu-link">
-                                                    <span class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
-                                                    <a class="flex" href="/lesson/<%= lesson._id %>">Quiz: Getting Started With Angular</a>
+                                                    <span
+                                                        class="material-icons icon-16pt icon--left text-50">hourglass_empty</span>
+                                                    <a class="flex" href="/lesson/<%= lesson._id %>">Quiz: Getting
+                                                        Started With Angular</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -170,14 +187,16 @@
                     <div class="col-lg-5 border-left-md pt-sm-32pt pt-md-0 d-flex flex-column align-items-center ">
                         <div class="text-center mt-24pt">
                             <p class="mb-16pt">
-                                <img src="/avatar/<%= course.teacher.avatar %>" alt="guy-6" class="rounded-circle" width="64">
+                                <img src="/avatar/<%= course.teacher.avatar %>" alt="guy-6" class="rounded-circle"
+                                    width="64">
                             </p>
                             <h4 class="m-0"><%= course.teacher.fullname %></h4>
                             <!-- <p class="lh-1">
                                 <small class="text-muted">Angular, Web Development</small>
                             </p> -->
                             <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
-                                <a href="instructor-profile.html" class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">Follow</a>
+                                <a href="instructor-profile.html"
+                                    class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">Follow</a>
                                 <a href="instructor-profile.html" class="btn btn-outline-secondary">View Profile</a>
                             </div>
                         </div>
@@ -185,7 +204,7 @@
                             <!-- <h4 text-align="center">About the author</h4> -->
                             <p class="text-70 mt-24pt mb-24pt"><%= course.teacher.about %></p>
 
-                            <h4>More from the author</h4>
+                            <!-- <h4>More from the author</h4>
                             <div class="list-group list-group-flush">
                                 <div class="list-group-item px-0">
                                     <a href="#" class="d-block mb-4pt">Angular Best Practices</a>
@@ -211,7 +230,7 @@
                                         <small class="text-muted">13 May 2018</small>
                                     </p>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -220,7 +239,7 @@
             <div class="bg-white border-top-2">
 
 
-                
+
 
             </div>
 
@@ -560,8 +579,10 @@
                     <div class="position-relative carousel-card">
                         <div class="js-mdk-carousel row d-block" id="carousel-courses1">
 
-                            <a class="carousel-control-next js-mdk-carousel-control mt-n24pt" href="#carousel-courses1" role="button" data-slide="next">
-                                <span class="carousel-control-icon material-icons" aria-hidden="true">keyboard_arrow_right</span>
+                            <a class="carousel-control-next js-mdk-carousel-control mt-n24pt" href="#carousel-courses1"
+                                role="button" data-slide="next">
+                                <span class="carousel-control-icon material-icons"
+                                    aria-hidden="true">keyboard_arrow_right</span>
                                 <span class="sr-only">Next</span>
                             </a>
 
@@ -569,11 +590,13 @@
                                 <% topcourse.forEach(function(course){ %>
                                 <div class="col-12 col-sm-6 col-md-4 col-xl-3">
 
-                                    <div class="card card--elevated card-course overlay js-overlay mdk-reveal js-mdk-reveal " data-partial-height="40" data-toggle="popover" data-trigger="click">
+                                    <div class="card card--elevated card-course overlay js-overlay mdk-reveal js-mdk-reveal "
+                                        data-partial-height="40" data-toggle="popover" data-trigger="click">
 
 
                                         <a href="/course/<%= course._id %>" class="js-image" data-position="">
-                                            <img src="/upload/images/<%= course.avatar %>" width="250" height="150" alt="course">
+                                            <img src="/upload/images/<%= course.avatar %>" width="250" height="150"
+                                                alt="course">
                                             <span class="overlay__content">
                                                 <span class="overlay__action d-flex flex-column text-center">
                                                     <i class="material-icons">play_circle_outline</i>
@@ -582,24 +605,33 @@
                                             </span>
                                         </a>
 
-                                        <span class="corner-ribbon corner-ribbon--default-right-top corner-ribbon--shadow bg-accent text-white">NEW</span>
+                                        <span
+                                            class="corner-ribbon corner-ribbon--default-right-top corner-ribbon--shadow bg-accent text-white">NEW</span>
 
                                         <div class="mdk-reveal__content">
                                             <div class="card-body">
                                                 <div class="d-flex">
                                                     <div class="flex">
-                                                        <a class="card-title" href="/course/<%= course._id %>"><%= course.name %></a>
-                                                        <small class="text-50 font-weight-bold mb-4pt"><%= course.teacher.fullname %></small>
+                                                        <a class="card-title"
+                                                            href="/course/<%= course._id %>"><%= course.name %></a>
+                                                        <small
+                                                            class="text-50 font-weight-bold mb-4pt"><%= course.teacher.fullname %></small>
                                                     </div>
-                                                    <a href="course.html" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite</a>
+                                                    <a href="course.html"
+                                                        class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite</a>
                                                 </div>
                                                 <div class="d-flex">
                                                     <div class="rating flex">
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                                        <span class="rating__item"><span
+                                                                class="material-icons">star</span></span>
+                                                        <span class="rating__item"><span
+                                                                class="material-icons">star</span></span>
+                                                        <span class="rating__item"><span
+                                                                class="material-icons">star</span></span>
+                                                        <span class="rating__item"><span
+                                                                class="material-icons">star</span></span>
+                                                        <span class="rating__item"><span
+                                                                class="material-icons">star_border</span></span>
                                                     </div>
                                                     <small class="text-50"><%= course.total_time %></small>
                                                 </div>
@@ -609,13 +641,15 @@
                                     <div class="popoverContainer d-none">
                                         <div class="media">
                                             <div class="media-left">
-                                                <img src="/upload/images/<%= course.avatar %>" width="40" height="40" alt="Angular" class="rounded">
+                                                <img src="/upload/images/<%= course.avatar %>" width="40" height="40"
+                                                    alt="Angular" class="rounded">
                                             </div>
                                             <div class="media-body">
                                                 <div class="card-title mb-0"><%= course.name %></div>
                                                 <p class="lh-1 mb-0">
                                                     <span class="text-black-50 small">with</span>
-                                                    <span class="text-black-50 small font-weight-bold"><%= course.teacher.fullname %></span>
+                                                    <span
+                                                        class="text-black-50 small font-weight-bold"><%= course.teacher.fullname %></span>
                                                 </p>
                                             </div>
                                         </div>
@@ -626,20 +660,27 @@
                                         <div class="row align-items-center">
                                             <div class="col-auto">
                                                 <div class="d-flex align-items-center mb-4pt">
-                                                    <span class="material-icons icon-16pt text-black-50 mr-4pt">access_time</span>
-                                                    <p class="flex text-black-50 lh-1 mb-0"><small><%= course.total_time %></small></p>
+                                                    <span
+                                                        class="material-icons icon-16pt text-black-50 mr-4pt">access_time</span>
+                                                    <p class="flex text-black-50 lh-1 mb-0">
+                                                        <small><%= course.total_time %></small></p>
                                                 </div>
                                                 <div class="d-flex align-items-center mb-4pt">
-                                                    <span class="material-icons icon-16pt text-black-50 mr-4pt">play_circle_outline</span>
-                                                    <p class="flex text-black-50 lh-1 mb-0"><small><%= course.lessons.length %></small></p>
+                                                    <span
+                                                        class="material-icons icon-16pt text-black-50 mr-4pt">play_circle_outline</span>
+                                                    <p class="flex text-black-50 lh-1 mb-0">
+                                                        <small><%= course.lessons.length %></small></p>
                                                 </div>
                                                 <div class="d-flex align-items-center">
-                                                    <span class="material-icons icon-16pt text-black-50 mr-4pt">assessment</span>
-                                                    <p class="flex text-black-50 lh-1 mb-0"><small><%= course.level %></small></p>
+                                                    <span
+                                                        class="material-icons icon-16pt text-black-50 mr-4pt">assessment</span>
+                                                    <p class="flex text-black-50 lh-1 mb-0">
+                                                        <small><%= course.level %></small></p>
                                                 </div>
                                             </div>
                                             <div class="col text-right">
-                                                <a href="/course/<%= course._id %>" class="btn btn-primary">Watch trailer</a>
+                                                <a href="/course/<%= course._id %>" class="btn btn-primary">Watch
+                                                    trailer</a>
                                             </div>
                                         </div>
 
@@ -666,7 +707,7 @@
     </div>
     <!-- // END Header Layout -->
 
-  
+
 
     <!-- jQuery -->
     <script src="/assets/vendor/jquery.min.js"></script>
@@ -706,4 +747,5 @@
 
 
 <!-- Mirrored from tutorio-bootstrap.frontendmatter.com/student-take-course.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:49 GMT -->
+
 </html>
