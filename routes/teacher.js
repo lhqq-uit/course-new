@@ -190,25 +190,25 @@ router.get("/dashboard", async (req, res) => {
                 console.log(error);
             })
 
-        io.on('connection', socket => {
-            console.log('A user connected');
+        // io.on('connection', socket => {
+        //     console.log('A user connected');
 
-            //Send a message when 
-            // setTimeout(() => {
-            //     //Sending an object when emmiting an event
+        //     //Send a message when 
+        //     // setTimeout(() => {
+        //     //     //Sending an object when emmiting an event
 
-            // },000);
+        //     // },000);
 
-            socket.on('disconnect', () => {
-                console.log('A user disconnected');
-            });
-            socket.on('clientEvent', data => {
-                console.log(data);
-            });
-            socket.emit('testerEvent', {
-                description: 'A custom event named testerEvent!'
-            });
-        });
+        //     socket.on('disconnect', () => {
+        //         console.log('A user disconnected');
+        //     });
+        //     socket.on('clientEvent', data => {
+        //         console.log(data);
+        //     });
+        //     socket.emit('testerEvent', {
+        //         description: 'A custom event named testerEvent!'
+        //     });
+        // });
 
         res.render("teacher/instructor-dashboard", {
             infoTeacher: infoTeacher,

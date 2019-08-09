@@ -148,6 +148,7 @@ router.get("/dashboard", async (req, res) => {
 
 //TODO: Student > student-take-lesson
 router.get('/take-quiz/:idLesson/:numerical', (req, res) => {
+    //TODO: thiếu header, với tên khóa học đang trả lời câu hỏi, 
     console.log(`${domain}/api/lesson/${req.params.idLesson}`)
     axios({
         method: 'get',

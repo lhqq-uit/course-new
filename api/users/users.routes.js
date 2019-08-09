@@ -43,5 +43,7 @@ router.get('/test', checkPermission.usedLogin, (req, res)=>{
     "use-jwt": req.user
   })
 });
+//TODO: info user
+router.get("/info/:id", UserController.infoUser);
 
 module.exports = router;
