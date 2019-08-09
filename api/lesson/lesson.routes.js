@@ -31,12 +31,12 @@ router.get('/:idLesson', checkPermission.isStudent, lessonController.getOneLesso
 router.get('/', lessonController.getAllLesson);
 
 //create lesson
-router.post('/:idCourse/', passport.authenticate('jwt', { session: false }), checkPermission.isTeacher, upload, lessonController.create);
+router.post('/:idCourse/', checkPermission.isTeacher, upload, lessonController.create);
 
 //update lesson
-router.put('/:idLesson', passport.authenticate('jwt', { session: false }), checkPermission.isTeacher, upload, lessonController.update);
+router.put('/:idLesson', checkPermission.isTeacher, upload, lessonController.update);
 
 //delete lesson
-router.delete('/:idLesson', passport.authenticate('jwt', { session: false }), checkPermission.isTeacher, lessonController.delete);
+router.delete('/:idLesson', checkPermission.isTeacher, lessonController.delete);
 
 module.exports = router;

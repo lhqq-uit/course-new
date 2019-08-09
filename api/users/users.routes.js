@@ -21,7 +21,7 @@ router.get('/logout', passport.authenticate('jwt', { session: false }), UserCont
 
 router.post('/signup', UserController.SignUp);
 
-router.put('/profile', passport.authenticate('jwt', { session: false }), upload.single('image'), UserController.updateUserProfile);
+router.put('/profile', checkPermission.usedLogin, upload.single('image'), UserController.updateUserProfile);
 
 router.post('/signin', UserController.SignIn);
 
@@ -37,5 +37,11 @@ router.get('/recharge/:idStudent', checkPermission.isAdmin, UserController.recha
 router.get('/withdrawal/:idTeacher', UserController.withdrawal);
 
 router.post('/change-password', UserController.changePassword);
+
+router.get('/test', checkPermission.usedLogin, (req, res)=>{
+  res.send({
+    "use-jwt": req.user
+  })
+});
 
 module.exports = router;

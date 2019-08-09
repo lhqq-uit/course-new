@@ -159,6 +159,10 @@ module.exports = {
   },
 
   updateUserProfile: async (req, res) => {
+    res.send({
+      body: req.body,
+      file: req.file
+    })
     let newUser = {
       email: req.body.email,
       fullname: req.body.fullname,
@@ -170,7 +174,7 @@ module.exports = {
     }
     try {
       // req.user._id not expect
-      await User.findOneAndUpdate({ _id: req.user._id }, newUser)
+      await User.findOneAndUpdate({ _id: req.user.data._id }, newUser)
       res.status(200).json({ message: 'Update user successfully!' })
     } catch (error) {
       res.status(500).json({ message: error.message });
