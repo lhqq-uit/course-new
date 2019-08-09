@@ -68,7 +68,7 @@
             <% } %>
 
             <div class="container page__container">
-                <form  method='POST'>
+                <form method='post' action="/user/edit-account">
                     <div class="row">
                         <div class="col-lg-9">
                             <div class="page-section">
@@ -78,24 +78,40 @@
                                             <div class="form-group row mb-0">
                                                 <label class="col-form-label col-sm-3">Full name</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" value="<%= data.user.fullname %>" placeholder="Your first name ...">
+                                                    <input type="text" name="fullname" class="form-control" value="<%= data.user.fullname %>" placeholder="Your first name ...">
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="list-group-item">
-                                            <div class="form-group row mb-0">
-                                                <label class="col-form-label col-sm-3">Last name</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" value="Watson" placeholder="Your last name ...">
-                                                </div>
-                                            </div>
-                                        </div> -->
                                         <div class="list-group-item">
                                             <div class="form-group row mb-0">
                                                 <label class="col-form-label col-sm-3">Email address</label>
                                                 <div class="col-sm-9">
-                                                    <input type="email" class="form-control" value="<%= data.user.email %>" placeholder="Your email address ...">
+                                                    <input type="email" class="form-control" name="email" value="<%= data.user.email %>" placeholder="Your email address ...">
                                                     <small class="form-text text-muted">Note that if you change your email, you will have to confirm it again.</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <div class="form-group row mb-0">
+                                                <label class="col-form-label col-sm-3">Your photo</label>
+                                                <div class="col-sm-9 media align-items-center">
+                                                    <a href="#" class="media-left mr-16pt">
+                                                        <img id="output-img" src="/avatar/<%= data.user.avatar %>" alt="people" width="56" class="rounded-circle" />
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <div class="custom-file">
+                                                            <input type="file" class="custom-file-input" id="inputGroupFile01" onchange="readURL(this);">
+                                                            <label class="custom-file-label" name="image" for="inputGroupFile01">Choose file</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <div class="form-group row mb-0">
+                                                <label class="col-form-label col-sm-3">About you</label>
+                                                <div class="col-sm-9">
+                                                    <textarea rows="3" name="about" class="form-control" placeholder="About you ..."></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -107,7 +123,6 @@
                             <div class="page-section pt-lg-112pt">
                                 <nav class="nav page-nav__menu">
                                     <a class="nav-link active" href="/user/edit-account">Basic Information</a>
-                                    <a class="nav-link" href="/user/edit-account-profile">Profile &amp; Privacy</a>
                                     <a class="nav-link" href="/user/edit-account-password">Change Password</a>
                                 </nav>
                                 <div class="page-nav__content">
@@ -161,7 +176,20 @@
 
     <!-- App Settings (safe to remove) -->
     <script src="../../assets/js/app-settings.js"></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
+                reader.onload = function (e) {
+                    $('#output-img')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 
 
 

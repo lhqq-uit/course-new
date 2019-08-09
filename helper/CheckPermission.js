@@ -119,4 +119,26 @@ module.exports = {
             return res.status(403).send({success: false, msg: 'Unauthorized.'});
         }
     },
+    usedLogin: (req, res, next)=>{
+        let token = getToken(req.headers);
+        if (token) {
+            jwt.verify(token, config.secret, (err, decode)=>{
+                if(err){
+                    let result = {
+                        success: false,
+                        msg : err.message
+                    };
+                    res.status(301).json(result);
+                }
+                req.user = {
+                    success : true,
+                    msg : "login success",
+                    data : decode,
+                }
+                next();
+            });
+        } else {
+            return res.status(403).send({success: false, msg: 'Unauthorized.'});
+        }
+    },
 }
