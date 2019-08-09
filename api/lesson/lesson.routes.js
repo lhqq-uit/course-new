@@ -8,7 +8,7 @@ const checkPermission = require('../../helper/CheckPermission');
 var storage = multer.diskStorage({
   // file upload destination
   destination: function (req, file, callback) {
-    console.log(file.fieldname)
+    // console.log(file.fieldname)
     if (file.fieldname == "video") {
       callback(null, './public/upload/video/');
     } else {

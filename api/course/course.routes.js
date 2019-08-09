@@ -9,13 +9,20 @@ const checkPermission = require('./../../helper/CheckPermission');
 var storage = multer.diskStorage({
   // file upload destination
   destination: function (req, file, callback) {
-    callback(null, './public/upload/images');
+    if (file.fieldname == "trailer") {
+      callback(null, './public/upload/trailer/');
+    } else {
+      callback(null, './public/upload/image/');
+    }
   },
   filename: function (req, file, callback) {
     callback(null, Date.now() + '-' + file.originalname);
   }
 });
-var upload = multer({ storage: storage });
+var upload = multer({ storage: storage }).fields([
+  { name: 'trailer', maxCount: 1 },
+  { name: 'image', maxCount: 1 }
+])
 
 router.get('/populate', CourseController.getCoursePopulate);
 
@@ -30,9 +37,9 @@ router.get('/rating/:idCourse', CourseController.getRatingCourse);
 
 router.get('/', CourseController.getAllCourse);
 
-router.post('/', checkPermission.isTeacher, upload.single('image'), CourseController.create);
+router.post('/', checkPermission.isTeacher, upload, CourseController.create);
 
-router.put('/:idCourse', checkPermission.isTeacher, upload.single('image'), CourseController.update);
+router.put('/:idCourse', checkPermission.isTeacher, upload, CourseController.update);
 
 router.put('/rating/:idCourse', checkPermission.isStudent, CourseController.ratingCourse);
 

@@ -5,9 +5,9 @@ const fs = require('fs');
 module.exports = {
     create: async (req, res) => {
         try {
-            if (!req.file) {
+            if (!req.files) {
                 return res.send({
-                    err_msg: 'No image received'
+                    err_msg: 'No file received'
                 });
             }
             //each tag separated by comma, remove space in array
@@ -16,13 +16,14 @@ module.exports = {
                 name: req.body.name,
                 topic: req.body.topic,
                 description: req.body.description,
+                trailer: req.files.trailer[0].filename,
                 price: req.body.price,
                 tag: tag,
                 sale: req.body.sale,
                 // total_time: req.body.total_time,
                 // level: req.body.level,
                 teacher: req.user.data._id,
-                avatar: req.file.filename,
+                avatar: req.files.image[0].filename,
             }
             let course = await Course.create(newCourse)
             await Teacher.findOneAndUpdate(
@@ -52,6 +53,7 @@ module.exports = {
             let newCourse = {
                 name: req.body.name,
                 topic: req.body.topic,
+                trailer: req.files.trailer[0].filename,
                 description: req.body.description,
                 price: req.body.price,
                 total_time: req.body.total_time,
@@ -59,7 +61,7 @@ module.exports = {
                 tag: tag,
                 sale: req.body.sale,
                 last_update: Date.now(),
-                avatar: req.file.filename,
+                avatar: req.files.image[0].filename,
             }
             let course = await Course.findOneAndUpdate(
                 {

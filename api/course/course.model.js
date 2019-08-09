@@ -9,6 +9,7 @@ var CourseSchema = new mongoose.Schema({
         type: String,
         required: 'Topic is required!'
     },
+    trailer: String,
     description: {
         type: String,
         required: 'Description is required!'

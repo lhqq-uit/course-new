@@ -27,6 +27,9 @@ var upload = multer({
 },
 {
     name: 'document'
+},,
+{
+    name: 'trailer'
 }
 ]);
 
@@ -248,7 +251,7 @@ router.post("/add-course", upload, async (req, res) => {
         if (getInfoTeacher.role == "Teacher") {
             let formData = await new FormData();
             let readStream = fs.createReadStream(`./public/upload/tmp/${req.files.image[0].originalname}`);
-
+            let readTrailerStream = fs.createReadStream(`./public/upload/tmp/${req.files.trailer[0].originalname}`);
             const formHeaders = formData.getHeaders();
             formData.append("name", req.body.name);
             formData.append("topic", req.body.topic);
@@ -256,6 +259,7 @@ router.post("/add-course", upload, async (req, res) => {
             formData.append("price", req.body.price);
             formData.append("tag", req.body.tag);
             formData.append("image", readStream);
+            formData.append("trailer", readTrailerStream);
             // console.log(formData)
             let config_axios = {
                 headers: {
@@ -266,6 +270,7 @@ router.post("/add-course", upload, async (req, res) => {
             await axios.post(`${domain}/api/course`, formData, config_axios)
                 .then(function (response) {
                     fs.unlink(`/public/tmp/${req.files.image[0].originalname}`);
+                    fs.unlink(`/public/tmp/${req.files.trailer[0].originalname}`);
                     // res.send(response)
                     res.redirect("/teacher/courses")
                 })
@@ -303,11 +308,9 @@ router.get("/edit-course/:idCourse", async (req, res) => {
 router.post("/edit-course/:idCourse", upload, async (req, res) => {
     if (req.session.token) {
         let getInfoTeacher = jwtDecode(req.session.token);
-        // res.send(getInfoTeacher)
-        // if (getInfoTeacher.role == "Teacher") {
         let formData = await new FormData();
         let readStream = fs.createReadStream(`./public/upload/tmp/${req.files.image[0].originalname}`);
-
+        let readTrailerStream = fs.createReadStream(`./public/upload/tmp/${req.files.trailer[0].originalname}`);
         const formHeaders = formData.getHeaders();
         formData.append("name", req.body.name);
         formData.append("topic", req.body.topic);
@@ -315,7 +318,8 @@ router.post("/edit-course/:idCourse", upload, async (req, res) => {
         formData.append("price", req.body.price);
         formData.append("tag", req.body.tag);
         formData.append("image", readStream);
-        console.log(formData)
+        formData.append("trailer", readTrailerStream);
+        // console.log(formData)
         let config_axios = {
             headers: {
                 Authorization: req.session.token,
@@ -325,6 +329,7 @@ router.post("/edit-course/:idCourse", upload, async (req, res) => {
         await axios.put(`${domain}/api/course/${req.params.idCourse}`, formData, config_axios)
             .then(function (response) {
                 fs.unlink(`/public/tmp/${req.files.image[0].originalname}`);
+                fs.unlink(`/public/tmp/${req.files.trailer[0].originalname}`);
                 // res.send(response)
                 res.redirect("/teacher/courses")
             })
