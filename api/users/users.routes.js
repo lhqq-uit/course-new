@@ -38,7 +38,9 @@ router.get('/withdrawal/:idTeacher', UserController.withdrawal);
 
 router.post('/change-password', UserController.changePassword);
 
-router.get('/test', checkPermission.usedLogin, (req, res)=>{
+router.get('/income', checkPermission.isAdmin, UserController.getIncomeAdmin);
+
+router.get('/test', checkPermission.usedLogin, (req, res) => {
   res.send({
     "use-jwt": req.user
   })

@@ -43,7 +43,7 @@ module.exports = {
                     err_msg: err_msg
                 });
             }
-            res.status(500).json(error);
+            res.status(500).json(error.message);
         }
     },
 
