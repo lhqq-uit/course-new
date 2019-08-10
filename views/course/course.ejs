@@ -70,7 +70,7 @@
 
         <!-- Header -->
         <% if (infoStudent == null) { %>
-
+            <% include layout/header %>
         <% } else{  %>
         <%- include('../layout/header-dashboard', {avatar: infoStudent.user.avatar}); %>
         <% } %>
