@@ -275,7 +275,8 @@ router.post("/add-course", upload, async (req, res) => {
                     res.redirect("/teacher/courses")
                 })
                 .catch(function (error) {
-                    res.send(error)
+                    res.redirect("/teacher/courses")
+                    // res.send(error)
                 });
         } else {
             res.redirect('/')

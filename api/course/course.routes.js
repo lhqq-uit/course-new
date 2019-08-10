@@ -12,7 +12,7 @@ var storage = multer.diskStorage({
     if (file.fieldname == "trailer") {
       callback(null, './public/upload/trailer/');
     } else {
-      callback(null, './public/upload/image/');
+      callback(null, './public/upload/images/');
     }
   },
   filename: function (req, file, callback) {
@@ -20,8 +20,8 @@ var storage = multer.diskStorage({
   }
 });
 var upload = multer({ storage: storage }).fields([
-  { name: 'trailer', maxCount: 1 },
-  { name: 'image', maxCount: 1 }
+  { name: 'trailer'},
+  { name: 'image'}
 ])
 
 router.get('/populate', CourseController.getCoursePopulate);
