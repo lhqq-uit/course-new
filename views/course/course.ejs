@@ -35,7 +35,22 @@
     <link type="text/css" href="/assets/css/app.css" rel="stylesheet">
     <link type="text/css" href="/assets/css/app.rtl.css" rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
+    <script>
+    function trailer() {
+        Swal.fire({
+        title: '<strong>Trailer</strong>',
+        html:
+            '<iframe width="100%" height="400" src="https://www.youtube.com/embed/XFWw2Ovnp3s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+        showCloseButton: true,
+        // showCancelButton: true,
+        focusConfirm: false,
+        // confirmButtonText:false
+        })
+    }
+    
+    </script>
 
 
 
@@ -72,7 +87,7 @@
                             <h1 class="text-white"><%= course.name %></h1>
                             <p class="lead text-white-50 measure-hero-lead"><%= course.description %></p>
                             <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
-                                <a href="#"
+                                <a onclick="trailer()"
                                     class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt">Watch trailer <i
                                         class="material-icons icon--right">play_circle_outline</i></a>
                                 <a href="/login" class="btn btn-white">Start your free trial</a>
@@ -108,13 +123,28 @@
                         </li>
                         <li class="nav-item ml-sm-auto text-sm-center flex-column navbar-list__item">
                             <div class="rating rating-24">
-                                <div class="rating__item"><i class="material-icons">star</i></div>
-                                <div class="rating__item"><i class="material-icons">star</i></div>
-                                <div class="rating__item"><i class="material-icons">star</i></div>
-                                <div class="rating__item"><i class="material-icons">star</i></div>
-                                <div class="rating__item"><i class="material-icons">star_border</i></div>
+                                    <div class="inline-block" id="ks2-<%= course._id %>"></div>
+                                    <script>
+                                        var dataArray = <%- JSON.stringify(course.ratings) %>;
+                                        var array='';
+                                        var sum = 0;
+                                        for (let i = 0; i < dataArray.length; i++) {
+                                            sum += dataArray[i]*1;
+                                        }
+                                        var result = sum / dataArray.length;
+                                        for (let i = 0; i < 5; i++) {
+                                            if (i < result) {
+                                                array+='<span class="rating__item"><span class="material-icons">star</span>';
+                                            }
+                                            else{
+                                                array+='<span class="rating__item"><span class="material-icons">star_border</span>';
+                                            }
+                                        }
+                                        //console.log(dataArray)
+                                        document.getElementById("ks2-<%= course._id %>").innerHTML = array;
+                                    </script>
                             </div>
-                            <p class="lh-1 mb-0"><small class="text-muted">20 ratings</small></p>
+                            <p class="lh-1 mb-0"><small class="text-muted"><%= course.ratings.length %> ratings</small></p>
                         </li>
                     </ul>
                 </div>
@@ -220,7 +250,7 @@
                                 </p> -->
                                 <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
                                     <!-- <a href="/profile" class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">Follow</a> -->
-                                    <a href="/profile" class="btn btn-outline-secondary">View Profile</a>
+                                    <a href="/profile/<%= course.teacher._id %>" class="btn btn-outline-secondary">View Profile</a>
                                 </div>
                             </div>
                         </div>
@@ -303,23 +333,54 @@
                         <h4>Student Feedback</h4>
                         <div class="row">
                             <div class="col-md-3 mb-32pt mb-md-0">
-                                <div class="display-1">4.7</div>
-                                <div class="rating rating-32">
-                                    <span class="rating__item"><span class="material-icons">star</span></span>
-                                    <span class="rating__item"><span class="material-icons">star</span></span>
-                                    <span class="rating__item"><span class="material-icons">star</span></span>
-                                    <span class="rating__item"><span class="material-icons">star</span></span>
-                                    <span class="rating__item"><span class="material-icons">star_border</span></span>
+                                <div class="display-1">
+                                    <div id="rl1-<%= course._id %>"></div>
+                                        <script>
+                                                var dataArray = <%- JSON.stringify(course.ratings) %>;
+                                                var sum = 0;
+                                                for (let i = 0; i < dataArray.length; i++) {
+                                                    sum += dataArray[i]*1;
+                                                }
+                                                var result = sum / dataArray.length;
+                                                // document.write(result.toFixed(1));
+                                                if (isNaN(result)) {
+                                                    result = 0;
+                                                }
+                                                document.getElementById("rl1-<%= course._id %>").innerHTML = result.toFixed(1) +"/5";
+                                                //console.log(dataArray)
+                                            </script>
                                 </div>
-                                <p class="text-muted mb-0">20 ratings</p>
+                                <div class="rating rating-32">
+                                    <div class="inline-block" id="ks21-<%= course._id %>"></div>
+                                    <script>
+                                        var dataArray = <%- JSON.stringify(course.ratings) %>;
+                                        var array='';
+                                        var sum = 0;
+                                        for (let i = 0; i < dataArray.length; i++) {
+                                            sum += dataArray[i]*1;
+                                        }
+                                        var result = sum / dataArray.length;
+                                        for (let i = 0; i < 5; i++) {
+                                            if (i < result) {
+                                                array+='<span class="rating__item"><span class="material-icons">star</span>';
+                                            }
+                                            else{
+                                                array+='<span class="rating__item"><span class="material-icons">star_border</span>';
+                                            }
+                                        }
+                                        //console.log(dataArray)
+                                        document.getElementById("ks21-<%= course._id %>").innerHTML = array;
+                                    </script>
+                                </div>
+                                <p class="text-muted mb-0"><%= course.ratings.length %> ratings</p>
                             </div>
                             <div class="col-md-9">
 
                                 <div class="row align-items-center mb-8pt">
                                     <div class="col-md-9 col-sm-6">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="75"
-                                                style="width: 75%" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress" id="5sp-<%= course._id %>">
+                                            <!-- <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="75"
+                                                style="width: 75%" aria-valuemin="0" aria-valuemax="100"></div> -->
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6 d-none d-sm-flex align-items-center">
@@ -330,15 +391,39 @@
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                             <span class="rating__item"><span class="material-icons">star</span></span>
                                         </div>
-                                        <span class="text-muted">75%</span>
-                                        <span class="material-icons icon-16pt ml-8pt">close</span>
+                                        <p class="text-muted">
+                                            <div id="5s-<%= course._id %>"></div>
+                                        <script>
+                                                var dataArray = <%- JSON.stringify(course.ratings) %>;
+                                                var sum = 0;
+                                                for (let i = 0; i < dataArray.length; i++) {
+                                                    if (dataArray[i]*1 == 5) {
+                                                        sum++;
+                                                    }
+                                                }
+                                                var result = sum / dataArray.length * 100;
+                                                // document.write(result.toFixed(1));
+                                                if (isNaN(result)) {
+                                                    result = 0;
+                                                }
+                                                document.getElementById("5s-<%= course._id %>").innerHTML = result.toFixed(1) +" %";
+
+                                                var progressbar = '<div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="75" style="width:'+ result + '%" aria-valuemin="0" aria-valuemax="100"></div>'
+                                                
+                                                document.getElementById("5sp-<%= course._id %>").innerHTML = progressbar;
+                                                // console.log(sum)
+                                                // console.log(result)
+                                                //console.log(dataArray)
+                                            </script>
+                                        </p>
+                                        <!-- <span class="material-icons icon-16pt ml-8pt">close</span> -->
                                     </div>
                                 </div>
                                 <div class="row align-items-center mb-8pt">
                                     <div class="col-md-9 col-sm-6">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="16"
-                                                style="width: 16%" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress" id="4sp-<%= course._id %>">
+                                            <!-- <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="16"
+                                                style="width: 16%" aria-valuemin="0" aria-valuemax="100"></div> -->
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6 d-none d-sm-flex align-items-center">
@@ -350,14 +435,38 @@
                                             <span class="rating__item"><span
                                                     class="material-icons">star_border</span></span>
                                         </div>
-                                        <p class="text-muted mb-0">16%</p>
+                                        <p class="text-muted mb-0">
+                                            <div id="4s-<%= course._id %>"></div>
+                                            <script>
+                                                    var dataArray4 = <%- JSON.stringify(course.ratings) %>;
+                                                    var sum4 = 0;
+                                                    for (let i = 0; i < dataArray.length; i++) {
+                                                        if (dataArray4[i]*1 == 4) {
+                                                            sum4++;
+                                                        }
+                                                    }
+                                                    var result4 = sum4 / dataArray4.length * 100;
+                                                    // document.write(result.toFixed(1));
+                                                    if (isNaN(result4)) {
+                                                        result4 = 0;
+                                                    }
+                                                    document.getElementById("4s-<%= course._id %>").innerHTML = result4.toFixed(1) +" %";
+    
+                                                    var progressbar4 = '<div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="75" style="width:'+ result4 + '%" aria-valuemin="0" aria-valuemax="100"></div>'
+                                                    
+                                                    document.getElementById("4sp-<%= course._id %>").innerHTML = progressbar4;
+                                                    // console.log(sum)
+                                                    // console.log(result)
+                                                    //console.log(dataArray)
+                                                </script>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="row align-items-center mb-8pt">
                                     <div class="col-md-9 col-sm-6">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="12"
-                                                style="width: 12%" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress" id="3sp-<%= course._id %>">
+                                            <!-- <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="12"
+                                                style="width: 12%" aria-valuemin="0" aria-valuemax="100"></div> -->
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6 d-none d-sm-flex align-items-center">
@@ -370,14 +479,38 @@
                                             <span class="rating__item"><span
                                                     class="material-icons">star_border</span></span>
                                         </div>
-                                        <p class="text-muted mb-0">12%</p>
+                                        <p class="text-muted mb-0">
+                                            <div id="3s-<%= course._id %>"></div>
+                                            <script>
+                                                    var dataArray3 = <%- JSON.stringify(course.ratings) %>;
+                                                    var sum3 = 0;
+                                                    for (let i = 0; i < dataArray.length; i++) {
+                                                        if (dataArray3[i]*1 == 3) {
+                                                            sum3++;
+                                                        }
+                                                    }
+                                                    var result3 = sum3 / dataArray3.length * 100;
+                                                    // document.write(result.toFixed(1));
+                                                    if (isNaN(result3)) {
+                                                        result3 = 0;
+                                                    }
+                                                    document.getElementById("3s-<%= course._id %>").innerHTML = result3.toFixed(1) +" %";
+    
+                                                    var progressbar3 = '<div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="75" style="width:'+ result + '%" aria-valuemin="0" aria-valuemax="100"></div>'
+                                                    
+                                                    document.getElementById("3sp-<%= course._id %>").innerHTML = progressbar3;
+                                                    // console.log(sum)
+                                                    // console.log(result)
+                                                    //console.log(dataArray)
+                                                </script>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="row align-items-center mb-8pt">
                                     <div class="col-md-9 col-sm-6">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="9"
-                                                style="width: 9%" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress" id="2sp-<%= course._id %>">
+                                            <!-- <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="9"
+                                                style="width: 9%" aria-valuemin="0" aria-valuemax="100"></div> -->
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6 d-none d-sm-flex align-items-center">
@@ -391,14 +524,38 @@
                                             <span class="rating__item"><span
                                                     class="material-icons">star_border</span></span>
                                         </div>
-                                        <p class="text-muted mb-0">9%</p>
+                                        <p class="text-muted mb-0">
+                                            <div id="2s-<%= course._id %>"></div>
+                                            <script>
+                                                    var dataArray2 = <%- JSON.stringify(course.ratings) %>;
+                                                    var sum2 = 0;
+                                                    for (let i = 0; i < dataArray2.length; i++) {
+                                                        if (dataArray2[i]*1 == 2) {
+                                                            sum2++;
+                                                        }
+                                                    }
+                                                    var result2 = sum2 / dataArray2.length * 100;
+                                                    // document.write(result.toFixed(1));
+                                                    if (isNaN(result2)) {
+                                                        result2 = 0;
+                                                    }
+                                                    document.getElementById("2s-<%= course._id %>").innerHTML = result2.toFixed(1) +" %";
+    
+                                                    var progressbar2 = '<div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="75" style="width:'+ result2 + '%" aria-valuemin="0" aria-valuemax="100"></div>'
+                                                    
+                                                    document.getElementById("2sp-<%= course._id %>").innerHTML = progressbar2;
+                                                    // console.log(sum)
+                                                    // console.log(result)
+                                                    //console.log(dataArray)
+                                                </script>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="row align-items-center mb-8pt">
                                     <div class="col-md-9 col-sm-6">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="0"
-                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress" id="1sp-<%= course._id %>">
+                                            <!-- <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="0"
+                                                aria-valuemin="0" aria-valuemax="100"></div> -->
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6 d-none d-sm-flex align-items-center">
@@ -413,7 +570,31 @@
                                             <span class="rating__item"><span
                                                     class="material-icons">star_border</span></span>
                                         </div>
-                                        <p class="text-muted mb-0">0%</p>
+                                        <p class="text-muted mb-0">
+                                            <div id="1s-<%= course._id %>"></div>
+                                            <script>
+                                                    var dataArray1 = <%- JSON.stringify(course.ratings) %>;
+                                                    var sum1 = 0;
+                                                    for (let i = 0; i < dataArray.length; i++) {
+                                                        if (dataArray1[i]*1 == 1) {
+                                                            sum1++;
+                                                        }
+                                                    }
+                                                    var result1 = sum1 / dataArray1.length * 100;
+                                                    // document.write(result.toFixed(1));
+                                                    if (isNaN(result1)) {
+                                                        result1 = 0;
+                                                    }
+                                                    document.getElementById("1s-<%= course._id %>").innerHTML = result1.toFixed(1) +" %";
+    
+                                                    var progressbar1 = '<div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="75" style="width:'+ result1 + '%" aria-valuemin="0" aria-valuemax="100"></div>'
+                                                    
+                                                    document.getElementById("1sp-<%= course._id %>").innerHTML = progressbar1;
+                                                    // console.log(sum)
+                                                    // console.log(result)
+                                                    //console.log(dataArray)
+                                                </script>
+                                        </p>
                                     </div>
                                 </div>
 

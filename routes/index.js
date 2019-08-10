@@ -7,13 +7,11 @@ const teacherRouter = require("./teacher")
 const userRouter = require("./users")
 const lessonRouter = require("./lesson")
 
-
-router.use("/user", userRouter)
-router.use("/", rootRouter)
 router.use("/course", courseRouter)
+router.use("/user", userRouter)
 router.use("/lesson", lessonRouter)
 router.use("/student", studentRouter)
 router.use("/teacher", teacherRouter)
-
+router.use("/", rootRouter)
 
 module.exports = router;
