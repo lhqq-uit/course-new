@@ -10,7 +10,7 @@ const checkPermission = require('../../helper/CheckPermission');
 router.get('/:idQuiz', quizController.getOneQuiz);
 
 //get All quiz
-router.get('/', quizController.getAllQuiz);
+router.get('/allQuiz/:idLesson', quizController.getAllQuiz);
 
 //create quiz
 router.post('/:idLesson/', checkPermission.isTeacher, quizController.create);

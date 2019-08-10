@@ -110,7 +110,12 @@ module.exports = {
             let teacher = await Teacher.findOne({
                 user: req.params.idTeacher
             })
-                .populate('courses')
+                .populate({
+                    path: "courses",
+                    populate: {
+                        path: 'lessons'
+                    }
+                })
                 .select('courses')
             if (!teacher) return res.status(404).json({
                 err_msg: 'Teacher not found'

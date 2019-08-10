@@ -34,6 +34,8 @@ router.get("/:idLesson", async function (req, res, next) {
             lesson,
             cmt,
             infoStudent: getInfoUser,
+            idLesson: req.params.idLesson,
+            token: req.session.token,
         });
     } else {
         res.status(403).send("Unauthorized");

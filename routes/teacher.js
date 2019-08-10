@@ -34,6 +34,30 @@ var upload = multer({
 ]);
 
 const axios = require('axios')
+
+router.get("/quizzes", async(req, res) => {
+    if(!req.session){
+        res.redirect('/login');
+    }else{
+        let getInfoTeacher = jwtDecode(req.session.token);
+        // res.send(getInfoTeacher);
+        await axios({
+            method: 'get',
+            url: `${domain}/api/teacher/courses/${getInfoTeacher._id}`,
+            headers: {
+                Authorization: req.session.token,
+            }
+        })
+        .then(Response => {
+            res.render('teacher/instructor-edit-quiz', {
+                courses: Response.data
+            });
+        })
+        .catch(error => {
+            res.status(400).json(error.message);
+        })
+    }
+})
 //TODO: edit quiz -> add question to quiz in lesson
 
 router.get("/edit-quiz/:idLesson", (req, res) => {
@@ -59,6 +83,15 @@ router.get("/edit-quiz/:idLesson", (req, res) => {
     // res.render('teacher/instructor-edit-quiz')
 })
 
+
+//TODO: Show all quizzes
+// router.get("/quizzes/:idLesson", (req, res) => {
+//     data=axios({
+//         method: 'get',
+//         url: `${domain}/api/allQuiz/${req.params.idLesson}`,
+//     })
+
+// })
 //TODO: edit quiz
 router.post("/edit-quiz/:idLesson", (req, res) => {
 
@@ -220,7 +253,10 @@ router.get("/dashboard", async (req, res) => {
             getAverageMonthlySalary: getAverageMonthlySalary,
             getTransactionThisMonth: getTransactionThisMonth,
             getTransactionOneWeek: getTransactionOneWeek,
-            notificationLogin: notificationLogin, // ! login true push notification
+            notificationLogin: notificationLogin,
+            token: req.session.token,
+            // idQuiz:
+            // ! login true push notification
         });
     } else {
         res.redirect("../login")

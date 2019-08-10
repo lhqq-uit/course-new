@@ -90,6 +90,11 @@
                         <li class="nav-item">
                             <a href="/upload/document/<%= lesson.document[0] %>" class="nav-link">Download Document</a>
                         </li>
+                        <li class="nav-item">
+                            <!-- router: /take-quiz/:idLesson/:numerical -->
+                            <!-- roof of quiz is 0 --> 
+                            <a href="/student/take-quiz/<%= idLesson%>/0" class="nav-link">quiz</a>
+                        </li>
                         <!-- <li class="nav-item">
                             <a href="#" class="nav-link">Notes</a>
                         </li>
