@@ -11,7 +11,8 @@ var passport = require('passport');
 var cors = require('cors');
 var config = require('./config/database');
 
-
+var followRedirects = require('follow-redirects');
+followRedirects.maxBodyLength = 100 * 1024 * 1024;
 
 
 mongoose.Promise = global.Promise;
