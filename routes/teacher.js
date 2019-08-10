@@ -368,15 +368,16 @@ router.post("/add-lesson/:idCourse", upload, async (req, res) => {
                 method: 'post',
                 url: `${domain}/api/lesson/${req.params.idCourse}`,
                 data: formData,
-                headers: config_axios.headers
+                headers: config_axios.headers,
                 //responseType: 'stream'
             })
             .then(function (response) {
                 fs.unlink(`/public/tmp/${req.files.video[0].filename}`);
                 fs.unlink(`/public/tmp/${req.files.document[0].file}`);
-                console.log(`created successfully for ${req.body.title} and `);
-                res.send("ok");
+                console.log(`created successfully for ${req.body.title}`);
+                // res.send("ok");
             }).catch(function(error){
+                // res.send(error.message)
                 res.redirect("/teacher/courses");
             });
         
