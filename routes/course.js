@@ -33,6 +33,7 @@ router.get('/:idCourse', async function (req, res, next) {
         url: `${domain}/api/course/${req.params.idCourse}`
     }).then(Response => {
         course = Response.data;
+        console.log(course)
     }).catch(err => {
         console.log(err)
     });

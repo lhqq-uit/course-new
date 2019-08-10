@@ -34,6 +34,25 @@
     <!-- App CSS -->
     <link type="text/css" href="/assets/css/app.css" rel="stylesheet">
     <link type="text/css" href="/assets/css/app.rtl.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+    <script>
+    function clickBuy() {
+        Swal.fire({
+        title: '<strong>Billing Information</strong>',
+        html:
+            '<b>Bank name:</b> Your bank name<br>' +
+            '<b>ID: </b> Your Bank account number<br>' +
+            '<b>Recipient is name: </b> Name<br>' +
+            '<b>Content: </b> pay for course + your username<br>',
+        showCloseButton: true,
+        showCancelButton: true,
+        focusConfirm: false,
+        
+        })
+    }
+    
+    </script>
 
 
 
@@ -76,7 +95,7 @@
                             <p class="lead text-white-50 measure-hero-lead mb-24pt"><%= course.description %></p>
                             <a href="/course/<%= course._id%>" class="btn btn-white">Resume course</a>
                             <% if(!bought){ %>
-                            <a href="/course/<%= course._id%>" class="btn btn-white">Buy course</a>
+                            <a onclick="clickBuy()" class="btn btn-white">Buy course</a>
                             <% }; %>
 
                         </div>
@@ -94,7 +113,7 @@
                                         <div class="media-body">
                                             <a class="card-title m-0"
                                                 href="/profile/<%= course.teacher._id %>"><%= course.teacher.fullname %></a>
-                                            <p class="text-50 lh-1 mb-0">Instructor</p>
+                                            <p class="text-50 lh-1 mb-0">Teacher</p>
                                         </div>
                                     </div>
                                 </li>
@@ -108,13 +127,28 @@
                                 </li>
                                 <li class="nav-item ml-sm-auto text-sm-center flex-column navbar-list__item">
                                     <div class="rating rating-24">
-                                        <div class="rating__item"><i class="material-icons">star</i></div>
-                                        <div class="rating__item"><i class="material-icons">star</i></div>
-                                        <div class="rating__item"><i class="material-icons">star</i></div>
-                                        <div class="rating__item"><i class="material-icons">star</i></div>
-                                        <div class="rating__item"><i class="material-icons">star_border</i></div>
+                                        <div class="inline-block" id="ks2-<%= course._id %>"></div>
+                                    <script>
+                                        var dataArray = <%- JSON.stringify(course.ratings) %>;
+                                        var array='';
+                                        var sum = 0;
+                                        for (let i = 0; i < dataArray.length; i++) {
+                                            sum += dataArray[i]*1;
+                                        }
+                                        var result = sum / dataArray.length;
+                                        for (let i = 0; i < 5; i++) {
+                                            if (i < result) {
+                                                array+='<span class="rating__item"><span class="material-icons">star</span>';
+                                            }
+                                            else{
+                                                array+='<span class="rating__item"><span class="material-icons">star_border</span>';
+                                            }
+                                        }
+                                        //console.log(dataArray)
+                                        document.getElementById("ks2-<%= course._id %>").innerHTML = array;
+                                    </script>
                                     </div>
-                                    <p class="lh-1 mb-0"><small class="text-muted">20 ratings</small></p>
+                                    <p class="lh-1 mb-0"><small class="text-muted"><%= course.ratings.length %> ratings</small></p>
                                 </li>
                             </ul>
                         </div>
@@ -195,9 +229,9 @@
                                 <small class="text-muted">Angular, Web Development</small>
                             </p> -->
                             <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
-                                <a href="instructor-profile.html"
-                                    class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">Follow</a>
-                                <a href="instructor-profile.html" class="btn btn-outline-secondary">View Profile</a>
+                                <!-- <a href="instructor-profile.html"
+                                    class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">Follow</a> -->
+                                <a href="/profile/<%= course.teacher._id %>" class="btn btn-outline-secondary">View Profile</a>
                             </div>
                         </div>
                         <div class="mb-24pt mb-md-0">

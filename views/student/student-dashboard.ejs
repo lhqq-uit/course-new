@@ -212,7 +212,7 @@
                         <div class="col-lg-6 mb-8pt mb-sm-0">
                             <div class="page-heading">
                                 <h4>Maybe you are interested</h4>
-                                <a href="student-my-courses.html" class="text-underline ml-sm-auto"></a>
+                                <a href="/courses" class="text-underline ml-sm-auto"></a>
                             </div>
 
 
@@ -340,7 +340,7 @@
                         <div class="col-lg-6">
                             <div class="page-heading">
                                 <h4>Courses</h4>
-                                <a href="student-my-courses.html" class="text-underline ml-sm-auto">My courses</a>
+                                <a href="/courses" class="text-underline ml-sm-auto">My courses</a>
                             </div>
 
 
@@ -362,7 +362,7 @@
 
                                                 <div class="card card--elevated card-course overlay js-overlay mdk-reveal js-mdk-reveal "
                                                     data-partial-height="40" data-toggle="popover" data-trigger="click">
-                                                    <a href="student-take-course.html" class="js-image" data-position="">
+                                                    <a href="/course/<%= item.id_course._id %>" class="js-image" data-position="">
                                                         <img src="../upload/images/<%= item.id_course.avatar %>" height="170" alt="course">
                                                         <span class="overlay__content">
                                                             <span class="overlay__action d-flex flex-column text-center">
@@ -380,7 +380,7 @@
                                                                         href="/course/<%= item.id_course._id %>"><%= item.id_course.name %></a>
                                                                     <small class="text-50 font-weight-bold mb-4pt"><%= item.id_course.teacher.fullname %></small>
                                                                 </div>
-                                                                <a href="student-take-course.html"
+                                                                <a href="/course/<%= item.id_course.name %>"
                                                                     class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite</a>
                                                             </div>
                                                             <div class="d-flex">

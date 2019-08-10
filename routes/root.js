@@ -276,7 +276,7 @@ router.get("/profile/:id", async (req, res) => {
         url: `${domain}/api/info/${req.params.id}`
     }).then(result => {
         getInfo = result.data.info
-        
+
     })
     // console.log(getInfo[0].role)
     //console.log(getInfoTeacher)
@@ -532,6 +532,10 @@ router.get("/all-courses", async (req, res) => {
     res.render("course/allcourse", { allcourse })
 })
 
-
+router.get("/logout", async (req, res) => {
+    req.session.destroy(function (err) {
+        res.redirect("../login");
+    })
+})
 
 module.exports = router;

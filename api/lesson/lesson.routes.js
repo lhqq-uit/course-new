@@ -25,7 +25,7 @@ var upload = multer({ storage: storage }).fields([
 ])
 
 //get a lesson
-router.get('/:idLesson', checkPermission.isStudent, lessonController.getOneLesson);
+router.get('/:idLesson', checkPermission.usedLogin, lessonController.getOneLesson);
 
 //get all lesson
 router.get('/', lessonController.getAllLesson);
