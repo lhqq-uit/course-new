@@ -41,6 +41,7 @@ router.get("/quizzes", async(req, res) => {
     }else{
         let getInfoTeacher = jwtDecode(req.session.token);
         // res.send(getInfoTeacher);
+        //var courses;
         await axios({
             method: 'get',
             url: `${domain}/api/teacher/courses/${getInfoTeacher._id}`,
@@ -49,13 +50,32 @@ router.get("/quizzes", async(req, res) => {
             }
         })
         .then(Response => {
-            res.render('teacher/instructor-edit-quiz', {
-                courses: Response.data
-            });
+            console.log(Response.data.courses)
+            courses = Response.data
         })
         .catch(error => {
             res.status(400).json(error.message);
         })
+        var infoTeacher = '';
+        await axios({
+            method: 'get',
+            url: `${domain}/api/teacher/info/${getInfoTeacher._id}`,
+            //responseType: 'stream'
+        })
+            .then(response => {
+                // handle success
+                //console.log(response.data);
+
+                infoTeacher = response.data;
+            })
+            .catch(error => {
+                // handle error
+                console.log(error);
+            })
+        res.render('teacher/instructor-edit-quiz', {
+            courses,
+            infoTeacher,
+        });
     }
 })
 //TODO: edit quiz -> add question to quiz in lesson

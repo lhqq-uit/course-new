@@ -51,7 +51,7 @@
 
         <!-- Header -->
 
-        <% include ../layout/header-quiz %>
+        <%- include('../layout/header-dashboard', {avatar: infoTeacher.user.avatar}); %>
 
         <!-- // END Header -->
 
@@ -63,10 +63,16 @@
                     <img src="../../assets/images/illustration/teacher/128/white.svg" width="104"
                         class="mr-md-32pt mb-32pt mb-md-0" alt="instructor">
                     <div class="flex mb-32pt mb-md-0">
-                        <h2 class="text-white mb-0">Elijah Murray</h2>
-                        <p class="lead text-white-50 d-flex align-items-center">Instructor <span
+                        <h2 class="text-white mb-0"><%= infoTeacher.user.fullname %></h2>
+                        <p class="lead text-white-50 d-flex align-items-center">Teacher <span
                                 class="ml-16pt d-flex align-items-center"><i
-                                    class="material-icons icon-16pt mr-4pt">opacity</i> 2,300 IQ</span></p>
+                                    class="material-icons icon-16pt mr-4pt">opacity</i> 
+                                    <% if (infoTeacher.iq == null) { %>
+                                        0 IQ
+                                        <% } else{  %> 
+                                            <%= infoTeacher.iq %>
+                                        <% } %> 
+                                </span></p>
                     </div>
                     <a href="/user/edit-account" class="btn btn-outline-white">Edit account</a>
                 </div>
@@ -123,17 +129,34 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label>Course</label>
-                                <select name="category" id="course_id" focus="getIdCourse"
-                                    class="form-control custom-select">
-                                    <% courses.courses.forEach(function(course){ %>
-                                    <option value="<%= course._id %>"><%- course.name %></option>
+                                <select name="category" id="course_id" class="form-control custom-select">
+                                    <% courses.courses.forEach(function(e){ %>
+                                        <option value="<%= e._id %>"><%= e.name %></option>
                                     <% }); %>
                                 </select>
                             </div>
                             <label>Lesson</label>
-                            <select class="lessonInCourse">
-                                    
-                            </select>
+                           
+                                <% courses.courses.forEach(function(e) { %>
+                                    <div id="<%= e._id %>" class="colors" style="display:none">
+                                       
+                                    <% if (e.lessons.length > 0 ) { %>
+                                        <div class="form-group">
+                                        <select id="<%= e._id %>" class="form-control custom-select">
+                                        <% for (let i = 0; i< e.lessons.length; i++) { %>
+                                            
+                                            <option value="<%= e.lessons[i]._id %>"><%= e.lessons[i].title %></option>
+                                        
+                                        <% } %>
+                                    </select></div>
+                                    <% } %>
+                               
+                                    </div>
+                                <% }); %>
+                            
+                           
+                                
+                           
                         </div>
                         <div class="col-md-4">
                             <div class="card m-0">
@@ -296,28 +319,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
 
     <script>
-        // function getIdCourse(){
-        //     // document.getElementById('course_id').addEventListener('onchange', function(){
-        //     let index=document.querySelector("#course_id").selectedIndex;
-        //     let show=`ABC`
-        //     $('.lessonInCourse').append(show);
-        // // })
-        // }
-        let index=document.querySelector("#course_id").selectedIndex;
-        alert(typeof(index.toString()));
-        alert(index*1)
-        var str="courses.courses["+index*1+"].lessons";
-        alert(str);
-        show=`<% courses.courses[`+index*1+`].lessons.forEach(function(lesson){ %>
-            <option value="<%= lesson._id %>"><%- lesson.title %></option>
-            <% }); %>`
-        show1 = `<% for(var i =1; i<courses.courses[${index*1}].lessons.length;i++){ %>
-            <option value="<%= courses.courses[${index*1}].lessons[i]._id %>"><%- courses.courses[${index*1}].lessons.title %></option>
-            <% }1 %>`
-        document.getElementById('course_id').addEventListener('focus', function(){ $('.lessonInCourse').append(show1)})
-        
+    $(function() {
+        $('#course_id').change(function(){
+            $('.colors').hide();
+            $('#' + $(this).val()).show();
+        });
+    });
     </script>
-
 
 </body>
 
