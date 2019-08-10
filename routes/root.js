@@ -538,4 +538,81 @@ router.get("/logout", async (req, res) => {
     })
 })
 
+//todo delete question
+router.get("/q/del/question/:id", async (req, res) => {
+    let url = `${domain}/api/quiz/${req.params.id}`;
+    console.log(url);
+    await axios({
+        method: "delete",
+        baseURL: url,
+        headers: {
+            Authorization: req.session.token
+        }
+    }).then(r => {
+        if (r.data.success == true) {
+            res.redirect(`/teacher/quizzes`)
+        }
+    }).catch(err => {
+        console.log(err)
+        res.redirect("/");
+    })
+    
+})
+
+
+//todo update
+router.post("/q/update/question/:id", async (req, res) => {
+    let url = `${domain}/api/quiz/${req.params.id}`;
+    console.log(url);
+    await axios({
+        method: "put",
+        baseURL: url,
+        data: {
+            question: req.body.question,
+            list_answer: req.body.list_answer,
+            result: req.body.result
+        },
+        headers: {
+            Authorization: req.session.token
+        }
+    }).then(r => {
+        if (r.data.success == true) {
+            res.redirect(`/teacher/quizzes`)
+        }
+    }).catch(err => {
+        console.log(err)
+        res.redirect("/");
+    })
+    
+})
+
+
+//todo: add question /q/add/question/
+router.post("/q/add/question/:id", async (req, res) => {
+    let url = `${domain}/api/quiz/${req.params.id}`;
+    console.log(url);
+    await axios({
+        method: "post",
+        baseURL: url,
+        data: {
+            question: req.body.question,
+            list_answer: req.body.list_answer,
+            result: req.body.result
+        },
+        headers: {
+            Authorization: req.session.token
+        }
+    }).then(r => {
+        if (r.data.success == true) {
+            res.redirect(`/teacher/quizzes`)
+        }
+    }).catch(err => {
+        console.log(err)
+        res.redirect("/");
+    })
+    
+})
+
+
+
 module.exports = router;

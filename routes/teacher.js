@@ -36,7 +36,7 @@ var upload = multer({
 const axios = require('axios')
 
 router.get("/quizzes", async(req, res) => {
-    if(!req.session){
+    if(!req.session.token){
         res.redirect('/login');
     }else{
         let getInfoTeacher = jwtDecode(req.session.token);
@@ -50,7 +50,7 @@ router.get("/quizzes", async(req, res) => {
             }
         })
         .then(Response => {
-            console.log(Response.data.courses)
+            //console.log(Response.data.courses)
             courses = Response.data
         })
         .catch(error => {

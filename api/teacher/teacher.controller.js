@@ -113,7 +113,10 @@ module.exports = {
                 .populate({
                     path: "courses",
                     populate: {
-                        path: 'lessons'
+                        path: 'lessons',
+                        populate:{
+                            path: "quizzes"
+                        }
                     }
                 })
                 .select('courses')
