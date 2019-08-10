@@ -107,10 +107,16 @@ module.exports = {
       })
       if (!lesson) return res.status(404).json({ message: 'Lesson not found' })
       let idCourseOfLesson = lesson.course._id;
+      let authorOfCourse = lesson.course.teacher;
       let student = await Student.findOne({ user: req.user.data._id });
-      let listCourseBought = student.courses.map(item => item.id_course.toString());
-      if (!listCourseBought.includes(idCourseOfLesson.toString())) {
-        return res.status(403).json({ message: 'You have not purchased the course' })
+      if (student) {
+        let listCourseBought = student.courses.map(item => item.id_course.toString());
+        if (!listCourseBought.includes(idCourseOfLesson.toString())) {
+          return res.status(403).json({ message: 'You have not purchased the course' })
+        }
+      }
+      else if (authorOfCourse != req.user.data._id) {
+        return res.status(403).json({ message: 'You have not author of course' })
       }
       res.status(201).json({
         success: true,
@@ -118,7 +124,9 @@ module.exports = {
         data: lesson
       })
     } catch (error) {
-      res.status(404).json({ message: 'No lesson found' })
+      res.status(404).json({
+        message: error.message
+      })
     }
   },
 
