@@ -21,7 +21,7 @@ module.exports = {
                 tag: tag,
                 sale: req.body.sale,
                 // total_time: req.body.total_time,
-                // level: req.body.level,
+                level: req.body.level,
                 teacher: req.user.data._id,
                 avatar: req.files.image[0].filename,
             }

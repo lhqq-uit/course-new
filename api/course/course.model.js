@@ -26,7 +26,7 @@ var CourseSchema = new mongoose.Schema({
     level: {
         type: String,
         enum: ['Beginner', 'Medium', 'Hard', 'Advanced'],
-        default: 'Beginner',
+        // default: 'Beginner',
     },
     ratings: [{
         type: Number,

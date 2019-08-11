@@ -318,7 +318,12 @@ router.post("/login", (req, res) => {
         //console.log(req.session.token)
         // console.log()
         if (req.session.token) {
-            res.redirect('/dashboard')
+            let decode = jwtDecode(req.session.token);
+            if(decode.role == "Admin"){
+                 res.redirect('/admin');
+            }else{
+                res.redirect('/dashboard')
+            }
         }
 
     }).catch(err => {

@@ -163,15 +163,25 @@
                                 </div>`
                             </div>
                             <div class="col-md-4">
+                                <h4>Level</h4>
+                                <div class="form-group">
+                                    <select id="custom-select" class="form-control custom-select" name="level">
+                                        <option value="Beginner" selected>Beginner</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Hard">Hard</option>
+                                        <option value="Advanced">Advanced</option>
+                                    </select>
+                                </div>
                                 <h4>Category</h4>
                                 <div class="form-group">
-                                    <div class="input-group form-inline">
-                                        <input type="text" name="topic" class="form-control" value="<%= course.topic %>"
-                                            required oninvalid="this.setCustomValidity('Enter topic Here')"
-                                            oninput="this.setCustomValidity('')">
-                                    </div>
+                                    <select id="custom-select" class="form-control custom-select" name="topic">
+                                        <option value="AI" selected>AI</option>
+                                        <option value="Internet of things">Internet of things</option>
+                                        <option value="Web development">Web development</option>
+                                        <option value="Language">Language</option>
+                                        <option value="STEM">STEM</option>
+                                    </select>
                                 </div>
-
                                 <div class="form-group">
                                     <div class="row">
 
