@@ -284,7 +284,7 @@ router.get("/dashboard", async (req, res) => {
 });
 
 //TODO: add course
-router.get("/add-course", (req, res) => {
+router.get("/add-course", async (req, res) => {
 
     if (!req.session.token) {
         res.redirect('/login')
