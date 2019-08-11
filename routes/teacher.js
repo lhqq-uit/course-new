@@ -310,6 +310,7 @@ router.post("/add-course", upload, async (req, res) => {
             let readTrailerStream = fs.createReadStream(`./public/upload/tmp/${req.files.trailer[0].originalname}`);
             const formHeaders = formData.getHeaders();
             formData.append("name", req.body.name);
+            formData.append("level", req.body.level);
             formData.append("topic", req.body.topic);
             formData.append("description", req.body.description);
             formData.append("price", req.body.price);
@@ -371,6 +372,7 @@ router.post("/edit-course/:idCourse", upload, async (req, res) => {
         const formHeaders = formData.getHeaders();
         formData.append("name", req.body.name);
         formData.append("topic", req.body.topic);
+        formData.append("level", req.body.level);
         formData.append("description", req.body.description);
         formData.append("price", req.body.price);
         formData.append("tag", req.body.tag);

@@ -140,5 +140,5 @@ module.exports = {
         } else {
             return res.status(403).send({success: false, msg: 'Unauthorized.'});
         }
-    },
+    }
 }
