@@ -42,7 +42,11 @@ module.exports = {
     getOneQuiz: async (req, res) => {
         try {
             let quiz = await Quiz.findById(req.params.idQuiz);
-            if (!quiz) return res.status(404).send('No quiz found or you are not author of quiz');
+            if (!quiz) return res.status(404).json({
+              success: false,
+              msg: "Nothing",
+              data: -1
+            });
             res.status(201).json({
                 success: true,
                 msg: "Success get a quiz",

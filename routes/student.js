@@ -147,40 +147,67 @@ router.get("/dashboard", async (req, res) => {
 })
 
 //TODO: Student > student-take-lesson
-router.get('/take-quiz/:idLesson/:numerical', (req, res) => {
-    //TODO: thiếu header, với tên khóa học đang trả lời câu hỏi, 
-    console.log(`${domain}/api/lesson/${req.params.idLesson}`)
-    axios({
-        method: 'get',
-        url: `${domain}/api/lesson/${req.params.idLesson}`,
-    })
+router.get('/take-quiz/:idLesson/:numerical', async (req, res) => {
+
+    //Authorization is true
+    if(req.session.token){
+        console.log(`${domain}/api/lesson/${req.params.idLesson}`)
+        let countQuiz = 0;
+        let link_next = '';
+        //call API lesson/idLesson from lesson to get a lesson
+        await axios({
+            method: 'get',
+            url: `${domain}/api/lesson/${req.params.idLesson}`,
+            headers: {
+                Authorization: req.session.token
+            }
+        })
         .then(Response => {
-            countQuiz = Response.data.data.quizzes
-            // for(i=0;i<countQuiz.length;i++){
-            //     axios({})
-            // }
+            countQuiz = Response.data.data.quizzes;
+            console.log("So luong --------------------------")
+            console.log(countQuiz.length)
+        })
+
+        // Nothing quiz in lesson
+        if (countQuiz.length == 0) {
+            res.render('student/student-take-quiz', {
+                countQuiz: null,
+                data: null,
+                link_next: null,
+                numerical: 0
+            })
+        }
+
+        //Numerical is No.Quiz in lesson
+        var numerical = parseInt(req.params.numerical);
+        
+        // if -> Check last quiz in lesson else -> continue
+        if (numerical >= countQuiz.length) {
+            res.send(`${domain}/student/take-quiz/${req.params.idLesson}/${countQuiz.length-1}`)
+        }else{
+            //Get quiz in lesson
             axios({
                 method: 'get',
                 url: `${domain}/api/quiz/${countQuiz[req.params.numerical]}`,
             })
                 .then(Response2 => {
+
                     console.log(Response2.data.data)
                     let data = Response2.data.data
-                    numerical = parseInt(req.params.numerical) + 1;
-                    link_next = `/student/take-quiz/${req.params.idLesson}/${numerical}`;
+                    // /take-quiz/:idLesson/:numerical
                     res.render('student/student-take-quiz', {
                         countQuiz,
                         data,
-                        link_next,
-                        numerical
+                        link_next: `/student/take-quiz/${req.params.idLesson}/${numerical+1}`,
+                        numerical: numerical + 1
                     });
                 })
-            // console.log(countQuiz[0])
+        }
 
-            // res.json(Response.data.data)
-
-        })
-    // res.render('student/student-take-quiz');
+        //No Authorization
+        }else{
+            res.redirect('/login');
+        }
 });
 
 //TODO: my course
