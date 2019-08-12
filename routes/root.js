@@ -240,6 +240,16 @@ router.get('/authentication',
 
 //TODO: show home page
 router.get("/", async (req, res) => {
+    let allcourse;
+    await axios({
+        method: "get",
+        url: `${domain}/api/course`,
+    }).then(result => {
+        allcourse = result.data
+        console.log(allcourse)
+    }).catch(err => {
+        console.log(err)
+    })
     var data = '';
     await axios({
         method: "get",
@@ -251,7 +261,8 @@ router.get("/", async (req, res) => {
         console.log(error);
     })
     res.render("index-2", {
-        data: data
+        data,
+        allcourse
     });
 })
 
