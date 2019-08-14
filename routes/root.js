@@ -426,26 +426,7 @@ router.post("/signup", (req, res) => {
 });
 
 //TODO: this only for cmt
-router.post("/:idLesson", (req, res) => {
-    let getInfo = jwtDecode(req.session.token);
-    console.log(getInfo)
-    axios({
-        method: "post",
-        url: `${domain}/api/comment/${req.params.idLesson}/${getInfo._id}`,
-        data: {
-            content: req.body.content
-        },
-        headers: {
-            Authorization: req.session.token
-        }
-    }).then(r => {
-        if (r.data.success == true) {
-            res.redirect(`/lesson/${req.params.idLesson}`)
-        }
-    }).catch(err => {
-        console.log(err)
-    })
-})
+
 
 router.post("/:idCMT/:idLesson", (req, res) => {
     let getInfo = jwtDecode(req.session.token);
@@ -550,6 +531,7 @@ router.get("/all-courses", async (req, res) => {
 
 router.get("/logout", async (req, res) => {
     req.session.destroy(function (err) {
+        req.logout()
         res.redirect("../login");
     })
 })
@@ -629,6 +611,26 @@ router.post("/q/add/question/:id", async (req, res) => {
     
 })
 
-
+//TODO: this only for cmt
+router.post("/:idLesson", (req, res) => {
+    let getInfo = jwtDecode(req.session.token);
+    console.log(getInfo)
+    axios({
+        method: "post",
+        url: `${domain}/api/comment/${req.params.idLesson}/${getInfo._id}`,
+        data: {
+            content: req.body.content
+        },
+        headers: {
+            Authorization: req.session.token
+        }
+    }).then(r => {
+        if (r.data.success == true) {
+            res.redirect(`/lesson/${req.params.idLesson}`)
+        }
+    }).catch(err => {
+        console.log(err)
+    })
+})
 
 module.exports = router;
