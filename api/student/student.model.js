@@ -24,10 +24,19 @@ var StudentSchema = mongoose.Schema({
     value: Number,
     date: Date
   }],
-  quiz_true: [{
-    lesson: String,
-    id: String
-  }]
+  // quiz_true: [{
+  //   lesson: String,
+  //   id: String
+  // }],
+  // quizes:[{
+  //   lesson: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Lesson'
+  //   },
+  //   answers: [{
+  //     type: String
+  //   }]
+  // }]
 })
 
 module.exports = mongoose.model('Student', StudentSchema);

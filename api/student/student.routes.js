@@ -13,7 +13,7 @@ router.get('/courses-not-purchased', checkPermission.isStudent, StudentControlle
 
 router.put('/buy-course/:idCourse', checkPermission.isStudent, StudentController.buyCourse);
 
-router.put('/quiz/:idQuiz', checkPermission.isStudent, StudentController.answerQuestion);
+router.put('/quiz/:idLesson', checkPermission.isStudent, StudentController.answerQuestion);
 
 router.put('/:idLesson', checkPermission.isStudent, StudentController.setLessonStudied);
 
