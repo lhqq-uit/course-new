@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from tutorio-bootstrap.frontendmatter.com/student-take-quiz.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:49 GMT -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,19 +62,24 @@
         <!-- Header Layout Content -->
         <div class="mdk-header-layout__content page-content ">
 
-            <div class="navbar navbar-list navbar-submenu navbar-light border-0 navbar-expand-sm" style="white-space: nowrap;">
+            <div class="navbar navbar-list navbar-submenu navbar-light border-0 navbar-expand-sm"
+                style="white-space: nowrap;">
                 <div class="container page__container">
                     <nav class="nav navbar-nav">
                         <div class="nav-item navbar-list__item">
-                            <a href="student-take-course.html" class="nav-link"><i class="material-icons icon--left">keyboard_backspace</i> Back to Course</a>
+                            <a href="student-take-course.html" class="nav-link"><i
+                                    class="material-icons icon--left">keyboard_backspace</i> Back to Course</a>
                         </div>
                         <div class="nav-item navbar-list__item">
                             <div class="d-flex align-items-center flex-nowrap">
                                 <div class="mr-16pt">
-                                    <a href="student-take-course.html"><img src="../../../assets/images/paths/angular_64x64.png" width="40" alt="Angular" class="rounded"></a>
+                                    <a href="student-take-course.html"><img
+                                            src="../../../assets/images/paths/angular_64x64.png" width="40"
+                                            alt="Angular" class="rounded"></a>
                                 </div>
                                 <div class="flex">
-                                    <a href="student-take-course.html" class="card-title text-body mb-0">Angular Fundamentals</a>
+                                    <a href="student-take-course.html" class="card-title text-body mb-0">Angular
+                                        Fundamentals</a>
                                     <p class="lh-1 d-flex align-items-center mb-0">
                                         <span class="text-50 small font-weight-bold mr-8pt">Elijah Murray</span>
                                         <span class="text-50 small">Software Engineer and Developer</span>
@@ -95,13 +101,15 @@
                     </nav> -->
 
                     <div class="d-flex flex-wrap align-items-end justify-content-end mb-16pt">
-                        <h1 class="text-white flex m-0"><center>Question <%= numerical %></center></h1>
+                        <h1 class="text-white flex m-0">
+                            <center>Question <% numerical + 1 %></center>
+                        </h1>
                         <!-- <p class="h1 text-white-50 font-weight-light m-0">00:14</p> -->
                     </div>
                     <tbody>
                         <p class="hero__lead measure-hero-lead text-white-50"><%= data.question %></p>
                     </tbody>
-                    
+
                 </div>
             </div>
 
@@ -116,46 +124,107 @@
                     <div class="nav navbar-nav ml-sm-auto navbar-list__item">
                         <div class="nav-item d-flex flex-column flex-sm-row ml-sm-16pt">
                             <!-- <a href="student-quiz-result-details.html" class="btn justify-content-center btn-outline-secondary w-100 w-sm-auto mb-16pt mb-sm-0">Skip Quiz</a> -->
-                            <a href="student-take-lesson.html" class="btn justify-content-center btn-outline-secondary w-100 w-sm-auto mb-16pt mb-sm-0 ml-sm-16pt">Review Video</a>
-                            <a href="<%= link_next %>" class="btn justify-content-center btn-accent w-100 w-sm-auto mb-16pt mb-sm-0 ml-sm-16pt">Next Question <i class="material-icons icon--right">keyboard_arrow_right</i></a>
+                            <a href="student-take-lesson.html"
+                                class="btn justify-content-center btn-outline-secondary w-100 w-sm-auto mb-16pt mb-sm-0 ml-sm-16pt">Review
+                                Video</a>
+                            <% if(link_next){ %>
+                            <a href="<%= link_next %>" 
+                                class="btn justify-content-center btn-accent w-100 w-sm-auto mb-16pt mb-sm-0 ml-sm-16pt"
+                                id="next-question">Next Question <i
+                                    class="material-icons icon--right">keyboard_arrow_right</i></a>
+                            <script>
+                                document.querySelector('#next-question').addEventListener('click', function () {
+                                    var a = JSON.parse(localStorage.getItem('answer')) || [];
+                                    var list_answer = document.getElementsByName('answer');
+                                    for (let i = 0; i < list_answer.length; i++) {
+                                        if (list_answer[i].checked == true) {
+                                            var choose = document.getElementsByName('answer')[i].value;
+                                        }
+                                    }
+                                    if (choose) {
+                                        a.push(choose);
+                                    } else {
+                                        a.push('No answer')
+                                    }
+                                    localStorage.setItem('answer', JSON.stringify(a));
+                                });
+
+                            </script>
+                            <% } else{ %>
+                            <a href="/student/result-take-quiz/<%= data.lesson %>"
+                                class="btn justify-content-center btn-accent w-100 w-sm-auto mb-16pt mb-sm-0 ml-sm-16pt" id="finish-question">
+                                Finish</a>
+                            <script>
+                                    document.querySelector('#finish-question').addEventListener('click', function () {
+                                        var a = JSON.parse(localStorage.getItem('answer')) || [];
+                                    var list_answer = document.getElementsByName('answer');
+                                    for (let i = 0; i < list_answer.length; i++) {
+                                        if (list_answer[i].checked == true) {
+                                            var choose = document.getElementsByName('answer')[i].value;
+                                        }
+                                    }
+                                    if (choose) {
+                                        a.push(choose);
+                                    } else {
+                                        a.push('No answer')
+                                    }
+                                    localStorage.setItem('answer', JSON.stringify(a));
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open("POST", "http://localhost:3000/student/result-take-quiz/<%= data.lesson %>", true);
+                                        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                                        var j = {
+                                            answer: JSON.parse(localStorage.getItem('answer')),
+                                        };
+                                        xhr.send(JSON.stringify(j));
+                                    });
+                            </script>
+                            <% } %>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="container page__container">
-               <form>
-                <div class="page-section">
-                    <h4>Your Answer:</h4>
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input name="answer" id="customCheck01" type="radio" class="custom-control-input">
-                            <label for="customCheck01" class="custom-control-label"></label><%= data.list_answer[0] %></label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input name="answer" id="customCheck02" type="radio" class="custom-control-input" checked="">
-                            <label for="customCheck02" class="custom-control-label"><%= data.list_answer[1] %></label>
-                        </div>
-                    </div>
-                    <div class="form-group">
+                <form>
+                    <div class="page-section">
+                        <h4>Your Answer:</h4>
+                        <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input name="answer" id="customCheck03" type="radio" class="custom-control-input" checked="">
-                                <label for="customCheck03" class="custom-control-label"><%= data.list_answer[2] %></label>
+                                <input name="answer" id="customCheck01" type="radio" class="custom-control-input"
+                                    value="A" required>
+                                <label for="customCheck01"
+                                    class="custom-control-label"></label><%= data.list_answer[0] %></label>
                             </div>
                         </div>
-                    <div class="form-group mb-32pt mb-lg-48pt">
-                        <div class="custom-control custom-checkbox">
-                            <input name="answer" id="customCheck04" type="radio" class="custom-control-input">
-                            <label for="customCheck04" class="custom-control-label"><%= data.list_answer[3] %></label>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input name="answer" id="customCheck02" type="radio" class="custom-control-input"
+                                    value="B">
+                                <label for="customCheck02"
+                                    class="custom-control-label"><%= data.list_answer[1] %></label>
+                            </div>
                         </div>
-                    </div>
-                    
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input name="answer" id="customCheck03" type="radio" class="custom-control-input"
+                                    value="C">
+                                <label for="customCheck03"
+                                    class="custom-control-label"><%= data.list_answer[2] %></label>
+                            </div>
+                        </div>
+                        <div class="form-group mb-32pt mb-lg-48pt">
+                            <div class="custom-control custom-checkbox">
+                                <input name="answer" id="" type="radio" class="custom-control-input"
+                                    value="D">
+                                <label for="customCheck04"
+                                    class="custom-control-label"><%= data.list_answer[3] %></label>
+                            </div>
+                        </div>
 
-                    <p class="text-50 mb-0">Note: There can be multiple correct answers to this question.</p>
-                </div>
-            </form>
+
+                        <p class="text-50 mb-0">Note: There can be multiple correct answers to this question.</p>
+                    </div>
+                </form>
             </div>
 
 
@@ -168,7 +237,7 @@
     </div>
     <!-- // END Header Layout -->
 
- 
+
 
     <!-- jQuery -->
     <script src="../../../assets/vendor/jquery.min.js"></script>
@@ -202,10 +271,9 @@
     <script src="../../../assets/js/app-settings.js"></script>
 
 
-
-
 </body>
 
 
 <!-- Mirrored from tutorio-bootstrap.frontendmatter.com/student-take-quiz.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Jul 2019 02:22:49 GMT -->
+
 </html>

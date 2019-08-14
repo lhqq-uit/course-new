@@ -107,7 +107,7 @@ module.exports = {
       })
       if (!lesson) return res.status(404).json({ message: 'Lesson not found' })
       let idCourseOfLesson = lesson.course._id;
-      let authorOfCourse = lesson.course.teacher;
+      let authorOfCourse = lesson.course.teacher._id;
       let student = await Student.findOne({ user: req.user.data._id });
       if (student) {
         let listCourseBought = student.courses.map(item => item.id_course.toString());
