@@ -36,7 +36,7 @@
     <link type="text/css" href="../../assets/css/app.rtl.css" rel="stylesheet">
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="/assets/js/sweetalert.min.js"></script>
 
 </head>
 
@@ -142,7 +142,7 @@
                                 <% courses.courses.forEach(function(e) { %>
                                     <div id="<%= e._id %>" class="colors" style="display:none">
                                         <% if (e.lessons.length > 0 ) { %>
-                                            <label>Chose Lesson To Add Question</label>
+                                            <label>List Lesson in course: <%= e.name %></label>
                                             <div class="form-group">
                                                 <select id="val-<%= e._id %>" class="form-control custom-select">
                                                     <% for (let i = 0; i< e.lessons.length; i++) { %>
@@ -151,13 +151,51 @@
                                                         <% } else { %>
                                                             <option value="<%= e.lessons[i]._id %>">Lesson <%= i+1 %>: <%= e.lessons[i].title %></option>
                                                         <% } %>
+                                                       
                                                     <% } %>
                                                 
                                                 </select>
-                                                <div class="text-right pt-4">
-                                                    <button onclick="myval<%= e._id %>Function()" class="btn btn-outline-primary">Add question</button>
-                                                </div>
+                                               
+                                                <% for (let i = 0; i< e.lessons.length; i++) { %>
+                                               
                                                 
+                                                   
+                                                    <div class="text-right pt-4">
+                                                        <button id="id-<%= e.lessons[i]._id %>" class="btn btn-outline-primary btn-block">Add question for Lesson <%= i+1 %> - <%= e.lessons[i].title %></button>
+                                                    </div>
+                                                  <div id="ids-<%= e.lessons[i]._id %>">
+
+                                                  </div>
+                                                    <script>
+                                                        $(document).ready(function(){
+                                                            $("#id-<%= e.lessons[i]._id %>").click(function(){
+                                                                $('#id-<%= e.lessons[i]._id %>').prop('disabled', true);
+                                                                let html = '<h4 class="flex mt-3"><span class="text-danger">Just add one question</span> <br> Add question for Lesson <%= i+1 %> - <%= e.lessons[i].title %>:</h4>'+
+                                                                    '<form action="/q/add/question/<%= e.lessons[i]._id %>" method="post">'+
+                                                                    '<ul class="list-group stack">'+
+                                                                    '<li class="list-group-item"><input name="question" id="question" type="text" class="form-control" placeholder="Question"></li>'+
+                                                                    '<li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 1"></li>'+
+                                                                    '<li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 2"></li>'+
+                                                                    '<li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 3"></li>'+
+                                                                    '<li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 4"></li>'+
+                                                                    '<h4 class="flex m-3 text-success">Choose the correct answer:</h4>'+
+                                                                    '<li class="list-group-item">'+
+                                                                    '<select name="result" id="result" class="form-control custom-select">'+
+                                                                    '<option value="A" selected>Answer 1</option>'+
+                                                                    '<option value="B">Answer 2</option>'+
+                                                                    '<option value="C">Answer 3</option>'+
+                                                                    '<option value="D">Answer 4</option>'+
+                                                                    '</select></li>'+
+                                                                    '</li></ul>'+
+                                                                    '<li class="list-group-item text-center"><button type="submit" class="btn btn-outline-primary">Add question</button></li>'+
+                                                                    '</form>';
+                                                                $("#ids-<%= e.lessons[i]._id %>").append(html);
+                                                            });
+                                                        });
+                                                    </script>
+                                                <% } %>
+                                           
+
                                                 <% for (let i = 0; i< e.lessons.length; i++) { %>
                                                     <% if (e.lessons[i].quizzes.length > 0 ) { %>
                                                         <% for (let j = 0; j < e.lessons[i].quizzes.length; j++) { %>
@@ -178,40 +216,36 @@
                                                                             <% } %> 
                                                                     <% } %>   
                                                                     <li class="list-group-item">
-                                                                            Result correct
-                                                                        <input onclick="checkSame();" name="result" id="result"
-                                                                            type="text" class="form-control" value="<%= e.lessons[i].quizzes[j].result %>"></li>
+                                                                           
+                                                                        <h5 class="flex m-3 text-success">Correct answer:</h5>
+                                                                        <input type="text" class="form-control" value="<%= e.lessons[i].quizzes[j].result %>" disabled></li>
+                                                                        
                                                                     </li>  
+                                                                    <li class="list-group-item">
+                                                                        <ul class="list-group text-info">
+                                                                            <li class="list-group-item">
+                                                                                <span class="text-danger"><b>Note: </b></span> <i>A - Answer 1; B - Answer 2; C - Answer 3; D - Answer 4</i>
+                                                                            </li>
+                                                                           
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        <h4 class="flex m-3 text-success">Choose the correct answer:</h4>
+                                                                        <select name="result" id="result" class="form-control custom-select">
+                                                                            <option value="A" selected>Answer 1</option>
+                                                                            <option value="B">Answer 2</option>
+                                                                            <option value="C">Answer 3</option>
+                                                                            <option value="D">Answer 4</option>
+                                                                        </select>
+                                                                    </li>
                                                                     <li class="list-group-item text-right">
                                                                             <button type="submit" class="btn btn-outline-primary">Update question</button>
                                                                             <a href="/q/del/question/<%= e.lessons[i].quizzes[j]._id %>" class="btn btn-outline-danger">Delete</a>
                                                                     </li> 
                                                             </ul>
-                                                        </form>
+                                                            </form>
                                                         <% } %>
                                                     <% } %>
-                                                    <script>
-                                                        function myval<%= e._id %>Function() {
-                                                            
-                                                            Swal.fire({
-                                                                title: '<strong>Add question for Lesson</strong>',
-                                                                html:
-                                                                    '<form action="/q/add/question/<%= e.lessons[i]._id %>" method="post">'+
-                                                                    '<ul class="list-group stack">'+
-                                                                    '<li class="list-group-item"><input name="question" id="question" type="text" class="form-control" placeholder="Question"></li>'+
-                                                                    '<li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 1"></li>'+
-                                                                    '<li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 2"></li>'+
-                                                                    '<li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 3"></li>'+
-                                                                    '<li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 4"></li>'+
-                                                                    '<li class="list-group-item"><input onclick="checkSame();" name="result" id="result" type="text" class="form-control" placeholder="result correct"></li></li></ul>'+
-                                                                    '<li class="list-group-item text-center"><button type="submit" class="btn btn-outline-primary">Add question</button></li>'+
-                                                                    '</form>',
-                                                                    showCancelButton: false,
-                                                                    showConfirmButton: false
-                                                                           
-                                                            })
-                                                        }
-                                                    </script>
                                                 <% } %>
                                                
                                             </div>
@@ -303,8 +337,8 @@
     
 
     <!-- Bootstrap -->
-    <script src="../../assets/vendor/popper.min.js"></script>
-    <script src="../../assets/vendor/bootstrap.min.js"></script>
+    <script src="/assets/vendor/popper.min.js"></script>
+    <script src="/assets/vendor/bootstrap.min.js"></script>
 
     <!-- Perfect Scrollbar -->
     <script src="../../assets/vendor/perfect-scrollbar.min.js"></script>
@@ -330,7 +364,6 @@
     <!-- App Settings (safe to remove) -->
     <script src="../../assets/js/app-settings.js"></script>
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- <script>
         document.getElementById("submit").addEventListener('click', function(){
