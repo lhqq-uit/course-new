@@ -170,7 +170,7 @@
                                                         $(document).ready(function(){
                                                             $("#id-<%= e.lessons[i]._id %>").click(function(){
                                                                 $('#id-<%= e.lessons[i]._id %>').prop('disabled', true);
-                                                                let html = '<h4 class="flex mt-3">Just add one question <br> Add question for Lesson <%= i+1 %> - <%= e.lessons[i].title %></h4>'+
+                                                                let html = '<h4 class="flex mt-3"><span class="text-danger">Just add one question</span> <br> Add question for Lesson <%= i+1 %> - <%= e.lessons[i].title %>:</h4>'+
                                                                     '<form action="/q/add/question/<%= e.lessons[i]._id %>" method="post">'+
                                                                     '<ul class="list-group stack">'+
                                                                     '<li class="list-group-item"><input name="question" id="question" type="text" class="form-control" placeholder="Question"></li>'+
@@ -178,7 +178,15 @@
                                                                     '<li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 2"></li>'+
                                                                     '<li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 3"></li>'+
                                                                     '<li class="list-group-item"><input name="list_answer" id="list_answer" type="text" class="form-control" placeholder="answer 4"></li>'+
-                                                                    '<li class="list-group-item"><input onclick="checkSame();" name="result" id="result" type="text" class="form-control" placeholder="result correct"></li></li></ul>'+
+                                                                    '<h4 class="flex m-3 text-success">Choose the correct answer:</h4>'+
+                                                                    '<li class="list-group-item">'+
+                                                                    '<select name="result" id="result" class="form-control custom-select">'+
+                                                                    '<option value="A" selected>Answer 1</option>'+
+                                                                    '<option value="B">Answer 2</option>'+
+                                                                    '<option value="C">Answer 3</option>'+
+                                                                    '<option value="D">Answer 4</option>'+
+                                                                    '</select></li>'+
+                                                                    '</li></ul>'+
                                                                     '<li class="list-group-item text-center"><button type="submit" class="btn btn-outline-primary">Add question</button></li>'+
                                                                     '</form>';
                                                                 $("#ids-<%= e.lessons[i]._id %>").append(html);
@@ -208,10 +216,28 @@
                                                                             <% } %> 
                                                                     <% } %>   
                                                                     <li class="list-group-item">
-                                                                            Result correct
-                                                                        <input onclick="checkSame();" name="result" id="result"
-                                                                            type="text" class="form-control" value="<%= e.lessons[i].quizzes[j].result %>"></li>
+                                                                           
+                                                                        <h5 class="flex m-3 text-success">Correct answer:</h5>
+                                                                        <input type="text" class="form-control" value="<%= e.lessons[i].quizzes[j].result %>" disabled></li>
+                                                                        
                                                                     </li>  
+                                                                    <li class="list-group-item">
+                                                                        <ul class="list-group text-info">
+                                                                            <li class="list-group-item">
+                                                                                <span class="text-danger"><b>Note: </b></span> <i>A - Answer 1; B - Answer 2; C - Answer 3; D - Answer 4</i>
+                                                                            </li>
+                                                                           
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li class="list-group-item">
+                                                                        <h4 class="flex m-3 text-success">Choose the correct answer:</h4>
+                                                                        <select name="result" id="result" class="form-control custom-select">
+                                                                            <option value="A" selected>Answer 1</option>
+                                                                            <option value="B">Answer 2</option>
+                                                                            <option value="C">Answer 3</option>
+                                                                            <option value="D">Answer 4</option>
+                                                                        </select>
+                                                                    </li>
                                                                     <li class="list-group-item text-right">
                                                                             <button type="submit" class="btn btn-outline-primary">Update question</button>
                                                                             <a href="/q/del/question/<%= e.lessons[i].quizzes[j]._id %>" class="btn btn-outline-danger">Delete</a>
