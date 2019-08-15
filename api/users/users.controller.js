@@ -170,7 +170,7 @@ module.exports = {
         }
         try {
             // req.user._id not expect
-            await User.findOneAndUpdate({ _id: req.user._id }, newUser, { upsert: true })
+            await User.findOneAndUpdate({ _id: req.user._id }, newUser)
             res.status(200).json({ message: 'Update user successfully!', as: true })
         } catch (error) {
             res.status(500).json({ message: error.message });
