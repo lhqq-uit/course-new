@@ -85,31 +85,15 @@ module.exports = {
       }
       let quizzes = await Quiz.find({ lesson: req.params.idLesson });
       let quizzes_answer = quizzes.map(item => item.result);
-      // res.json(quizzes);
-      // console.log(quizzes);
-      //check answered quiz ?
-      // quiz_true = []
-      // for (let i = 0; i < student.quiz_true.length; i++) {
-      //   quiz_true.push(student.quiz_true[i].id)
-      // }
-      // if (quiz_true.includes(req.params.idQuiz)) {
-      //   return res.status(200).json({
-      //     message: 'This quiz has been answered true by you'
-      //   })
-      // }
-      // if (req.body.answer && req.body.answer.toUpperCase() !== quiz.result.toUpperCase())
-      //   return res.status(200).json({ result: false })
-      // let answer = {
-      //   lesson: quiz.lesson,
-      //   id: quiz._id
-      // }
       let result = [];
       let answer = req.body.answer;
+      let amountQuizTrueOfLesson = 0;
       for (let i = 0; i < quizzes_answer.length; i++) {
         if (answer[i] !== quizzes_answer[i]) {
           result.push(false);
         } else {
           result.push(true);
+          amountQuizTrueOfLesson += 1;
         }
       }
       let amount_true = result.filter(x => x == true).length;
@@ -127,6 +111,19 @@ module.exports = {
           }
         }
       );
+      if (amountQuizTrueOfLesson / quizzes_answer.length >= 0.6) {
+        await Student.findOneAndUpdate(
+          {
+            user: req.user.data._id,
+            "courses.id_course": lesson.course
+          },
+          {
+            $addToSet: {
+              "courses.$.lesson_number": req.params.idLesson
+            }
+          }
+        );
+      }
       res.status(200).json({ result });
     } catch (error) {
       res.status(500).json({

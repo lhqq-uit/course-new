@@ -63,18 +63,18 @@
                 <div class="container page__container">
                     <nav class="nav navbar-nav">
                         <div class="nav-item navbar-list__item">
-                            <a href="student-take-course.html" class="nav-link"><i class="material-icons icon--left">keyboard_backspace</i> Back to Course</a>
+                            <a href="/course/<%= course._id %>" class="nav-link"><i class="material-icons icon--left">keyboard_backspace</i> Back to Course</a>
                         </div>
                         <div class="nav-item navbar-list__item">
                             <div class="d-flex align-items-center flex-nowrap">
                                 <div class="mr-16pt">
-                                    <a href="student-take-course.html"><img src="/assets/images/paths/angular_64x64.png" width="40" alt="Angular" class="rounded"></a>
+                                    <a href="/course/<%= course._id %>"><img src="/upload/images/<%= course.avatar %>" width="40" alt="Angular" class="rounded"></a>
                                 </div>
                                 <div class="flex">
-                                    <a href="student-take-course.html" class="card-title text-body mb-0">Angular Fundamentals</a>
+                                    <a href="/course/<%= course._id %>" class="card-title text-body mb-0"><%= course.name %></a>
                                     <p class="lh-1 d-flex align-items-center mb-0">
-                                        <span class="text-50 small font-weight-bold mr-8pt">Elijah Murray</span>
-                                        <span class="text-50 small">Software Engineer and Developer</span>
+                                        <span class="text-50 small font-weight-bold mr-8pt"><%= course.teacher.fullname %></span>
+                                        <!-- <span class="text-50 small">Software Engineer and Developer</span> -->
                                     </p>
                                 </div>
                             </div>
@@ -82,25 +82,12 @@
                     </nav>
                 </div>
             </div>
-            <script>var result_answer = []</script>
-
-            <%  let your_score = 0; let total_score = 0;  %>
-
-            <% result.result.forEach(function(item){ %>
-                <% if (item == true) { %>
-                    <% your_score += 10; %>
-                <% } %>
-                <% total_score += 10 %>
-                <script>
-                    
-                    result_answer.push(<%= item %>);
-                </script>
-            <% }); %>
+            
             <div class="mdk-box bg-dark mdk-box--bg-gradient-primary js-mdk-box mb-0" data-effects="blend-background">
                 <div class="mdk-box__content">
                     <div class="py-64pt text-center text-sm-left">
                         <div class="container d-flex flex-column justify-content-center align-items-center">
-                            <h1 class="text-white mb-24pt">Your Score: <%= your_score %></h1>
+                            <h1 class="text-white mb-24pt" id="your-score"></h1>
                         </div>
                     </div>
                 </div>
@@ -108,15 +95,15 @@
             <div class="navbar navbar-expand-sm navbar-light navbar-submenu navbar-list p-0 m-0 align-items-center">
                 <div class="container page__container">
                     <ul class="nav navbar-nav flex align-items-sm-center">
-                        <li class="nav-item navbar-list__item"><%= your_score %>/<%= total_score %> Score</li>
-                        <li class="nav-item navbar-list__item">
+                        <li class="nav-item navbar-list__item" id="score"> </li>
+                        <!-- <li class="nav-item navbar-list__item">
                             <i class="material-icons text-muted icon--left">schedule</i>
                             12 minutes
                         </li>
                         <li class="nav-item navbar-list__item">
                             <i class="material-icons text-muted icon--left">assessment</i>
                             Intermediate
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -816,9 +803,13 @@
     <script src="/assets/js/app-settings.js"></script>
 
     <script>
+            var result_answer = JSON.parse(localStorage.getItem("boolean_answer"));
             var your_answer = JSON.parse(localStorage.getItem("answer"));
+            let your_score = 0;
+            let total_score = result_answer.length * 10;
             for(let i=0; i<your_answer.length; i++) {
                 if(result_answer[i] == true){
+                    your_score += 10;
                     if(your_answer[i] == "A"){
                     document.querySelectorAll('.answer-A')[i].classList.add('list-quiz-badge-success');
                     } else if( your_answer[i] == "B"){
@@ -840,7 +831,9 @@
                     }
                 }
             }
-            localStorage.removeItem('answer')
+            document.getElementById('your-score').innerHTML = "You score: " + your_score;
+            document.getElementById('score').innerHTML = `${your_score}/${total_score} Score`
+
         </script>
 
 
