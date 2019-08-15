@@ -70,7 +70,7 @@
 
         <!-- Header -->
         <% if (infoStudent == null) { %>
-            <% include layout/header %>
+            <% include ../layout/header %>
         <% } else{  %>
         <%- include('../layout/header-dashboard', {avatar: infoStudent.user.avatar}); %>
         <% } %>
@@ -144,7 +144,7 @@
                                         document.getElementById("ks2-<%= course._id %>").innerHTML = array;
                                     </script>
                             </div>
-                            <p class="lh-1 mb-0"><small class="text-muted"><%= course.ratings.length %> ratings</small></p>
+                            <p class="lh-1 mb-0"><small class="text-muted"><%= course.ratings.length -1 %> ratings</small></p>
                         </li>
                     </ul>
                 </div>
@@ -372,7 +372,7 @@
                                         document.getElementById("ks21-<%= course._id %>").innerHTML = array;
                                     </script>
                                 </div>
-                                <p class="text-muted mb-0"><%= course.ratings.length %> ratings</p>
+                                <p class="text-muted mb-0"><%= course.ratings.length - 1 %> ratings</p>
                             </div>
                             <div class="col-md-9">
 
