@@ -55,7 +55,7 @@
 
         <!-- Header -->
 
-        <% include ../layout/header-dashboard-quiz %>
+        <%- include('../layout/header-dashboard', {avatar: infoStudent.avatar}); %>
 
         <!-- // END Header -->
 
@@ -67,22 +67,21 @@
                 <div class="container page__container">
                     <nav class="nav navbar-nav">
                         <div class="nav-item navbar-list__item">
-                            <a href="student-take-course.html" class="nav-link"><i
+                            <a href="/course/<%= course._id %>" class="nav-link"><i
                                     class="material-icons icon--left">keyboard_backspace</i> Back to Course</a>
                         </div>
                         <div class="nav-item navbar-list__item">
                             <div class="d-flex align-items-center flex-nowrap">
                                 <div class="mr-16pt">
-                                    <a href="student-take-course.html"><img
-                                            src="../../../assets/images/paths/angular_64x64.png" width="40"
+                                    <a href="<%= course._id %>"><img
+                                            src="/upload/images/<%= course.avatar %>" width="40"
                                             alt="Angular" class="rounded"></a>
                                 </div>
                                 <div class="flex">
-                                    <a href="student-take-course.html" class="card-title text-body mb-0">Angular
-                                        Fundamentals</a>
+                                    <a href="/course/<%= course._id %>" class="card-title text-body mb-0"><%= course.name %></a>
                                     <p class="lh-1 d-flex align-items-center mb-0">
-                                        <span class="text-50 small font-weight-bold mr-8pt">Elijah Murray</span>
-                                        <span class="text-50 small">Software Engineer and Developer</span>
+                                        <span class="text-50 small font-weight-bold mr-8pt"><%= course.teacher.fullname %></span>
+                                        <!-- <span class="text-50 small">Software Engineer and Developer</span> -->
                                     </p>
                                 </div>
                             </div>
@@ -151,32 +150,40 @@
 
                             </script>
                             <% } else{ %>
-                            <a href="/student/result-take-quiz/<%= data.lesson %>"
+                            <button
                                 class="btn justify-content-center btn-accent w-100 w-sm-auto mb-16pt mb-sm-0 ml-sm-16pt" id="finish-question">
-                                Finish</a>
+                                Finish</button>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
                             <script>
                                     document.querySelector('#finish-question').addEventListener('click', function () {
                                         var a = JSON.parse(localStorage.getItem('answer')) || [];
-                                    var list_answer = document.getElementsByName('answer');
-                                    for (let i = 0; i < list_answer.length; i++) {
-                                        if (list_answer[i].checked == true) {
-                                            var choose = document.getElementsByName('answer')[i].value;
+                                        var list_answer = document.getElementsByName('answer');
+                                        for (let i = 0; i < list_answer.length; i++) {
+                                            if (list_answer[i].checked == true) {
+                                                var choose = document.getElementsByName('answer')[i].value;
+                                            }
                                         }
-                                    }
-                                    if (choose) {
-                                        a.push(choose);
-                                    } else {
-                                        a.push('No answer')
-                                    }
-                                    localStorage.setItem('answer', JSON.stringify(a));
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.open("POST", "http://localhost:3000/student/result-take-quiz/<%= data.lesson %>", true);
-                                        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-                                        var j = {
-                                            answer: JSON.parse(localStorage.getItem('answer')),
-                                        };
-                                        xhr.send(JSON.stringify(j));
+                                        if (choose) {
+                                            a.push(choose);
+                                        } else {
+                                            a.push('No answer')
+                                        }
+                                        localStorage.setItem('answer', JSON.stringify(a));
+                                        axios({
+                                            method: "POST",
+                                            url: "http://localhost:3000/student/result-take-quiz/<%= data.lesson %>",
+                                            data:{
+                                                answer: JSON.parse(localStorage.getItem('answer')),
+                                            }
+                                        })
+                                        .then(res=>{
+                                            // alert(res.data)
+                                            localStorage.setItem("boolean_answer", JSON.stringify(res.data.result));
+                                            window.location.replace("http://localhost:3000/student/result-take-quiz/<%= data.lesson %>")
+                                        })
+                                        .catch(err => console.log(err.message))
                                     });
+                            
                             </script>
                             <% } %>
                         </div>

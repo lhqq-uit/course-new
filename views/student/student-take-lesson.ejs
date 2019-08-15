@@ -362,7 +362,9 @@
     <script src="/assets/js/app-settings.js"></script>
 
     <script>
-
+        
+        localStorage.removeItem('answer');
+        localStorage.removeItem('boolean_answer');
         var player = jwplayer('player').setup({
             "playlist": [
                 {
