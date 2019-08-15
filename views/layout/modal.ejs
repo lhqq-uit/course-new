@@ -32,21 +32,21 @@
 
                             <div id="courses-development" class="tab-pane show active">
                                 <div class="row no-gutters">
-                                    <div class="col-md-6 p-0">
+                                    <div class="col-md-12 p-0">
                                         <div class="p-24pt d-flex h-100 flex-column">
                                             <div class="flex">
                                                 <h5 class="text-black-100">Courses</h5>
                                                 <ul class="nav flex-column mb-24pt">
                                                     <% if (allcourse) { %>
                                                         <% allcourse.forEach(function(e) { %>
-                                                            <% if (e.tag.length > 0) { %>
-                                                                <% for (let i = 0; i < e.tag.length; i++) { %>
-                                                                    <% if (e.tag[i] == "AI") { %>
+                                                            <% if (e.topic == "AI" ) { %>
+                                                               
+                                                                  
                                                                         <li class="nav-item">
                                                                             <a class="nav-link px-0" href="/course/<%= e._id %>"><%= e.name %></a>
                                                                         </li>
-                                                                    <% } %>
-                                                                <% } %>
+                                                                 
+                                                               
                                                             <% } %>     
                                                         <% }); %>
                                                     <% } else{  %> 
@@ -74,14 +74,12 @@
 
                                                     <% if (allcourse) { %>
                                                         <% allcourse.forEach(function(e) { %>
-                                                            <% if (e.tag.length > 0) { %>
-                                                                <% for (let i = 0; i < e.tag.length; i++) { %>
-                                                                    <% if (e.tag[i] == "Internet of things") { %>
+                                                            <% if (e.topic == "Internet of things") { %>
+                                                               
                                                                         <li class="nav-item">
                                                                             <a class="nav-link px-0" href="/course/<%= e._id %>"><%= e.name %></a>
                                                                         </li>
-                                                                    <% } %>
-                                                                <% } %>
+                                                                   
                                                             <% } %>     
                                                         <% }); %>
                                                     <% } else{  %> 
@@ -107,14 +105,12 @@
 
                                                     <% if (allcourse) { %>
                                                         <% allcourse.forEach(function(e) { %>
-                                                            <% if (e.tag.length > 0) { %>
-                                                                <% for (let i = 0; i < e.tag.length; i++) { %>
-                                                                    <% if (e.tag[i] == "Web development") { %>
+                                                            <% if (e.topic == "Web development") { %>
+                                                               
                                                                         <li class="nav-item">
                                                                             <a class="nav-link px-0" href="/course/<%= e._id %>"><%= e.name %></a>
                                                                         </li>
-                                                                    <% } %>
-                                                                <% } %>
+                                                                    
                                                             <% } %>     
                                                         <% }); %>
                                                     <% } else{  %> 
@@ -142,14 +138,12 @@
                                                     
                                                     <% if (allcourse) { %>
                                                         <% allcourse.forEach(function(e) { %>
-                                                            <% if (e.tag.length > 0) { %>
-                                                                <% for (let i = 0; i < e.tag.length; i++) { %>
-                                                                    <% if (e.tag[i] == "Language") { %>
+                                                            <% if (e.topic == "Language") { %>
+                                                                
                                                                         <li class="nav-item">
                                                                             <a class="nav-link px-0" href="/course/<%= e._id %>"><%= e.name %></a>
                                                                         </li>
-                                                                    <% } %>
-                                                                <% } %>
+                                                                    
                                                             <% } %>     
                                                         <% }); %>
                                                     <% } else{  %> 
@@ -176,14 +170,12 @@
 
                                                     <% if (allcourse) { %>
                                                         <% allcourse.forEach(function(e) { %>
-                                                            <% if (e.tag.length > 0) { %>
-                                                                <% for (let i = 0; i < e.tag.length; i++) { %>
-                                                                    <% if (e.tag[i] == "STEM") { %>
+                                                            <% if (e.topic == "STEM") { %>
+                                                               
                                                                         <li class="nav-item">
                                                                             <a class="nav-link px-0" href="/course/<%= e._id %>"><%= e.name %></a>
                                                                         </li>
-                                                                    <% } %>
-                                                                <% } %>
+                                                                   
                                                             <% } %>     
                                                         <% }); %>
                                                     <% } else{  %> 

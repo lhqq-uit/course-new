@@ -246,7 +246,7 @@ router.get("/", async (req, res) => {
         url: `${domain}/api/course`,
     }).then(result => {
         allcourse = result.data
-        console.log(allcourse)
+        //console.log(allcourse)
     }).catch(err => {
         console.log(err)
     })
