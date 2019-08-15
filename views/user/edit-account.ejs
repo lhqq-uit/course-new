@@ -68,7 +68,7 @@
             <% } %>
 
             <div class="container page__container">
-                <form method='post' action="/user/edit-account">
+                <form method='post' action="/user/edit-account" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-lg-9">
                             <div class="page-section">
@@ -78,7 +78,7 @@
                                             <div class="form-group row mb-0">
                                                 <label class="col-form-label col-sm-3">Full name</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="fullname" class="form-control" value="<%= data.user.fullname %>" placeholder="Your first name ...">
+                                                    <input type="text" name="fullname" class="form-control" value="<%= data.user.fullname %>">
                                                 </div>
                                             </div>
                                         </div>
@@ -86,7 +86,7 @@
                                             <div class="form-group row mb-0">
                                                 <label class="col-form-label col-sm-3">Email address</label>
                                                 <div class="col-sm-9">
-                                                    <input type="email" class="form-control" name="email" value="<%= data.user.email %>" placeholder="Your email address ...">
+                                                    <input type="email" class="form-control" name="email" value="<%= data.user.email %>">
                                                     <small class="form-text text-muted">Note that if you change your email, you will have to confirm it again.</small>
                                                 </div>
                                             </div>
@@ -100,8 +100,8 @@
                                                     </a>
                                                     <div class="media-body">
                                                         <div class="custom-file">
-                                                            <input type="file" class="custom-file-input" id="inputGroupFile01" onchange="readURL(this);">
-                                                            <label class="custom-file-label" name="image" for="inputGroupFile01">Choose file</label>
+                                                            <input type="file" name="image" class="custom-file-input" id="inputGroupFile01" onchange="readURL(this);">
+                                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -111,7 +111,15 @@
                                             <div class="form-group row mb-0">
                                                 <label class="col-form-label col-sm-3">About you</label>
                                                 <div class="col-sm-9">
-                                                    <textarea rows="3" name="about" class="form-control" placeholder="About you ..."></textarea>
+                                                    <textarea rows="3" name="about" placeholder="<%= data.user.about %>" value="<%= data.user.about %>" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <div class="form-group row mb-0">
+                                                <label class="col-form-label col-sm-3">Connect you</label>
+                                                <div class="col-sm-9">
+                                                    <textarea rows="3" name="connect" placeholder="<%= data.user.connect %>" value="<%= data.user.connect %>" class="form-control"></textarea>
                                                 </div>
                                             </div>
                                         </div>
