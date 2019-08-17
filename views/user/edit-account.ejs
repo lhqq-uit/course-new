@@ -68,7 +68,7 @@
             <% } %>
 
             <div class="container page__container">
-                <form method='post' action="/user/edit-account" enctype="multipart/form-data">
+                <form method='post' enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-lg-9">
                             <div class="page-section">
@@ -96,7 +96,7 @@
                                                 <label class="col-form-label col-sm-3">Your photo</label>
                                                 <div class="col-sm-9 media align-items-center">
                                                     <a href="#" class="media-left mr-16pt">
-                                                        <img id="output-img" src="/avatar/<%= data.user.avatar %>" alt="people" width="56" class="rounded-circle" />
+                                                        <img id="output-img" src="/upload/avatar/<%= data.user.avatar %>" alt="people" width="56" class="rounded-circle" />
                                                     </a>
                                                     <div class="media-body">
                                                         <div class="custom-file">
