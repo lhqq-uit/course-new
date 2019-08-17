@@ -176,6 +176,15 @@
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">List Course</h6>
+              <% if (success != "") { %>
+                <div class="alert alert-success" role="alert">
+                  <%= success %>
+                </div>
+              <% }else if(err != ""){ %>
+                <div class="alert alert-danger" role="alert">
+                  <%= err %>
+                </div>
+              <% } %>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -209,20 +218,19 @@
                       <td><%= student.user.fullname %></td>
                       <td><%= student.user.email %></td>
                       <td><%= student.balance %></td>
-                      <td><%= student.iq %></td>
+                      <td>cho</td>
                       <td><%= student.courses.length %></td>
                       <td>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#modelId<%= student.user._id %>">
-                          Charge
+                        <button type="button" class="btn btn-outline-primary btn-xs" data-toggle="modal" data-target="#modelId<%= student.user._id %>">
+                          Buy Course
                         </button>
-                        
                         <!-- Modal -->
                         <div class="modal fade" id="modelId<%= student.user._id %>" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <form method="post" action="/admin/charge/<%= student.user._id %>">
-                              <div class="modal-body">
+                              <div class="modal-body">   
                                 <div class="form-group">
                                     <label for="">ID User</label>
                                     <input type="text" class="form-control" name="_id" id=""  value="<%= student.user._id %>" disabled />
@@ -232,8 +240,8 @@
                                   <input type="text" class="form-control" name="username" id=""  value="<%= student.user.username %>" disabled />
                                 </div>
                                 <div class="form-group">
-                                  <label for="">Number</label>
-                                  <input type="number" class="form-control" name="numberPlus" id="">
+                                  <label for="">ID course: </label>
+                                  <input type="text" class="form-control" name="idCourse" id="">
                                 </div>
                               </div>
                               <div class="modal-footer">
