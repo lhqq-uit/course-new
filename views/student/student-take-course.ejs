@@ -91,8 +91,36 @@
                 <div class="mdk-box__content">
                     <div class="hero py-64pt text-center text-sm-left">
                         <div class="container">
-                            <h1 class="text-white"><%= course.name%></h1>
-                            <p class="lead text-white-50 measure-hero-lead mb-24pt more"><%= course.description %></p>
+                                <h1 class="text-white"><%= course.name %></h1><!-- <div class="more" id="more"> -->
+                                        <p id="frist1" class="lead text-white-50 measure-hero-lead"></p>
+                                        <p id="frist" class="lead text-white-50 measure-hero-lead"></p>
+                                        <div id="last1">
+                                            <p  class="lead text-white-50 measure-hero-lead"><%= course.description %> <a id="less" class="text-white">Show less</a></p>
+                                            <div class="mb-4"></div>
+                                        </div>
+                                    <script type="text/javascript">
+                                    $("#last1").hide();
+                                    var str = $("#last1").text();
+                                    // console.log(str)
+                                    if (str.length > 150) {
+                                        var res = str.slice(0, 150)+ "..." + '<a id="more" class="text-white"> Show more </a>';
+                                        document.getElementById("frist").innerHTML= res;
+                                    } else {
+                                        document.getElementById("frist").innerHTML= str;
+                                    }
+                                    // console.log(res)
+                                    $(document).ready(function(){
+                                    $("#more").click(function(){
+                                        $("#frist").hide();
+                                        $("#last1").show();
+                                    });
+                                    $("#less").click(function(){
+                                        $("#last1").hide();
+                                        $("#frist").show();
+                                    });
+                                    });
+                                                                    
+                                     </script>
                             <a href="/course/<%= course._id%>" class="btn btn-white">Resume course</a>
                             <% if(!bought){ %>
                             <a onclick="clickBuy()" class="btn btn-white">Buy course</a>
@@ -277,329 +305,6 @@
 
             </div>
 
-            <!-- <div class="page-section bg-white border-bottom-2">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-7 mb-24pt mb-md-0">
-                            <h4>About the author</h4>
-                            <p class="text-70 mb-24pt">Eddie Bryan is a software developer at LearnD*ash. With more than 20 years o*f software development experience, he has gained a passion for Agile software development -- especially Lean.</p>
-
-                            <h4>More from the author</h4>
-                            <div class="list-group list-group-flush">
-                                <div class="list-group-item px-0">
-                                    <a href="#" class="d-block mb-4pt">Angular Best Practices</a>
-                                    <p class="lh-1 mb-0">
-                                        <small class="text-muted mr-8pt">6h 40m</small>
-                                        <small class="text-muted mr-8pt">13,876 Views</small>
-                                        <small class="text-muted">13 May 2018</small>
-                                    </p>
-                                </div>
-                                <div class="list-group-item px-0">
-                                    <a href="#" class="d-block mb-4pt">Unit Testing in Angular</a>
-                                    <p class="lh-1 mb-0">
-                                        <small class="text-muted mr-8pt">6h 40m</small>
-                                        <small class="text-muted mr-8pt">13,876 Views</small>
-                                        <small class="text-muted">13 May 2018</small>
-                                    </p>
-                                </div>
-                                <div class="list-group-item px-0">
-                                    <a href="#" class="d-block mb-4pt">Migrating Applications from AngularJS to Angular</a>
-                                    <p class="lh-1 mb-0">
-                                        <small class="text-muted mr-8pt">6h 40m</small>
-                                        <small class="text-muted mr-8pt">13,876 Views</small>
-                                        <small class="text-muted">13 May 2018</small>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5 border-left-md pt-sm-32pt pt-md-0 d-flex flex-column align-items-center justify-content-center">
-                            <div class="text-center">
-                                <p class="mb-16pt">
-                                    <img src="/assets/images/people/110/guy-6.jpg" alt="guy-6" class="rounded-circle" width="64">
-                                </p>
-                                <h4 class="m-0">Eddie Bryan</h4>
-                                <p class="lh-1">
-                                    <small class="text-muted">Angular, Web Development</small>
-                                </p>
-                                <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
-                                    <a href="instructor-profile.html" class="btn btn-outline-primary mb-16pt mb-sm-0 mr-sm-16pt">Follow</a>
-                                    <a href="instructor-profile.html" class="btn btn-outline-secondary">View Profile</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-            <!-- <div class="page-section border-bottom-2">
-                <div class="container">
-                    <div class="page-headline text-center">
-                        <h2>Feedback</h2>
-                        <p class="lead text-70 measure-lead mx-auto">What other students turned professionals have to say about us after learning with us and reaching their goals.</p>
-                    </div>
-
-                    <div class="position-relative carousel-card">
-                        <div class="row d-block js-mdk-carousel" id="carousel-feedback">
-                            <a class="carousel-control-next js-mdk-carousel-control mt-n24pt" href="#carousel-feedback" role="button" data-slide="next">
-                                <span class="carousel-control-icon material-icons" aria-hidden="true">keyboard_arrow_right</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                            <div class="mdk-carousel__content">
-
-                                <div class="col-12 col-md-6">
-                                    <div class="card card--elevated card-body">
-                                        <blockquote class="mb-0">
-                                            <p class="text-70">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia distinctio reiciendis iusto id, doloribus optio soluta laborum nobis dolor tempore velit porro maiores eveniet voluptas officia ipsa magnam aliquam. Perferendis?</p>
-
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <img src="/assets/images/people/110/guy-1.jpg" width="40" alt="avatar" class="rounded-circle">
-                                                </div>
-                                                <div class="media-body media-middle">
-                                                    <p class="mb-0"><a href="#" class="text-body"><strong>Umberto Kass</strong></a></p>
-                                                    <div class="rating">
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </blockquote>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-6">
-                                    <div class="card card--elevated card-body">
-                                        <blockquote class="mb-0">
-                                            <p class="text-70">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia distinctio reiciendis iusto id, doloribus optio soluta laborum nobis dolor tempore velit porro maiores eveniet voluptas officia ipsa magnam aliquam. Perferendis?</p>
-
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <img src="/assets/images/people/110/guy-2.jpg" width="40" alt="avatar" class="rounded-circle">
-                                                </div>
-                                                <div class="media-body media-middle">
-                                                    <p class="mb-0"><a href="#" class="text-body"><strong>Umberto Kass</strong></a></p>
-                                                    <div class="rating">
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                                        <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </blockquote>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white">
-                <div class="pt-32pt pt-lg-64pt pb-16pt pb-lg-32pt">
-                    <div class="container page__container">
-                        <h4>Student Feedback</h4>
-                        <div class="row">
-                            <div class="col-md-3 mb-32pt mb-md-0">
-                                <div class="display-1">4.7</div>
-                                <div class="rating rating-32">
-                                    <span class="rating__item"><span class="material-icons">star</span></span>
-                                    <span class="rating__item"><span class="material-icons">star</span></span>
-                                    <span class="rating__item"><span class="material-icons">star</span></span>
-                                    <span class="rating__item"><span class="material-icons">star</span></span>
-                                    <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                </div>
-                                <p class="text-muted mb-0">20 ratings</p>
-                            </div>
-                            <div class="col-md-9">
-
-                                <div class="row align-items-center mb-8pt">
-                                    <div class="col-md-9 col-sm-6">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="75" style="width: 75%" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 d-none d-sm-flex align-items-center">
-                                        <div class="rating rating-24 mr-8pt">
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                        </div>
-                                        <span class="text-muted">75%</span>
-                                        <span class="material-icons icon-16pt ml-8pt">close</span>
-                                    </div>
-                                </div>
-                                <div class="row align-items-center mb-8pt">
-                                    <div class="col-md-9 col-sm-6">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="16" style="width: 16%" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 d-none d-sm-flex align-items-center">
-                                        <div class="rating rating-24 mr-8pt">
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                        </div>
-                                        <p class="text-muted mb-0">16%</p>
-                                    </div>
-                                </div>
-                                <div class="row align-items-center mb-8pt">
-                                    <div class="col-md-9 col-sm-6">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="12" style="width: 12%" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 d-none d-sm-flex align-items-center">
-                                        <div class="rating rating-24 mr-8pt">
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                        </div>
-                                        <p class="text-muted mb-0">12%</p>
-                                    </div>
-                                </div>
-                                <div class="row align-items-center mb-8pt">
-                                    <div class="col-md-9 col-sm-6">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="9" style="width: 9%" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 d-none d-sm-flex align-items-center">
-                                        <div class="rating rating-24 mr-8pt">
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                        </div>
-                                        <p class="text-muted mb-0">9%</p>
-                                    </div>
-                                </div>
-                                <div class="row align-items-center mb-8pt">
-                                    <div class="col-md-9 col-sm-6">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-secondary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-6 d-none d-sm-flex align-items-center">
-                                        <div class="rating rating-24 mr-8pt">
-                                            <span class="rating__item"><span class="material-icons">star</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                            <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                        </div>
-                                        <p class="text-muted mb-0">0%</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="pt-16pt pt-lg-32pt">
-                    <div class="page-separator-mask js-read-more">
-                        <div class="container page__container">
-
-
-
-
-                            <div class="mb-16pt pb-16pt border-bottom row">
-                                <div class="col-md-3 mb-16pt mb-md-0">
-                                    <div class="d-flex">
-                                        <a href="student-profile.html" class="avatar avatar-sm mr-16pt">
-                                            <img src="/assets/images/people/110/guy-1.jpg" alt="avatar" class="avatar-img rounded-circle">
-                                        </a>
-                                        <div class="flex">
-                                            <p class="text-muted m-0">2 days ago</p>
-                                            <p class="mb-0"><a href="student-profile.html" class="text-body">Laza Bogdan</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="rating mb-8pt">
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                    </div>
-                                    <p class="text-70 mb-0">This course is absolutely amazing, Bryan goes* out of his way to really expl*ain things clearly I couldn't be happier, so glad I made this purchase!</p>
-                                </div>
-                            </div>
-
-                            <div class="mb-16pt pb-16pt border-bottom row page-separator-mask__item">
-                                <div class="col-md-3 mb-16pt mb-md-0">
-                                    <div class="d-flex">
-                                        <a href="student-profile.html" class="avatar avatar-sm mr-16pt">
-                                            <img src="/assets/images/people/110/guy-1.jpg" alt="avatar" class="avatar-img rounded-circle">
-                                        </a>
-                                        <div class="flex">
-                                            <p class="text-muted m-0">2 days ago</p>
-                                            <p class="mb-0"><a href="student-profile.html" class="text-body">Laza Bogdan</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="rating mb-8pt">
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                    </div>
-                                    <p class="text-70 mb-0">This course is absolutely amazing, Bryan goes* out of his way to really expl*ain things clearly I couldn't be happier, so glad I made this purchase!</p>
-                                </div>
-                            </div>
-
-                            <div class="mb-16pt pb-16pt border-bottom row">
-                                <div class="col-md-3 mb-16pt mb-md-0">
-                                    <div class="d-flex">
-                                        <a href="student-profile.html" class="avatar avatar-sm mr-16pt">
-                                            <img src="/assets/images/people/110/guy-1.jpg" alt="avatar" class="avatar-img rounded-circle">
-                                        </a>
-                                        <div class="flex">
-                                            <p class="text-muted m-0">2 days ago</p>
-                                            <p class="mb-0"><a href="student-profile.html" class="text-body">Laza Bogdan</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="rating mb-8pt">
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star</span></span>
-                                        <span class="rating__item"><span class="material-icons">star_border</span></span>
-                                    </div>
-                                    <p class="text-70 mb-0">This course is absolutely amazing, Bryan goes* out of his way to really expl*ain things clearly I couldn't be happier, so glad I made this purchase!</p>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class="page-separator-mask__content">
-                            <div class="page-separator-mask__top"></div>
-                            <div class="page-separator-mask__bottom bg-body"></div>
-                            <div class="page-separator">
-                                <a href="#" class="page-separator__text link-text">read more <i class="material-icons">keyboard_arrow_down</i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
 
             <div class="page-section">
                 <div class="container page__container">
@@ -745,44 +450,6 @@
 
     <!-- jQuery -->
     <script src="/assets/vendor/jquery.min.js"></script>
-    <script>
-    $(document).ready(function() {
-    // Configure/customize these variables.
-    var showChar = 100;  // How many characters are shown by default
-    var ellipsestext = "...";
-    var moretext = "Show less";
-    var lesstext = "Show more >";
-    
-
-    $('.more').each(function() {
-        var content = $(this).html();
- 
-        if(content.length > showChar) {
- 
-            var c = content.substr(0, showChar);
-            var h = content.substr(showChar, content.length - showChar);
- 
-            var html = c + '<span class="moreellipses text-white">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink text-white">' + moretext + '</a></span>';
- 
-            $(this).html(html);
-        }
- 
-    });
- 
-    $(".morelink").click(function(){
-        if($(this).hasClass("less")) {
-            $(this).removeClass("less");
-            $(this).html(moretext);
-        } else {
-            $(this).addClass("less");
-            $(this).html(lesstext);
-        }
-        $(this).parent().prev().toggle();
-        $(this).prev().toggle();
-        return false;
-    });
-});
-    </script>
     <!-- Bootstrap -->
     <script src="/assets/vendor/popper.min.js"></script>
     <script src="/assets/vendor/bootstrap.min.js"></script>
