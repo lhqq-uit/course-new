@@ -24,7 +24,14 @@ router.get('/:idCourse', async function (req, res, next) {
             })
             .catch(error => {
                 // handle error
-                console.log(error);
+                //console.log(error);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
     }
 
@@ -33,9 +40,16 @@ router.get('/:idCourse', async function (req, res, next) {
         url: `${domain}/api/course/${req.params.idCourse}`
     }).then(Response => {
         course = Response.data;
-        console.log(course)
+        //console.log(course)
     }).catch(err => {
-        console.log(err)
+        //console.log(err)
+        if (error.response.status == 403) {
+            res.redirect("/403")
+        } else if (error.response.status == 404) {
+            res.redirect("/404")
+        } else if (error.response.status == 500) {
+            res.redirect("/500")
+        } 
     });
     let topcourse;
     await axios({
@@ -44,7 +58,14 @@ router.get('/:idCourse', async function (req, res, next) {
     }).then(Response => {
         topcourse = Response.data;
     }).catch(err => {
-        console.log(err)
+        // console.log(err)
+        if (error.response.status == 403) {
+            res.redirect("/403")
+        } else if (error.response.status == 404) {
+            res.redirect("/404")
+        } else if (error.response.status == 500) {
+            res.redirect("/500")
+        }
     });
     if (req.session.token) {
 
@@ -63,7 +84,14 @@ router.get('/:idCourse', async function (req, res, next) {
                 }
             });
         }).catch(err => {
-            console.log(err)
+            // console.log(err)
+            if (error.response.status == 403) {
+                res.redirect("/403")
+            } else if (error.response.status == 404) {
+                res.redirect("/404")
+            } else if (error.response.status == 500) {
+                res.redirect("/500")
+            } 
         });
 
         res.render("student/student-take-course", { course, topcourse, bought, infoStudent });

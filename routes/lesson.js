@@ -19,8 +19,15 @@ router.get("/:idLesson", async function (req, res, next) {
             .then(Response => {
                 lesson = Response.data.data;
             })
-            .catch(err => {
-                console.log(err);
+            .catch(error => {
+                // console.log(err);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                } 
             });
         let cmt;
         await axios({
@@ -28,6 +35,14 @@ router.get("/:idLesson", async function (req, res, next) {
             url: `${domain}/api/comment/lesson/${req.params.idLesson}`,
         }).then(response => {
             cmt = response.data.data;
+        }).catch(error => {
+            if (error.response.status == 403) {
+                res.redirect("/403")
+            } else if (error.response.status == 404) {
+                res.redirect("/404")
+            } else if (error.response.status == 500) {
+                res.redirect("/500")
+            } 
         });
         let getInfoUser = jwtDecode(req.session.token);
         res.render("student/student-take-lesson", {
@@ -38,7 +53,7 @@ router.get("/:idLesson", async function (req, res, next) {
             token: req.session.token,
         });
     } else {
-        res.status(403).send("Unauthorized");
+        res.redirect("/login")
     }
 });
 

@@ -93,7 +93,7 @@
                         <li class="nav-item">
                             <!-- router: /take-quiz/:idLesson/:numerical -->
                             <!-- roof of quiz is 0 --> 
-                            <a href="/student/take-quiz/<%= idLesson%>/0" class="nav-link">quiz</a>
+                            <a href="/student/take-quiz/<%= idLesson%>/0" class="nav-link">Answer Quiz</a>
                         </li>
                         <!-- <li class="nav-item">
                             <a href="#" class="nav-link">Notes</a>
@@ -106,7 +106,7 @@
             </div>
             <div class="bg-gradient-primary pb-lg-64pt py-32pt">
                 <div class="container">
-                    <nav class="course-nav">
+                    <!-- <nav class="course-nav">
                         <a href="#" data-toggle="tooltip" data-placement="bottom"
                             data-title="Getting Started with Angular: Introduction"><span
                                 class="material-icons text-primary">check_circle</span></a>
@@ -117,8 +117,8 @@
                             data-title="Getting Started with Angular: Comparing Angular to AngularJS" href="#"><span
                                 class="material-icons">play_circle_outline</span></a>
                         <a data-toggle="tooltip" data-placement="bottom" data-title="Quiz: Getting Started with Angular"
-                            href="student-take-quiz.html"><span class="material-icons">hourglass_empty</span></a>
-                    </nav>
+                            href="/student/take-quiz/<%= idLesson%>/0"><span class="material-icons">hourglass_empty</span></a>
+                    </nav> -->
 
                     <div id="player"></div>
 
@@ -143,8 +143,8 @@
                                 </span>
                                 <div class="media-body">
                                     <a class="card-title m-0"
-                                        href="/profile/lesson.course.teacher._id"><%= lesson.course.teacher.fullname %></a>
-                                    <p class="text-50 lh-1 mb-0">Instructor</p>
+                                        href="/profile/<%= lesson.course.teacher._id %>"><%= lesson.course.teacher.fullname %></a>
+                                    <p class="text-50 lh-1 mb-0">Teacher</p>
                                 </div>
                             </div>
                         </li>
@@ -158,13 +158,44 @@
                         </li>
                         <li class="nav-item ml-sm-auto text-sm-center flex-column navbar-list__item">
                             <div class="rating rating-24">
-                                <div class="rating__item"><i class="material-icons">star</i></div>
-                                <div class="rating__item"><i class="material-icons">star</i></div>
-                                <div class="rating__item"><i class="material-icons">star</i></div>
-                                <div class="rating__item"><i class="material-icons">star</i></div>
-                                <div class="rating__item"><i class="material-icons">star_border</i></div>
+                                <div class="inline-block" id="ks2-<%= lesson.course._id %>"></div>
+                                <script>
+                                    var dataArray = <%- JSON.stringify(lesson.course.ratings) %>;
+                                    var array='';
+                                    var sum = 0;
+                                    for (let i = 0; i < dataArray.length; i++) {
+                                        sum += dataArray[i]*1;
+                                    }
+                                    var result = sum / dataArray.length;
+                                    for (let i = 0; i < 5; i++) {
+                                        if (i < result) {
+                                            array+='<span class="rating__item"><span class="material-icons">star</span>';
+                                        }
+                                        else{
+                                            array+='<span class="rating__item"><span class="material-icons">star_border</span>';
+                                        }
+                                    }
+                                    //console.log(dataArray)
+                                    document.getElementById("ks2-<%= lesson.course._id %>").innerHTML = array;
+                                </script>
                             </div>
-                            <p class="lh-1 mb-0"><small class="text-muted">20 ratings</small></p>
+                            <p class="lh-1 mb-0"><small class="text-muted">
+                                <div class="inline-block" id="rl1-<%= lesson.course._id %>"></div>
+                                        <script>
+                                                var dataArray = <%- JSON.stringify(lesson.course.ratings) %>;
+                                                var sum = 0;
+                                                for (let i = 0; i < dataArray.length; i++) {
+                                                    sum += dataArray[i]*1;
+                                                }
+                                                var result = sum / dataArray.length;
+                                                // document.write(result.toFixed(1));
+                                                if (isNaN(result)) {
+                                                    result = 0;
+                                                }
+                                                document.getElementById("rl1-<%= lesson.course._id %>").innerHTML = result.toFixed(1) +"/5";
+                                                //console.log(dataArray)
+                                            </script>
+                            </small></p>
                         </li>
                     </ul>
                 </div>
@@ -306,7 +337,7 @@
                                         required="" placeholder="Reply comment">
                                     <div class="input-group-append">
                                         <div class="input-group-text pl-0">
-                                            <button class="btn btn-flush" type="button"><i
+                                            <button class="btn btn-flush" type="submit"><i
                                                     class="material-icons">send</i></button>
                                         </div>
                                     </div>

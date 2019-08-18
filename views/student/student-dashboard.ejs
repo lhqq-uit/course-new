@@ -76,7 +76,7 @@
                                     <% if (getTotalIq == null) { %>
                                     0 IQ
                                     <% } else{  %> 
-                                        <%= getTotalIq %>
+                                        <%= getTotalIq %> IQ
                                     <% } %>
                                 </span></p>
                     </div>
@@ -146,7 +146,8 @@
                             <div id="carouselExampleFade" class="carousel carousel-card slide mb-24pt">
                                 <div class="carousel-inner">
                                     <% if (getCourseStudied.length > 0) { %>
-                                        <% getCourseStudied.forEach(function(item) { %>
+                                        <% getCourseStudied.forEach(function(item,index) { %>
+                                            <% if (index ==  0) { %>
                                         <div class="carousel-item active">
 
                                             <a class="card mb-0" href="#">
@@ -185,6 +186,46 @@
                                             </a>
 
                                         </div>
+                                            <% } else {%>
+                                                <div class="carousel-item">
+
+                                                    <a class="card mb-0" href="#">
+                                                        <img src="../assets/images/achievements/flinto.png" alt="Flinto"
+                                                            class="card-img" style="max-height: 100%; width: initial;">
+                                                        <div class="fullbleed bg-primary" style="opacity: .5;"></div>
+                                                        <span class="card-body fullbleed">
+                                                            <span class="row">
+                                                                <span class="col-5 text-center">
+                                                                    <span
+                                                                        class="h5 text-white text-uppercase font-weight-normal m-0 d-block">Achievement</span>
+                                                                    <span class="text-white-60 d-block mb-16pt">
+                                                                        <script>
+                                                                            document.write(moment("<%= item.last_update %>").fromNow())    
+                                                                        </script>
+                                                                    </span>
+                                                                    <img src="../assets/images/illustration/achievement/128/white.png"
+                                                                        alt="achievement">
+                                                                </span>
+                                                                <span class="col-7 d-flex flex-column">
+                                                                    <span class="text-right flex">
+                                                                        <img src="../assets/images/paths/flinto_40x40%402x.png"
+                                                                            width="64" alt="Flinto" class="rounded">
+                                                                    </span>
+                                                                    <span>
+                                                                        <span class="h4 text-white m-0 d-block">
+                                                                            <%= item.topic %>
+                                                                        </span>
+                                                                        <span class="text-white-60">
+                                                                            <%= item.name %>
+                                                                        </span>
+                                                                    </span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                                    </a>
+        
+                                                </div>
+                                            <% } %>
                                         <% }) %>
                                     <% } else {%>
                                         <h2>You have not completed any course.</h2>
@@ -356,7 +397,7 @@
                                     </a>
 
                                     <div class="mdk-carousel__content">
-                                        <% if (getCoursePurchased) { %>
+                                        <% if (getCoursePurchased.courses.length > 0) { %>
                                             <% getCoursePurchased.courses.forEach( item => { %>
                                             <div class="col-12 col-sm-6">
 
@@ -499,6 +540,8 @@
 
                                             </div>
                                             <% }); %>
+                                        <% } else {%>
+                                            <h2>You have not any course.</h2>
                                         <% } %>
                                       
                                     </div>
@@ -623,7 +666,7 @@
         </script>
 
     <!-- jQuery -->
-    <script src="../assets/vendor/jquery.min.js"></script>
+    <!-- <script src="../assets/vendor/jquery.min.js"></script> -->
 
     <!-- Bootstrap -->
     <script src="../assets/vendor/popper.min.js"></script>

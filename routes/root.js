@@ -302,18 +302,22 @@ router.get("/profile/:id", async (req, res) => {
 
 //TODO: login
 router.get("/login", (req, res) => {
-    let notificationError = false;
-    var notificationSignUpTrue = false;
-    if (req.session.SignUpTrue == true) { //TODO: signup true -> login -> push notification
-        notificationSignUpTrue = true;
+    if (req.session.token) {
+        res.redirect("/dashboard")
+    } else {
+        let notificationError = false;
+        var notificationSignUpTrue = false;
+        if (req.session.SignUpTrue == true) { //TODO: signup true -> login -> push notification
+            notificationSignUpTrue = true;
+        }
+        if (req.session.catchLogin == false) { //TODO: login false -> push err
+            notificationError = true;
+        }
+        res.render("root/login", {
+            notificationError: notificationError,
+            notificationSignUpTrue: notificationSignUpTrue
+        });
     }
-    if (req.session.catchLogin == false) { //TODO: login false -> push err
-        notificationError = true;
-    }
-    res.render("root/login", {
-        notificationError: notificationError,
-        notificationSignUpTrue: notificationSignUpTrue
-    });
 });
 
 router.post("/login", (req, res) => {
@@ -330,9 +334,9 @@ router.post("/login", (req, res) => {
         // console.log()
         if (req.session.token) {
             let decode = jwtDecode(req.session.token);
-            if(decode.role == "Admin"){
-                 res.redirect('/admin');
-            }else{
+            if (decode.role == "Admin") {
+                res.redirect('/admin');
+            } else {
                 res.redirect('/dashboard')
             }
         }
@@ -539,7 +543,7 @@ router.get("/logout", async (req, res) => {
 //todo delete question
 router.get("/q/del/question/:id", async (req, res) => {
     let url = `${domain}/api/quiz/${req.params.id}`;
-    console.log(url);
+    //console.log(url);
     await axios({
         method: "delete",
         baseURL: url,
@@ -551,17 +555,17 @@ router.get("/q/del/question/:id", async (req, res) => {
             res.redirect(`/teacher/quizzes`)
         }
     }).catch(err => {
-        console.log(err)
+        //console.log(err)
         res.redirect("/");
     })
-    
+
 })
 
 
 //todo update
 router.post("/q/update/question/:id", async (req, res) => {
     let url = `${domain}/api/quiz/${req.params.id}`;
-    console.log(url);
+    //console.log(url);
     await axios({
         method: "put",
         baseURL: url,
@@ -578,17 +582,17 @@ router.post("/q/update/question/:id", async (req, res) => {
             res.redirect(`/teacher/quizzes`)
         }
     }).catch(err => {
-        console.log(err)
+        //console.log(err)
         res.redirect("/");
     })
-    
+
 })
 
 
 //todo: add question /q/add/question/
 router.post("/q/add/question/:id", async (req, res) => {
     let url = `${domain}/api/quiz/${req.params.id}`;
-    console.log(url);
+    //console.log(url);
     await axios({
         method: "post",
         baseURL: url,
@@ -608,13 +612,26 @@ router.post("/q/add/question/:id", async (req, res) => {
         console.log(err)
         res.redirect("/");
     })
-    
+
+})
+
+//todo: err show
+router.get("/403", async (req, res) => {
+    res.render("error/403")
+})
+
+router.get("/404", async (req, res) => {
+    res.render("error/404")
+})
+
+router.get("/500", async (req, res) => {
+    res.render("error/500")
 })
 
 //TODO: this only for cmt
 router.post("/:idLesson", (req, res) => {
     let getInfo = jwtDecode(req.session.token);
-    console.log(getInfo)
+    //console.log(getInfo)
     axios({
         method: "post",
         url: `${domain}/api/comment/${req.params.idLesson}/${getInfo._id}`,
@@ -629,7 +646,8 @@ router.post("/:idLesson", (req, res) => {
             res.redirect(`/lesson/${req.params.idLesson}`)
         }
     }).catch(err => {
-        console.log(err)
+        //console.log(err)
+        res.redirect("/");
     })
 })
 

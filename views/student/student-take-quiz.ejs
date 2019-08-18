@@ -101,12 +101,12 @@
 
                     <div class="d-flex flex-wrap align-items-end justify-content-end mb-16pt">
                         <h1 class="text-white flex m-0">
-                            <center>Question <% numerical + 1 %></center>
+                            <center>Question <%= numerical + 1 %></center>
                         </h1>
                         <!-- <p class="h1 text-white-50 font-weight-light m-0">00:14</p> -->
                     </div>
                     <tbody>
-                        <p class="hero__lead measure-hero-lead text-white-50"><%= data.question %></p>
+                       <h2> <p class="text-white"><%= data.question %></p></h2>
                     </tbody>
 
                 </div>
@@ -123,9 +123,9 @@
                     <div class="nav navbar-nav ml-sm-auto navbar-list__item">
                         <div class="nav-item d-flex flex-column flex-sm-row ml-sm-16pt">
                             <!-- <a href="student-quiz-result-details.html" class="btn justify-content-center btn-outline-secondary w-100 w-sm-auto mb-16pt mb-sm-0">Skip Quiz</a> -->
-                            <a href="student-take-lesson.html"
+                            <!-- <a href="student-take-lesson.html"
                                 class="btn justify-content-center btn-outline-secondary w-100 w-sm-auto mb-16pt mb-sm-0 ml-sm-16pt">Review
-                                Video</a>
+                                Video</a> -->
                             <% if(link_next){ %>
                             <a href="<%= link_next %>" 
                                 class="btn justify-content-center btn-accent w-100 w-sm-auto mb-16pt mb-sm-0 ml-sm-16pt"
@@ -221,7 +221,7 @@
                         </div>
                         <div class="form-group mb-32pt mb-lg-48pt">
                             <div class="custom-control custom-checkbox">
-                                <input name="answer" id="" type="radio" class="custom-control-input"
+                                <input name="answer" id="customCheck04" type="radio" class="custom-control-input"
                                     value="D">
                                 <label for="customCheck04"
                                     class="custom-control-label"><%= data.list_answer[3] %></label>
@@ -229,14 +229,14 @@
                         </div>
 
 
-                        <p class="text-50 mb-0">Note: There can be multiple correct answers to this question.</p>
+                        <p class="text-50 mb-0">Note: If you do not select the answer, default D</p>
                     </div>
                 </form>
             </div>
 
 
 
-            <% include ../layout/footer-quiz %>
+            <% include ../layout/footer %>
 
         </div>
         <!-- // END Header Layout Content -->
