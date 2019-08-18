@@ -133,23 +133,8 @@ router.get("/edit-quiz/:idLesson", (req, res) => {
     // res.render('teacher/instructor-edit-quiz')
 })
 
-
-//TODO: Show all quizzes
-// router.get("/quizzes/:idLesson", (req, res) => {
-//     data=axios({
-//         method: 'get',
-//         url: `${domain}/api/allQuiz/${req.params.idLesson}`,
-//     })
-
-// })
 //TODO: edit quiz
 router.post("/edit-quiz/:idLesson", (req, res) => {
-
-    // console.log(req.params.idLesson)
-    // res.redirect('/login')
-
-    // res.json(req.body)
-    console.log(req.session.token)
     axios({
         method: 'post',
         url: `${domain}/api/quiz/${req.params.idLesson}`,
@@ -414,8 +399,8 @@ router.post("/add-course", upload, async (req, res) => {
             };
             await axios.post(`${domain}/api/course`, formData, config_axios)
                 .then(function (response) {
-                    fs.unlink(`/public/tmp/${req.files.image[0].originalname}`);
-                    fs.unlink(`/public/tmp/${req.files.trailer[0].originalname}`);
+                    fs.unlink(`./public/upload/tmp/${req.files.image[0].originalname}`);
+                    fs.unlink(`./public/upload/tmp/${req.files.trailer[0].originalname}`);
                     // res.send(response)
                     res.redirect("/teacher/courses")
                 })
@@ -506,8 +491,8 @@ router.post("/edit-course/:idCourse", upload, async (req, res) => {
         };
         await axios.put(`${domain}/api/course/${req.params.idCourse}`, formData, config_axios)
             .then(function (response) {
-                fs.unlink(`/public/tmp/${req.files.image[0].originalname}`);
-                fs.unlink(`/public/tmp/${req.files.trailer[0].originalname}`);
+                fs.unlink(`./public/upload/tmp/${req.files.image[0].originalname}`);
+                fs.unlink(`./public/upload/tmp/${req.files.trailer[0].originalname}`);
                 // res.send(response)
                 res.redirect("/teacher/courses")
             })
@@ -550,8 +535,8 @@ router.post("/add-lesson/:idCourse", upload, async (req, res) => {
             //responseType: 'stream'
         })
             .then(function (response) {
-                fs.unlink(`/public/tmp/${req.files.video[0].filename}`);
-                fs.unlink(`/public/tmp/${req.files.document[0].file}`);
+                fs.unlink(`./public/upload/tmp/${req.files.video[0].filename}`);
+                fs.unlink(`./public/upload/tmp/${req.files.document[0].file}`);
                 console.log(`created successfully for ${req.body.title}`);
                 // res.send("ok");
             }).catch(function (error) {
@@ -564,8 +549,45 @@ router.post("/add-lesson/:idCourse", upload, async (req, res) => {
     }
 })
 
-router.post("/edit-lesson/:idCourse", upload, async (req, res) => {
+router.post("/edit-lesson/:idLesson", upload, async (req, res) => {
+    if (req.session.token) {
+        let formData = await new FormData();
+        let readStreamVideo = await fs.createReadStream(`./public/upload/tmp/${req.files.video[0].originalname}`);
+        let readStreamDoc = await fs.createReadStream(`./public/upload/tmp/${req.files.document[0].originalname}`);
 
+        const formHeaders = await formData.getHeaders();
+        formData.append("title", req.body.title);
+        formData.append("description", req.body.description);
+        formData.append("video", readStreamVideo);
+        formData.append("document", readStreamDoc);
+        // console.log(formData)
+        let config_axios = {
+            headers: {
+                Authorization: req.session.token,
+                ...formHeaders
+            }
+        };
+
+        await axios({
+            method: 'put',
+            url: `${domain}/api/lesson/${req.params.idLesson}`,
+            data: formData,
+            headers: config_axios.headers,
+            //responseType: 'stream'
+        })
+            .then(function (response) {
+                fs.unlink(`./public/upload/tmp/${req.files.video[0].filename}`);
+                fs.unlink(`./public/upload/tmp/${req.files.document[0].filename}`);
+                console.log(`created successfully for ${req.body.title}`);
+                // res.send("ok");
+            }).catch(function (error) {
+                res.send(error.message)
+                res.redirect("/teacher/courses");
+            });
+
+    } else {
+        res.redirect('/login');
+    }
 })
 
 router.get("/courses", (req, res) => {

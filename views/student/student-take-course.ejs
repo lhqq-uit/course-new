@@ -51,6 +51,21 @@
         
         })
     }
+    function trailer() {
+        Swal.fire({
+        title: '<strong>Trailer</strong>',
+        html:
+            `
+            <video width="400" controls>
+                <source src="/upload/video/<%= course.trailer %>" type="video/*">
+            </video>
+            `,
+        showCloseButton: true,
+        // showCancelButton: true,
+        focusConfirm: false,
+        // confirmButtonText:false
+        })
+    }
     
     </script>
 

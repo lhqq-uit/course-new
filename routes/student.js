@@ -3,7 +3,6 @@ const router = express.Router();
 const domain = require("./../config/domain");
 const axios = require("axios");
 const jwtDecode = require("jwt-decode");
-
 //TODO: student-dashboard
 router.get("/dashboard", async (req, res) => {
     var infoStudent = "";
@@ -335,7 +334,7 @@ router.post("/result-take-quiz/:idLesson", async (req, res) => {
                 }
             });
 
-        res.json(list_question);
+        res.json(list_question );
     }
 });
 
