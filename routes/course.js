@@ -27,28 +27,54 @@ router.get('/:idCourse', async function (req, res, next) {
     if (req.session.token) {
 
         let getInfoStudent = jwtDecode(req.session.token)
-        await axios({
-            method: 'get',
-            url: `${domain}/api/student/info/${getInfoStudent._id}`,
-            //responseType: 'stream'
-        })
-            .then(response => {
-                // handle success
-                //console.log(response.data);
-
-                infoStudent = response.data;
+        if(getInfoStudent.role=="Teacher"){
+            await axios({
+                method: 'get',
+                url: `${domain}/api/teacher/info/${getInfoStudent._id}`,
+                //responseType: 'stream'
             })
-            .catch(error => {
-                // handle error
-                //console.log(error);
-                if (error.response.status == 403) {
-                    res.redirect("/403")
-                } else if (error.response.status == 404) {
-                    res.redirect("/404")
-                } else if (error.response.status == 500) {
-                    res.redirect("/500")
-                }
+                .then(response => {
+                    // handle success
+                    //console.log(response.data);
+    
+                    infoStudent = response.data;
+                })
+                .catch(error => {
+                    // handle error
+                    //console.log(error);
+                    if (error.response.status == 403) {
+                        res.redirect("/403")
+                    } else if (error.response.status == 404) {
+                        res.redirect("/404")
+                    } else if (error.response.status == 500) {
+                        res.redirect("/500")
+                    }
+                })
+        }else{
+            await axios({
+                method: 'get',
+                url: `${domain}/api/student/info/${getInfoStudent._id}`,
+                //responseType: 'stream'
             })
+                .then(response => {
+                    // handle success
+                    //console.log(response.data);
+    
+                    infoStudent = response.data;
+                })
+                .catch(error => {
+                    // handle error
+                    //console.log(error);
+                    if (error.response.status == 403) {
+                        res.redirect("/403")
+                    } else if (error.response.status == 404) {
+                        res.redirect("/404")
+                    } else if (error.response.status == 500) {
+                        res.redirect("/500")
+                    }
+                })
+        }
+        
     }
 
     await axios({
@@ -84,32 +110,34 @@ router.get('/:idCourse', async function (req, res, next) {
         }
     });
     if (req.session.token) {
-
         let bought = false;
-        await axios({
-            method: 'get',
-            url: `${domain}/api/student/courses-purchased`,
-            headers: {
-                Authorization: req.session.token
-            }
-        }).then(Response => {
-            Response.data.courses.forEach(element => {
-                // console.log(element.id_course._id)
-                if (element.id_course._id == req.params.idCourse) {
-                    bought = true;
+        if(infoStudent.role=="Teacher"){
+            bought= true;
+        }else if(infoStudent.role=="Student"){
+            await axios({
+                method: 'get',
+                url: `${domain}/api/student/courses-purchased`,
+                headers: {
+                    Authorization: req.session.token
+                }
+            }).then(Response => {
+                Response.data.courses.forEach(element => {
+                    // console.log(element.id_course._id)
+                    if (element.id_course._id == req.params.idCourse) {
+                        bought = true;
+                    }
+                });
+            }).catch(err => {
+                // console.log(err)
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
                 }
             });
-        }).catch(err => {
-            // console.log(err)
-            if (error.response.status == 403) {
-                res.redirect("/403")
-            } else if (error.response.status == 404) {
-                res.redirect("/404")
-            } else if (error.response.status == 500) {
-                res.redirect("/500")
-            }
-        });
-
+        }
         res.render("student/student-take-course", { course, topcourse, bought, infoStudent, allcourse });
     } else {
         res.render("course/course", { course, topcourse, infoStudent, allcourse });
