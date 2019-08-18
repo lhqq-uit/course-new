@@ -187,7 +187,8 @@ router.get('/:idCourse', async function (req, res, next) {
 //todo: rating
 router.get("/s/c/rating/:idCourse/:numStar", async (req, res) => {
     let url = `${domain}/api/course/rating/${req.params.idCourse}`;
-    //console.log(url);
+    console.log(url);
+    console.log(req.params.numStar)
     await axios({
         method: "put",
         baseURL: url,
