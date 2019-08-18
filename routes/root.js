@@ -496,6 +496,22 @@ router.post("/delete/child/:idLesson/:idCommentParent/:idCommentChild", async (r
 //TODO: search
 router.get("/search", async (req, res) => {
     //console.log("vv")
+    let allcourse1;
+    await axios({
+        method: "get",
+        url: `${domain}/api/course`,
+    }).then(result => {
+        allcourse1 = result.data
+    }).catch(err => {
+        // console.log(err)
+        if (error.response.status == 403) {
+            res.redirect("/403")
+        } else if (error.response.status == 404) {
+            res.redirect("/404")
+        } else if (error.response.status == 500) {
+            res.redirect("/500")
+        }
+    })
     let allcourse;
     let keySearch = req.param("search");
     console.log(req.param("search"))
@@ -514,7 +530,8 @@ router.get("/search", async (req, res) => {
     })
     res.render("course/search", {
         allcourse,
-        keySearch
+        keySearch,
+        allcourse1
     })
 })
 
@@ -527,7 +544,14 @@ router.get("/all-courses", async (req, res) => {
     }).then(result => {
         allcourse = result.data
     }).catch(err => {
-        console.log(err)
+        // console.log(err)
+        if (error.response.status == 403) {
+            res.redirect("/403")
+        } else if (error.response.status == 404) {
+            res.redirect("/404")
+        } else if (error.response.status == 500) {
+            res.redirect("/500")
+        }
     })
     // res.send()
     res.render("course/allcourse", { allcourse })

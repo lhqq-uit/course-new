@@ -171,7 +171,7 @@
                                         localStorage.setItem('answer', JSON.stringify(a));
                                         axios({
                                             method: "POST",
-                                            url: "http://localhost:3000/student/result-take-quiz/<%= data.lesson %>",
+                                            url: window.location.hostname + "/student/result-take-quiz/<%= data.lesson %>",
                                             data:{
                                                 answer: JSON.parse(localStorage.getItem('answer')),
                                             }
@@ -179,7 +179,7 @@
                                         .then(res=>{
                                             // alert(res.data)
                                             localStorage.setItem("boolean_answer", JSON.stringify(res.data.result));
-                                            window.location.replace("http://localhost:3000/student/result-take-quiz/<%= data.lesson %>")
+                                            window.location.replace(window.location.hostname + "/student/result-take-quiz/<%= data.lesson %>")
                                         })
                                         .catch(err => console.log(err.message))
                                     });

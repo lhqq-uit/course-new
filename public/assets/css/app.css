@@ -21865,7 +21865,10 @@ html {
 }
 
 [dir=ltr] .text-black-70 {
-  color: rgba(48, 56, 64, .7) !important
+  color: rgba(48, 56, 64, .7) !important;
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 [dir=ltr] .text-black-100 {

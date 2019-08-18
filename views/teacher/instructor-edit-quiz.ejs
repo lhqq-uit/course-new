@@ -73,7 +73,7 @@
                                     <% if (infoTeacher.iq == null) { %>
                                         0 IQ
                                         <% } else{  %> 
-                                            <%= infoTeacher.iq %>
+                                            <%= infoTeacher.iq %> IQ
                                         <% } %> 
                                 </span></p>
                     </div>
@@ -133,6 +133,7 @@
                             <div class="form-group">
                                 <label>Course</label>
                                 <select name="category" id="course_id" class="form-control custom-select">
+                                    <option value="0" selected>--- Chose course ---</option>
                                     <% courses.courses.forEach(function(e){ %>
                                         <option value="<%= e._id %>"><%= e.name %></option>
                                     <% }); %>
