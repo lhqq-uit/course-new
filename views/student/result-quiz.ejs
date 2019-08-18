@@ -733,6 +733,8 @@
 
     <!-- App Settings (safe to remove) -->
     <script src="/assets/js/app-settings.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
     <script>
             var result_answer = JSON.parse(localStorage.getItem("boolean_answer"));
@@ -765,8 +767,7 @@
             }
             document.getElementById('your-score').innerHTML = "You score: " + your_score;
             document.getElementById('score').innerHTML = `${your_score}/${total_score} Score`
-
-        </script>
+    </script>
 
 
 </body>

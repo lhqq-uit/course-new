@@ -148,9 +148,9 @@
                                     oninput="this.setCustomValidity('')"><%= course.description %></textarea>
                                 <br>
 
-                                <h4>Image</h4>
                                 <div class="row">
                                     <div class="col-sm-6">
+                                        <h4>Image</h4>
                                         <div class="custom-file">
                                             <input type="file" name="image" id="file" class="custom-file-input"
                                                 onchange="readURL(this);" required
@@ -159,14 +159,28 @@
                                             <label for="file" class="custom-file-label image-course">Choose file
                                                 image</label>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div style="text-align: center;">
-                                            <img id="output-img" src="/upload/images/<%= course.avatar %>" width="250"
-                                                height="auto" alt="your image" />
+
+                                        <div style="text-align: center; margin: 20px 0;">
+                                            <img id="output-img" src="/upload/images/<%= course.avatar %>" width="100%" height="auto"
+                                                alt="your image" />
                                         </div>
                                     </div>
-                                </div>`
+                                    <div class="col-sm-6">
+                                        <h4>Video trailer</h4>
+                                        <div class="custom-file">
+                                            <input type="file" name="trailer" id="file" class="custom-file-input"
+                                                onchange="readURLVideo(this);" required
+                                                oninvalid="this.setCustomValidity('Enter File video Here')"
+                                                oninput="this.setCustomValidity('')" accept="video/*">
+                                            <label for="file" class="custom-file-label image-course">Choose file video
+                                                trailer</label>
+                                        </div>
+                                        <div style="text-align: center; margin: 20px 0;">
+                                            <video id="output-video" src="/upload/video/<%= course.trailer %>" width="100%" height="auto" autoplay
+                                                controls></video>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-4">
                                 <h4>Level</h4>
@@ -434,6 +448,18 @@
 
                 reader.onload = function (e) {
                     $('#output-img')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function readURLVideo(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#output-video')
                         .attr('src', e.target.result);
                 };
 

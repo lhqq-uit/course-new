@@ -42,7 +42,11 @@
         Swal.fire({
         title: '<strong>Trailer</strong>',
         html:
-            '<iframe width="100%" height="400" src="https://www.youtube.com/embed/XFWw2Ovnp3s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+            `
+            <video width="400" controls>
+                <source src="/upload/video/<%= course.trailer %>" type="video/*">
+            </video>
+            `,
         showCloseButton: true,
         // showCancelButton: true,
         focusConfirm: false,
@@ -88,8 +92,7 @@
                             <p class="lead text-white-50 measure-hero-lead more"><%= course.description %></p>
                             <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
                                 <a onclick="trailer()"
-                                    class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt">Watch trailer <i
-                                        class="material-icons icon--right">play_circle_outline</i></a>
+                                    class="btn btn-white mb-16pt mb-sm-0 mr-sm-16pt">Watch trailer</a>
                                 <a href="/login" class="btn btn-white">Start your free trial</a>
                             </div>
                         </div>

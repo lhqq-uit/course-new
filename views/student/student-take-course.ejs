@@ -51,6 +51,21 @@
         
         })
     }
+    function trailer() {
+        Swal.fire({
+        title: '<strong>Trailer</strong>',
+        html:
+            `
+            <video width="400" controls>
+                <source src="/upload/video/<%= course.trailer %>" type="video/*">
+            </video>
+            `,
+        showCloseButton: true,
+        // showCancelButton: true,
+        focusConfirm: false,
+        // confirmButtonText:false
+        })
+    }
     
     </script>
 
@@ -93,7 +108,8 @@
                         <div class="container">
                             <h1 class="text-white"><%= course.name%></h1>
                             <p class="lead text-white-50 measure-hero-lead mb-24pt more"><%= course.description %></p>
-                            <a href="/course/<%= course._id%>" class="btn btn-white">Resume course</a>
+                            <a onclick="trailer()"
+                                    class="btn btn-white mb-16pt mb-sm-0 mr-sm-16pt">Watch trailer</a>
                             <% if(!bought){ %>
                             <a onclick="clickBuy()" class="btn btn-white">Buy course</a>
                             <% }; %>

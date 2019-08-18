@@ -285,7 +285,10 @@ module.exports = {
             { $addToSet: { course_studied: student.courses[i].id_course } }
           );
       }
-      res.status(200).json({ message: "Set course studied successfully" });
+      let course_studied = await Student.findOne({ user: req.user.data._id })
+        .populate("course_studied")
+        .select("course_studied");
+      res.status(200).json({ course_studied });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

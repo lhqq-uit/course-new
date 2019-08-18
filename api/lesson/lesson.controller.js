@@ -1,8 +1,8 @@
-const Course = require('./../course/course.model')
-const Teacher = require('./../teacher/teacher.model')
-const Lesson = require('./lesson.model')
-const Student = require('./../student/student.model')
-const fs = require('fs')
+const Course = require("./../course/course.model");
+const Teacher = require("./../teacher/teacher.model");
+const Lesson = require("./lesson.model");
+const Student = require("./../student/student.model");
+const fs = require("fs");
 
 module.exports = {
   create: async (req, res) => {
@@ -17,9 +17,9 @@ module.exports = {
         video: req.files.video[0].filename,
         document: list_document,
         course: req.params.idCourse
-      }
+      };
       // res.send(newLesson)
-      let lesson = await Lesson.create(newLesson)
+      let lesson = await Lesson.create(newLesson);
       //console.log(lesson)
       await Course.findOneAndUpdate(
         {
@@ -28,7 +28,7 @@ module.exports = {
         {
           $push: { lessons: lesson._id }
         }
-      )
+      );
 
       await Teacher.findOneAndUpdate(
         {
@@ -37,36 +37,34 @@ module.exports = {
         {
           $inc: { iq: +100 }
         }
-      )
+      );
 
       res.status(201).json({
         success: true,
         msg: "Success create a lesson",
         data: lesson
-      })
+      });
     } catch (error) {
-      if (error && error.name === 'ValidationError') {
-        let err_msg = error.message.toString().replace('Lesson validation failed: ', '').split(', ')
+      if (error && error.name === "ValidationError") {
+        let err_msg = error.message
+          .toString()
+          .replace("Lesson validation failed: ", "")
+          .split(", ");
         return res.status(400).json({
           success: false,
           err_msg: err_msg
         });
       }
-      res.status(500).send('There was a problem adding the information to the database.')
+      res
+        .status(500)
+        .send("There was a problem adding the information to the database.");
     }
   },
   update: async (req, res) => {
     try {
-      // if(!req.file){
-      //     return res.send({
-      //         message: 'No document received'
-      //       });
-      // }
-
-
       let lessonOld = await Lesson.findById(req.params.idLesson);
       for (let i = 0; i < lessonOld.document.length; i++) {
-        let document = lessonOld.document[i]
+        var document = lessonOld.document[i];
         fs.unlinkSync(`./public/upload/document/${document}`);
       }
       let video = lessonOld.video;
@@ -75,64 +73,77 @@ module.exports = {
         title: req.body.title,
         desciption: req.body.description,
         video: req.files.video[0].filename,
-        document: list_document
+        document: req.files.document[0].filename
       };
 
-      let lesson = await Lesson.findByIdAndUpdate(req.params.idLesson, newLesson);
+      let lesson = await Lesson.findByIdAndUpdate(
+        req.params.idLesson,
+        newLesson
+      );
       // let lesson = await Lesson.findOneAndUpdate({_id: req.params.idLesson}, newLesson);
-      if (!lesson) return res.status(404).send('No course found or you are not author of lesson');
-      console.log(lesson)
+      if (!lesson)
+        return res
+          .status(404)
+          .send("No course found or you are not author of lesson");
+      // console.log(lesson);
       res.status(201).json({
         success: true,
         msg: "Success update a lesson",
         data: newLesson
-      })
+      });
     } catch (error) {
-      res.status(500).send('There was a problem updating the information to the database.')
+      res.status(500).send(error.message);
     }
   },
 
   getOneLesson: async (req, res) => {
     try {
-      let lesson = await Lesson.findById(req.params.idLesson).populate({
-        path: 'comment',
-        populate: {
-          path: 'user'
-        }
-      }).populate({
-        path: 'course',
-        populate: {
-          path: 'teacher'
-        }
-      })
-      if (!lesson) return res.status(404).json({ message: 'Lesson not found' })
+      let lesson = await Lesson.findById(req.params.idLesson)
+        .populate({
+          path: "comment",
+          populate: {
+            path: "user"
+          }
+        })
+        .populate({
+          path: "course",
+          populate: {
+            path: "teacher"
+          }
+        });
+      if (!lesson) return res.status(404).json({ message: "Lesson not found" });
       let idCourseOfLesson = lesson.course._id;
       let authorOfCourse = lesson.course.teacher._id;
       let student = await Student.findOne({ user: req.user.data._id });
       if (student) {
-        let listCourseBought = student.courses.map(item => item.id_course.toString());
+        let listCourseBought = student.courses.map(item =>
+          item.id_course.toString()
+        );
         if (!listCourseBought.includes(idCourseOfLesson.toString())) {
-          return res.status(403).json({ message: 'You have not purchased the course' })
+          return res
+            .status(403)
+            .json({ message: "You have not purchased the course" });
         }
-      }
-      else if (authorOfCourse != req.user.data._id) {
-        return res.status(403).json({ message: 'You have not author of course' })
+      } else if (authorOfCourse != req.user.data._id) {
+        return res
+          .status(403)
+          .json({ message: "You have not author of course" });
       }
       res.status(201).json({
         success: true,
         msg: "Success get a lesson",
         data: lesson
-      })
+      });
     } catch (error) {
       res.status(404).json({
         message: error.message
-      })
+      });
     }
   },
 
   getAllLesson: async (req, res) => {
     let lesson = await Lesson.find({}, (err, data) => {
-      if (err) return res.status(404).send('No lesson found');
+      if (err) return res.status(404).send("No lesson found");
       res.status(201).json({
         success: true,
         msg: "Success get all lesson",
@@ -143,20 +154,16 @@ module.exports = {
 
   delete: async (req, res) => {
     try {
-
       let lessonOld = await Lesson.findById(req.params.idLesson);
       for (let i = 0; i < lessonOld.document.length; i++) {
-        let document = lessonOld.document[i]
+        let document = lessonOld.document[i];
         fs.unlinkSync(`./public/upload/document/${document}`);
       }
       let video = lessonOld.video;
       fs.unlinkSync(`./public/upload/video/${video}`);
-      let lesson = await Lesson.findByIdAndDelete(
-        {
-          _id: req.params.idLesson
-        }
-      );
-      //if(!lesson) return res.status(404).json('No course found or you are not author of lesson');
+      let lesson = await Lesson.findByIdAndDelete({
+        _id: req.params.idLesson
+      });
 
       await Course.findOneAndUpdate(
         {
@@ -177,10 +184,12 @@ module.exports = {
       );
       res.status(201).json({
         success: true,
-        msg: "Success delete a lesson",
-      })
+        msg: "Success delete a lesson"
+      });
     } catch (error) {
-      res.status(500).json('There was a problem deleting the information to the database.')
+      res
+        .status(500)
+        .json("There was a problem deleting the information to the database.");
     }
   }
-}
+};
