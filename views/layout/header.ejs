@@ -22,18 +22,39 @@
             </form>
 
             <!-- Main Navigation -->
-
-            <ul class="nav navbar-nav ml-auto flex-nowrap" style="white-space: nowrap;">
-                <li class="ml-16pt nav-item">
-                    <a href="/login" class="nav-link">
-                        <i class="material-icons">lock_open</i>
-                        <span class="sr-only">Login</span>
-                    </a>
-                </li>
-                <li class="d-none d-sm-flex nav-item">
-                    <a href="/signup" class="btn btn-accent">Get started</a>
-                </li>
-            </ul>
+            <% if (getInfo == null) { %>
+                <ul class="nav navbar-nav ml-auto flex-nowrap" style="white-space: nowrap;">
+                        <li class="ml-16pt nav-item">
+                            <a href="/login" class="nav-link">
+                                <i class="material-icons">lock_open</i>
+                                <span class="sr-only">Login</span>
+                            </a>
+                        </li>
+                        <li class="d-none d-sm-flex nav-item">
+                            <a href="/signup" class="btn btn-accent">Get started</a>
+                        </li>
+                    </ul>
+            <% } else {  %> 
+                <nav class="nav navbar-nav ml-auto flex-nowrap">
+                <div class="nav-item dropdown d-none d-sm-flex ml-16pt">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                          <img width="32" height="32" class="rounded-circle" src="/upload/avatar/<%= getInfo.avatar %>" alt="student" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <div class="dropdown-header"><strong>Instructor</strong></div>
+                          <a class="dropdown-item" href="/dashboard">Dashboard</a>
+                          <!-- <a class="dropdown-item" href="instructor-courses.html">Courses</a>
+                                      <a class="dropdown-item" href="instructor-quizzes.html">Quizzes</a> -->
+                          <div class="dropdown-divider"></div>
+                          <div class="dropdown-header"><strong>Account</strong></div>
+                          <!-- <a class="dropdown-item" href="student-edit-account.html">Edit Account</a>
+                                      <a class="dropdown-item" href="student-billing-history.html">Billing</a> -->
+                          <a class="dropdown-item" href="/logout">Logout</a>
+                        </div>
+                      </div>
+                    </nav>
+            <% } %>
+            
 
 
 

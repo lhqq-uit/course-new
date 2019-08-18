@@ -109,11 +109,11 @@ module.exports = {
                 teacher: req.user.data._id
             }).select("students_enrolled");
 
-            if(numberStudentOfCourse !=0){
+            if (numberStudentOfCourse != 0) {
                 res.status(400).json({
                     err_message: "you can delete course has student that joining"
                 });
-            } else{
+            } else {
                 let course = await Course.findOneAndDelete({
                     _id: req.params.idCourse,
                     teacher: req.user.data._id
@@ -131,7 +131,7 @@ module.exports = {
                 fs.unlinkSync(`./public/upload/images/${course.avatar}`);
                 res.status(200).json('Delete successfully!')
             }
-            
+
         } catch (error) {
             res.status(500).json({ err_msg: error.message })
         }
@@ -156,7 +156,7 @@ module.exports = {
                 req.params.idCourse,
                 { $push: { ratings: req.body.rate } }
             )
-            res.status(200).json({ message: 'Rating for course successfully' })
+            res.status(200).json({ message: 'Rating for course successfully', success: true })
         } catch (error) {
             res.status(500).json(error)
         }

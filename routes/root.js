@@ -240,6 +240,11 @@ router.get('/authentication',
 
 //TODO: show home page
 router.get("/", async (req, res) => {
+    let getInfo = null;
+    if (req.session.token) {
+        getInfo = jwtDecode(req.session.token)
+        //console.log(getInfoTeacher)
+    }
     let allcourse;
     await axios({
         method: "get",
@@ -262,7 +267,8 @@ router.get("/", async (req, res) => {
     })
     res.render("index-2", {
         data,
-        allcourse
+        allcourse,
+        getInfo
     });
 })
 
