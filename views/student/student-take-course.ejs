@@ -76,7 +76,7 @@
 
         <!-- Header -->
         <% if (infoStudent == null) { %>
-            <% include ../layout/header %>
+            <%- include('../layout/header', {getInfo}); %>
         <% } else{  %>
         <%- include('../layout/header-dashboard', {avatar: infoStudent.user.avatar}); %>
         <% } %>
@@ -107,6 +107,7 @@
                                         document.getElementById("frist").innerHTML= res;
                                     } else {
                                         document.getElementById("frist").innerHTML= str;
+                                        $(".less").hide();
                                     }
                                     // console.log(res)
                                     $(document).ready(function(){
@@ -178,6 +179,32 @@
                                     </div>
                                     <p class="lh-1 mb-0"><small class="text-muted"><%= course.ratings.length - 1  %> ratings</small></p>
                                 </li>
+                                <% if (checkRating == null) { %>
+                                    <li class="nav-item navbar-list__item">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-accent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ratings</button>
+                                        <div class="dropdown-menu">
+                                          <a class="dropdown-item" href="#">You need to complete the course first</a>
+                                        </div>
+                                      </div>
+                                    </li>
+                                <% } else {  %> 
+                                    <li class="nav-item navbar-list__item">
+                                        <form action="" method="">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-accent dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ratings</button>
+                                                <div class="dropdown-menu">
+                                                  <a class="dropdown-item" href="/course/s/c/rating/<%= course._id %>/5"><span class="rating__item"><span class="material-icons">star</span><span class="rating__item"><span class="material-icons">star</span><span class="rating__item"><span class="material-icons">star</span><span class="rating__item"><span class="material-icons">star</span><span class="rating__item"><span class="material-icons">star</span></a>
+                                                  <a class="dropdown-item" href="/course/s/c/rating/<%= course._id %>/4"><span class="rating__item"><span class="material-icons">star</span><span class="rating__item"><span class="material-icons">star</span><span class="rating__item"><span class="material-icons">star</span><span class="rating__item"><span class="material-icons">star</span></a>
+                                                  <a class="dropdown-item" href="/course/s/c/rating/<%= course._id %>/3"><span class="rating__item"><span class="material-icons">star</span><span class="rating__item"><span class="material-icons">star</span><span class="rating__item"><span class="material-icons">star</span></a>
+                                                  <a class="dropdown-item" href="/course/s/c/rating/<%= course._id %>/2"><span class="rating__item"><span class="material-icons">star</span><span class="rating__item"><span class="material-icons">star</span></a>
+                                                  <a class="dropdown-item" href="/course/s/c/rating/<%= course._id %>/1"><span class="rating__item"><span class="material-icons">star</span></a>
+                                                </div>
+                                              </div>
+                                        </form>
+                                    </li>
+                                <% } %>
+                                
                             </ul>
                         </div>
                     </div>
