@@ -7,6 +7,22 @@ const jwtDecode = require('jwt-decode');
 /* GET users listing. */
 router.get('/:idCourse', async function (req, res, next) {
     let course;
+    let allcourse;
+    await axios({
+        method: "get",
+        url: `${domain}/api/course`,
+    }).then(result => {
+        allcourse = result.data
+    }).catch(err => {
+        // console.log(err)
+        if (error.response.status == 403) {
+            res.redirect("/403")
+        } else if (error.response.status == 404) {
+            res.redirect("/404")
+        } else if (error.response.status == 500) {
+            res.redirect("/500")
+        }
+    })
     var infoStudent = null;
     if (req.session.token) {
 
@@ -24,7 +40,14 @@ router.get('/:idCourse', async function (req, res, next) {
             })
             .catch(error => {
                 // handle error
-                console.log(error);
+                //console.log(error);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
     }
 
@@ -33,9 +56,16 @@ router.get('/:idCourse', async function (req, res, next) {
         url: `${domain}/api/course/${req.params.idCourse}`
     }).then(Response => {
         course = Response.data;
-        console.log(course)
+        //console.log(course)
     }).catch(err => {
-        console.log(err)
+        //console.log(err)
+        if (error.response.status == 403) {
+            res.redirect("/403")
+        } else if (error.response.status == 404) {
+            res.redirect("/404")
+        } else if (error.response.status == 500) {
+            res.redirect("/500")
+        }
     });
     let topcourse;
     await axios({
@@ -44,7 +74,14 @@ router.get('/:idCourse', async function (req, res, next) {
     }).then(Response => {
         topcourse = Response.data;
     }).catch(err => {
-        console.log(err)
+        // console.log(err)
+        if (error.response.status == 403) {
+            res.redirect("/403")
+        } else if (error.response.status == 404) {
+            res.redirect("/404")
+        } else if (error.response.status == 500) {
+            res.redirect("/500")
+        }
     });
     if (req.session.token) {
 
@@ -63,12 +100,19 @@ router.get('/:idCourse', async function (req, res, next) {
                 }
             });
         }).catch(err => {
-            console.log(err)
+            // console.log(err)
+            if (error.response.status == 403) {
+                res.redirect("/403")
+            } else if (error.response.status == 404) {
+                res.redirect("/404")
+            } else if (error.response.status == 500) {
+                res.redirect("/500")
+            }
         });
 
-        res.render("student/student-take-course", { course, topcourse, bought, infoStudent });
+        res.render("student/student-take-course", { course, topcourse, bought, infoStudent, allcourse });
     } else {
-        res.render("course/course", { course, topcourse, infoStudent });
+        res.render("course/course", { course, topcourse, infoStudent, allcourse });
     }
 });
 

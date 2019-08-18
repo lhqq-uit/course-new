@@ -54,7 +54,14 @@ router.get("/quizzes", async (req, res) => {
                 courses = Response.data
             })
             .catch(error => {
-                res.status(400).json(error.message);
+                // res.status(400).json(error.message);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
         var infoTeacher = '';
         await axios({
@@ -70,7 +77,14 @@ router.get("/quizzes", async (req, res) => {
             })
             .catch(error => {
                 // handle error
-                console.log(error);
+                // console.log(error);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
         res.render('teacher/instructor-edit-quiz', {
             courses,
@@ -97,8 +111,24 @@ router.get("/edit-quiz/:idLesson", (req, res) => {
                     lesson: lesson.data.title,
                     course: Response2.data.name
                 })
+            }).catch(error => {
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
             // res.json(data)
+        }).catch(error => {
+            if (error.response.status == 403) {
+                res.redirect("/403")
+            } else if (error.response.status == 404) {
+                res.redirect("/404")
+            } else if (error.response.status == 500) {
+                res.redirect("/500")
+            }
         })
     // res.render('teacher/instructor-edit-quiz')
 })
@@ -160,7 +190,14 @@ router.get("/dashboard", async (req, res) => {
             })
             .catch(error => {
                 // handle error
-                console.log(error);
+                // console.log(error);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
 
         var getTransactionOneWeek = '';
@@ -179,7 +216,14 @@ router.get("/dashboard", async (req, res) => {
             })
             .catch(error => {
                 // handle error
-                console.log(error);
+                // console.log(error);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
 
         var getTransactionThisMonth = '';
@@ -198,7 +242,14 @@ router.get("/dashboard", async (req, res) => {
             })
             .catch(error => {
                 // handle error
-                console.log(error);
+                // console.log(error);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
 
         var getAverageMonthlySalary = '';
@@ -217,7 +268,14 @@ router.get("/dashboard", async (req, res) => {
             })
             .catch(error => {
                 // handle error
-                console.log(error);
+                // console.log(error);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
         //console.log(iqTeacher) 
 
@@ -243,7 +301,14 @@ router.get("/dashboard", async (req, res) => {
             })
             .catch(error => {
                 // handle error
-                console.log(error);
+                // console.log(error);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
 
         // io.on('connection', socket => {
@@ -305,7 +370,14 @@ router.get("/add-course", async (req, res) => {
                 })
                 .catch(error => {
                     // handle error
-                    console.log(error);
+                    // console.log(error);
+                    if (error.response.status == 403) {
+                        res.redirect("/403")
+                    } else if (error.response.status == 404) {
+                        res.redirect("/404")
+                    } else if (error.response.status == 500) {
+                        res.redirect("/500")
+                    }
                 })
             res.render("teacher/instructor-add-course", {
                 infoTeacher,
@@ -376,7 +448,14 @@ router.get("/edit-course/:idCourse", async (req, res) => {
             })
             .catch(error => {
                 // handle error
-                console.log(error);
+                // console.log(error);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
 
         await axios({
@@ -389,7 +468,14 @@ router.get("/edit-course/:idCourse", async (req, res) => {
             });
 
         }).catch(error => {
-            res.send(error.message)
+            // res.send(error.message)
+            if (error.response.status == 403) {
+                res.redirect("/403")
+            } else if (error.response.status == 404) {
+                res.redirect("/404")
+            } else if (error.response.status == 500) {
+                res.redirect("/500")
+            }
         })
     } else {
         res.redirect('/login');
@@ -499,7 +585,14 @@ router.get("/courses", (req, res) => {
         })
         .catch(error => {
             // handle error
-            console.log(error);
+            // console.log(error);
+            if (error.response.status == 403) {
+                res.redirect("/403")
+            } else if (error.response.status == 404) {
+                res.redirect("/404")
+            } else if (error.response.status == 500) {
+                res.redirect("/500")
+            }
         })
 
 });
@@ -523,7 +616,14 @@ router.get("/statement", async (req, res) => {
             })
             .catch(error => {
                 // handle error
-                console.log(error);
+                // console.log(error);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
 
         let getInfoTeacher = jwtDecode(req.session.token)
@@ -540,7 +640,14 @@ router.get("/statement", async (req, res) => {
             })
             .catch(error => {
                 // handle error
-                console.log(error);
+                // console.log(error);
+                if (error.response.status == 403) {
+                    res.redirect("/403")
+                } else if (error.response.status == 404) {
+                    res.redirect("/404")
+                } else if (error.response.status == 500) {
+                    res.redirect("/500")
+                }
             })
 
         res.render("teacher/instructor-statement", {
@@ -564,8 +671,15 @@ router.get('/delete-lesson/:idLesson', async (req, res) => {
         })
         .catch(error => {
             // handle error
-            console.log(error);
-            res.status(500);
+            // console.log(error);
+            // res.status(500);
+            if (error.response.status == 403) {
+                res.redirect("/403")
+            } else if (error.response.status == 404) {
+                res.redirect("/404")
+            } else if (error.response.status == 500) {
+                res.redirect("/500")
+            } 
         })
 })
 
@@ -584,7 +698,14 @@ router.get('/delete-course/:idCourse', async (req, res) => {
         .catch(error => {
             // handle error
             // console.log(error);
-            res.status(500).send(error.message);
+            // res.status(500).send(error.message);
+            if (error.response.status == 403) {
+                res.redirect("/403")
+            } else if (error.response.status == 404) {
+                res.redirect("/404")
+            } else if (error.response.status == 500) {
+                res.redirect("/500")
+            }
         })
 })
 
@@ -606,7 +727,14 @@ router.get('/profile/:id', async (req, res) => {
         })
         .catch(error => {
             // handle error
-            console.log(error);
+            // console.log(error);
+            if (error.response.status == 403) {
+                res.redirect("/403")
+            } else if (error.response.status == 404) {
+                res.redirect("/404")
+            } else if (error.response.status == 500) {
+                res.redirect("/500")
+            } 
         })
 
     await axios({
@@ -622,7 +750,14 @@ router.get('/profile/:id', async (req, res) => {
         })
         .catch(error => {
             // handle error
-            console.log(error);
+            // console.log(error);
+            if (error.response.status == 403) {
+                res.redirect("/403")
+            } else if (error.response.status == 404) {
+                res.redirect("/404")
+            } else if (error.response.status == 500) {
+                res.redirect("/500")
+            }
         })
 
     res.render("teacher/profile", {

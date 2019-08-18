@@ -85,7 +85,7 @@
                     <div class="hero py-64pt text-center text-sm-left">
                         <div class="container">
                             <h1 class="text-white"><%= course.name %></h1>
-                            <p class="lead text-white-50 measure-hero-lead"><%= course.description %></p>
+                            <p class="lead text-white-50 measure-hero-lead more"><%= course.description %></p>
                             <div class="d-flex flex-column flex-sm-row align-items-center justify-content-start">
                                 <a onclick="trailer()"
                                     class="btn btn-outline-white mb-16pt mb-sm-0 mr-sm-16pt">Watch trailer <i
@@ -144,7 +144,7 @@
                                         document.getElementById("ks2-<%= course._id %>").innerHTML = array;
                                     </script>
                             </div>
-                            <p class="lh-1 mb-0"><small class="text-muted"><%= course.ratings.length -1 %> ratings</small></p>
+                            <p class="lh-1 mb-0"><small class="text-muted"><%= course.ratings.length %> ratings</small></p>
                         </li>
                     </ul>
                 </div>
@@ -774,10 +774,49 @@
     }" sidebar-variant="bg-transparent border-0"></app-settings>
     </div> -->
     <!-- Modal -->
-
+    <%- include('../layout/modal',{allcourse}) %>
 
     <!-- jQuery -->
     <script src="/assets/vendor/jquery.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+    // Configure/customize these variables.
+    var showChar = 100;  // How many characters are shown by default
+    var ellipsestext = "...";
+    var moretext = "Show less";
+    var lesstext = "Show more >";
+    
+
+    $('.more').each(function() {
+        var content = $(this).html();
+ 
+        if(content.length > showChar) {
+ 
+            var c = content.substr(0, showChar);
+            var h = content.substr(showChar, content.length - showChar);
+ 
+            var html = c + '<span class="moreellipses text-white">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink text-white">' + moretext + '</a></span>';
+ 
+            $(this).html(html);
+        }
+ 
+    });
+ 
+    $(".morelink").click(function(){
+        if($(this).hasClass("less")) {
+            $(this).removeClass("less");
+            $(this).html(moretext);
+        } else {
+            $(this).addClass("less");
+            $(this).html(lesstext);
+        }
+        $(this).parent().prev().toggle();
+        $(this).prev().toggle();
+        return false;
+    });
+});
+    </script>
 
     <!-- Bootstrap -->
     <script src="/assets/vendor/popper.min.js"></script>

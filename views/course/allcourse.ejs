@@ -132,10 +132,10 @@
                                         <div class="card-body">
                                             <div class="d-flex">
                                                 <div class="flex">
-                                                    <a class="card-title" href="course.html"><%= e.name %></a>
+                                                    <a class="card-title" href="/course/<%= e._id %>"><%= e.name %></a>
                                                     <small class="text-50 font-weight-bold mb-4pt"><%= e.teacher.fullname %></small>
                                                 </div>
-                                                <a href="course.html" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite</a>
+                                                <a href="/course/<%= e._id %>" class="ml-4pt material-icons text-20 card-course__icon-favorite">favorite</a>
                                             </div>
                                             <div class="d-flex">
                                                 <div class="rating flex">
@@ -165,7 +165,7 @@
                                 <div class="popoverContainer d-none">
                                     <div class="media">
                                         <div class="media-left">
-                                            <img src="assets/images/paths/angular_40x40%402x.png" width="40" height="40" alt="Angular" class="rounded">
+                                            <img src="/upload/images/<%= e.avatar %>" width="40" height="40" alt="Angular" class="rounded">
                                         </div>
                                         <div class="media-body">
                                             <div class="card-title mb-0"><%= e.name %></div>
@@ -177,7 +177,7 @@
                                     </div>
 
                                     <p class="my-16pt text-black-70">
-                                        <%= e.name%>
+                                        <%= e.description%>
                                     </p>
 
                                     <!-- <div class="mb-16pt">
