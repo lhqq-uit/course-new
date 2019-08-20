@@ -167,7 +167,7 @@ router.get('/authentication',
                     data: {
                         fullname: req.user.displayName,
                         username: req.user.id,
-                        email: `${req.user.id}112@student.com`,
+                        email: `${req.user.id}-facebook@vaic.asia`,
                         password: req.user.id,
                         role: "Student"
                     }
