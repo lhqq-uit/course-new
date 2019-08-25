@@ -23,7 +23,7 @@ router.get('/:idCourse', async function (req, res, next) {
     }).catch(err => {
         // console.log(err)
         if (error.response.status == 403) {
-            res.redirect("/403")
+            // res.redirect("/403")
         } else if (error.response.status == 404) {
             res.redirect("/404")
         } else if (error.response.status == 500) {
@@ -93,7 +93,7 @@ router.get('/:idCourse', async function (req, res, next) {
     }).catch(err => {
         //console.log(err)
         if (error.response.status == 403) {
-            res.redirect("/403")
+            // res.redirect("/403")
         } else if (error.response.status == 404) {
             res.redirect("/404")
         } else if (error.response.status == 500) {
@@ -109,7 +109,7 @@ router.get('/:idCourse', async function (req, res, next) {
     }).catch(err => {
         // console.log(err)
         if (error.response.status == 403) {
-            res.redirect("/403")
+            // res.redirect("/403")
         } else if (error.response.status == 404) {
             res.redirect("/404")
         } else if (error.response.status == 500) {
@@ -137,7 +137,7 @@ router.get('/:idCourse', async function (req, res, next) {
             }).catch(err => {
                 // console.log(err)
                 if (error.response.status == 403) {
-                    res.redirect("/403")
+                    // res.redirect("/403")
                 } else if (error.response.status == 404) {
                     res.redirect("/404")
                 } else if (error.response.status == 500) {
@@ -168,7 +168,7 @@ router.get('/:idCourse', async function (req, res, next) {
                 // handle error
                 // console.log(error);
                 if (error.response.status == 403) {
-                    res.redirect("/403")
+                    // res.redirect("/403")
                 } else if (error.response.status == 404) {
                     res.redirect("/404")
                 } else if (error.response.status == 500) {
