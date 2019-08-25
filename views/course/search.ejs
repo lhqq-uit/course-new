@@ -54,7 +54,9 @@
 
         <!-- Header -->
 
-        <% include ../layout/header %>
+        <%- include('../layout/header', {getInfo}); %>
+
+       
 
         <!-- // END Header -->
 
@@ -218,7 +220,7 @@
     <!-- // END drawer -->
     
     <!-- Modal -->
-    <%- include('layout/modal',{allcourse1}) %>
+    <%- include('../layout/modal',{allcourse:allcourse1}) %>
 
     <!-- jQuery -->
     <script src="assets/vendor/jquery.min.js"></script>

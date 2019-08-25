@@ -502,6 +502,11 @@ router.post("/delete/child/:idLesson/:idCommentParent/:idCommentChild", async (r
 //TODO: search
 router.get("/search", async (req, res) => {
     //console.log("vv")
+    let getInfo = null;
+    if (req.session.token) {
+        getInfo = jwtDecode(req.session.token)
+        //console.log(getInfoTeacher)
+    }
     let allcourse1;
     await axios({
         method: "get",
@@ -509,18 +514,18 @@ router.get("/search", async (req, res) => {
     }).then(result => {
         allcourse1 = result.data
     }).catch(err => {
-        // console.log(err)
-        if (error.response.status == 403) {
-            res.redirect("/403")
-        } else if (error.response.status == 404) {
-            res.redirect("/404")
-        } else if (error.response.status == 500) {
-            res.redirect("/500")
-        }
+        console.log(err)
+        // if (error.response.status == 403) {
+        //     res.redirect("/403")
+        // } else if (error.response.status == 404) {
+        //     res.redirect("/404")
+        // } else if (error.response.status == 500) {
+        //     res.redirect("/500")
+        // }
     })
     let allcourse;
     let keySearch = req.param("search");
-    console.log(req.param("search"))
+    //console.log(req.param("search"))
     //console.log(req.body.search)
     await axios({
         method: "get",
@@ -537,12 +542,18 @@ router.get("/search", async (req, res) => {
     res.render("course/search", {
         allcourse,
         keySearch,
-        allcourse1
+        allcourse1,
+        getInfo
     })
 })
 
 //TODO: all course
 router.get("/all-courses", async (req, res) => {
+    let getInfo = null;
+    if (req.session.token) {
+        getInfo = jwtDecode(req.session.token)
+        //console.log(getInfoTeacher)
+    }
     let allcourse;
     await axios({
         method: "get",
@@ -560,7 +571,7 @@ router.get("/all-courses", async (req, res) => {
         }
     })
     // res.send()
-    res.render("course/allcourse", { allcourse })
+    res.render("course/allcourse", { allcourse, getInfo })
 })
 
 router.get("/logout", async (req, res) => {
