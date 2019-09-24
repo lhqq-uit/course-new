@@ -36,6 +36,7 @@ module.exports = {
           role: req.body.role
         });
         let user = await User.create(newUser);
+        // delete 1
         if (req.body.role == "Admin") {
           res.status(201).json({
             success: true,
@@ -154,8 +155,8 @@ module.exports = {
       // config mail server
       service: "Gmail",
       auth: {
-        user: "cskh.sanda.asia@gmail.com",
-        pass: "LeThiMyHanh"
+        user: "cskh.vaic@gmail.com",
+        pass: "Vaic@123456"
       }
     });
     var mainOptions = {
