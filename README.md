@@ -7,10 +7,10 @@
 ![MongoDB 2](https://img.shields.io/badge/MongoDB-3.x-brightgreen.svg?logo=mongodb)
 ![Express 4](https://img.shields.io/badge/ExpressJS-4.16.x-brightgreen.svg)
 
-## Tenchnical stack: MEVN stack
+## Tenchnical
 - **Database**: MongoDB
 - **Web Framwork**: ExpressJS
-- **Frontend Framwork**: No
+- **Frontend Template**: EJS
 - **Platform**: NodeJS
 
 ## Setup
